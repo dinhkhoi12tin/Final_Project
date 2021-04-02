@@ -22,7 +22,7 @@ void LoadFileStudents(Students*& stu)
 				pCur->pNext = new Students;
 				pCur = pCur->pNext;
 			}
-			input >> stu->No >> stu->NameFirst >> stu->NameLast >>  stu->ID >> stu->Gender >> stu->socialID >> stu->username >> stu->password >> stu->Birth ;
+			input >> pCur->No >> pCur->ID >> pCur->NameFirst >> pCur->NameLast >>  pCur->Gender >> pCur->Birth >> pCur->socialID >> pCur->username >> pCur->password;
 			pCur->pNext = nullptr;
 		}
 	}

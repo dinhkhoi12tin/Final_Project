@@ -5,6 +5,5 @@ int main()
 	LoadFileStudents(stu);
 	delete[] stu;
     displayUI();
-    cout<<"pull ve roi code nao!!!";
 }
     
