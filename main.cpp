@@ -1,6 +1,7 @@
-#include<iostream>
-using namespace std;
-int main(){
-
-    cout<<"pull ve roi code nao!!!";
+ #include"Header.h"
+int main()
+{
+	Students* stu = nullptr;
+	LoadFileStudents(stu);
+	delete[] stu;
 }
