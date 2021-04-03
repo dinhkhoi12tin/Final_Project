@@ -58,8 +58,8 @@ void display_information_students(Students* stu) {
 void export_file(Students * stu,string filename) {
     ofstream output;
     output.open(filename);
-    output << "No" << "," << "Student ID" << "," << "Name First" << "," << "Name Last" << "," << "Gender"
-        << "," << "Brith" << "," << "Social ID" << "," << "Username" << "," << "Password" << "," << "Classes" << "\n";
+   // output << "No" << "," << "Student ID" << "," << "Name First" << "," << "Name Last" << "," << "Gender"
+      //  << "," << "Brith" << "," << "Social ID" << "," << "Username" << "," << "Password" << "," << "Classes" << "\n";
     while (stu != nullptr && stu->No!="") {
    
         output << stu->No << "," << stu->ID << "," << stu->NameFirst << "," << stu->NameLast << "," << stu->Gender
@@ -107,9 +107,7 @@ void displayUI()
             cin >> options;
         } while (options != 0);
     }
-    void createframe()
-        {
-        
+void createframe(){
         int x = 60;  // change size of input
         int y = 10;
         HANDLE  hConsole;
@@ -140,4 +138,15 @@ void displayUI()
         gotoxy(0, y); printf("%c", 200); // moc cau ben trai duoi
         gotoxy(26, 0); cout << "  MENU  ";
         cout << endl;
-     }
+}
+void Change_Password(Students* stu, string ID, string New_Password,string filename) {
+    Students * phead = stu;
+    while (stu != nullptr) {
+        if (stu->ID == ID) {
+            stu->password = New_Password;
+            break;
+        }
+        stu = stu->pNext;
+    }
+    export_file(phead, filename);
+}
