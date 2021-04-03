@@ -139,14 +139,16 @@ void createframe(){
         gotoxy(26, 0); cout << "  MENU  ";
         cout << endl;
 }
-void Change_Password(Students* stu, string ID, string New_Password,string filename) {
-    Students * phead = stu;
-    while (stu != nullptr) {
-        if (stu->ID == ID) {
-            stu->password = New_Password;
-            break;
-        }
-        stu = stu->pNext;
-    }
-    export_file(phead, filename);
+void Change_Password(Students* stu,Students* stu_cur, string ID, string New_Password,string filename) {
+    stu_cur->password = New_Password;
+    export_file(stu, filename);
+}
+void View_profile(Students *stu,Students* stu_cur) {
+    cout << stu->No << "," << stu->ID << "," << stu->NameFirst << "," << stu->NameLast << "," << stu->Gender
+        << "," << stu->Birth << "," << stu->socialID << "," << stu->username << "," << stu->password << ","
+        << stu->classes << "\n";
+
+    cout << stu_cur->No << "," << stu_cur->ID << "," << stu_cur->NameFirst << "," << stu_cur->NameLast << "," << stu_cur->Gender
+    << "," << stu_cur->Birth << "," << stu_cur->socialID << "," << stu_cur->username << "," << stu_cur->password << ","
+        << stu_cur->classes << "\n";
 }

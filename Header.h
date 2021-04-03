@@ -27,3 +27,4 @@ void export_file(Students * stu,string filename);
 void Release_memory(Students *& stu);
 void display_information_students(Students* stu);
 void Change_Password(Students* stu, string ID, string New_Password, string filename);
+void View_profile(Students* stu, Students* stu_cur);
