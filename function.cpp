@@ -107,7 +107,17 @@ void displayUI()
             cin >> options;
         } while (options != 0);
     }
+<<<<<<< Updated upstream
 void createframe(){
+=======
+<<<<<<< HEAD
+void createframe()
+        {
+        
+=======
+void createframe(){
+>>>>>>> 7047496c390092f7c13b93e1ad6edc911ceba7ff
+>>>>>>> Stashed changes
         int x = 60;  // change size of input
         int y = 10;
         HANDLE  hConsole;
@@ -138,6 +148,50 @@ void createframe(){
         gotoxy(0, y); printf("%c", 200); // moc cau ben trai duoi
         gotoxy(26, 0); cout << "  MENU  ";
         cout << endl;
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+     }
+bool CheckUser(Students*& stu, string user, string pass)
+{
+    Students* pCur = stu;
+    while (pCur->pNext != nullptr)
+    {
+        if (user == pCur->username)
+        {
+            if(pass == pCur->password) return true
+        }
+        else pCur = pCur->pNext;
+    }
+    return false;
+}
+void Login(Students*& stu)
+{
+    string user;
+    string pass;
+    do
+    {
+        cout << "Username: " << endl;
+        cin >> user;
+        cout << "Password: " << endl;
+        cin >> pass;
+        if (CheckUser(stu, user, pass) == false)
+        {
+            cout << "Wrong username or password " << endl;
+            cout << "Please try again " << endl;
+        }
+    } while (CheckUser(stu, user, pass) == false);
+    if (user[0] == '0')
+    {
+        //staff function
+    }
+    else
+    {
+        //student function
+    }
+}
+=======
+>>>>>>> Stashed changes
 }
 void Change_Password(Students* stu,Students* stu_cur, string ID, string New_Password,string filename) {
     stu_cur->password = New_Password;
@@ -151,4 +205,9 @@ void View_profile(Students *stu,Students* stu_cur) {
     cout << stu_cur->No << "," << stu_cur->ID << "," << stu_cur->NameFirst << "," << stu_cur->NameLast << "," << stu_cur->Gender
     << "," << stu_cur->Birth << "," << stu_cur->socialID << "," << stu_cur->username << "," << stu_cur->password << ","
         << stu_cur->classes << "\n";
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> 7047496c390092f7c13b93e1ad6edc911ceba7ff
+>>>>>>> Stashed changes
