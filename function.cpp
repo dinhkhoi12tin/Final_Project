@@ -9,8 +9,6 @@ void LoadFileStudents(Students*& stu,string filename)
 	}
 	else
 	{
-        string line1;
-        getline(input, line1, '\n');
 		Students* pCur = stu;
 		while (input.good())
 		{
