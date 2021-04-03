@@ -62,7 +62,7 @@ void export_file(Students * stu,string filename) {
     output.open(filename);
     output << "No" << "," << "Student ID" << "," << "Name First" << "," << "Name Last" << "," << "Gender"
         << "," << "Brith" << "," << "Social ID" << "," << "Username" << "," << "Password" << "," << "Classes" << "\n";
-    while (stu != nullptr) {
+    while (stu != nullptr && stu->No!="") {
    
         output << stu->No << "," << stu->ID << "," << stu->NameFirst << "," << stu->NameLast << "," << stu->Gender
             << "," << stu->Birth << "," << stu->socialID << "," << stu->username << "," << stu->password << ","
