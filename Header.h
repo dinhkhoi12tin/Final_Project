@@ -26,15 +26,9 @@ void LoadFileStudents(Students*& stu, string filename);
 void export_file(Students * stu,string filename);
 void Release_memory(Students *& stu);
 void display_information_students(Students* stu);
-<<<<<<< Updated upstream
-void Change_Password(Students* stu, string ID, string New_Password, string filename);
+void Change_Password(Students* stu, Students* stu_cur, string New_Password, string filename);
 void View_profile(Students* stu, Students* stu_cur);
-=======
-<<<<<<< HEAD
-bool CheckUser(Students*& stu, string user, string pass);
-void Login(Students*& stu);
-=======
-void Change_Password(Students* stu, string ID, string New_Password, string filename);
-void View_profile(Students* stu, Students* stu_cur);
->>>>>>> 7047496c390092f7c13b93e1ad6edc911ceba7ff
->>>>>>> Stashed changes
+bool CheckUser(Students* stu, Students*& stu_cur,string ID, string pass);
+void Login(Students* stu);
+Students* Find_User_By_ID(Students* stu, string ID);
+void Option_Student_After_Login(Students* stu, Students* stu_cur, string filename);

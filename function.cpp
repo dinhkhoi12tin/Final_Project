@@ -107,93 +107,87 @@ void displayUI()
             cin >> options;
         } while (options != 0);
     }
-<<<<<<< Updated upstream
-void createframe(){
-=======
-<<<<<<< HEAD
-void createframe()
-        {
-        
-=======
-void createframe(){
->>>>>>> 7047496c390092f7c13b93e1ad6edc911ceba7ff
->>>>>>> Stashed changes
-        int x = 60;  // change size of input
-        int y = 10;
-        HANDLE  hConsole;
-        hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-        SetConsoleTextAttribute(hConsole, 119);
-        for (int i = 0; i < y; i++)
-        {
-            for (int j = 0; j < x; j++)
-            {
-                cout << " " ;
-            }
-            cout << endl;
-        }
-        SetConsoleTextAttribute(hConsole, 158);
-        for (int i = 1; i < x; i++) // tao dong ngang
-        {
-            gotoxy(i, 0); printf("%c", 205); // dong ngang tren
-            gotoxy(i, y); printf("%c", 205);  // dong ngang duoi
-        }
-        for (int i = 1; i < y; i++)  // dong ke thang dung
-        {
-            gotoxy(0, i); printf("%c", 186); // dong thang ben trai
-            gotoxy(x, i); printf("%c", 186); // dong thang ben phai
-        }
-        gotoxy(x, 0); printf("%c", 187); // cai moc cau ben phai ben tre^n
-        gotoxy(x, y); printf("%c", 188); // cai moc cau ben phai ben duoi
-        gotoxy(0, 0); printf("%c", 201); // cai moc cau ben trai tren
-        gotoxy(0, y); printf("%c", 200); // moc cau ben trai duoi
-        gotoxy(26, 0); cout << "  MENU  ";
-        cout << endl;
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-     }
-bool CheckUser(Students*& stu, string user, string pass)
-{
-    Students* pCur = stu;
-    while (pCur->pNext != nullptr)
+void createframe() {
+    int x = 60;  // change size of input
+    int y = 10;
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 119);
+    for (int i = 0; i < y; i++)
     {
-        if (user == pCur->username)
+        for (int j = 0; j < x; j++)
         {
-            if(pass == pCur->password) return true
+            cout << " ";
         }
-        else pCur = pCur->pNext;
+        cout << endl;
     }
-    return false;
+    SetConsoleTextAttribute(hConsole, 158);
+    for (int i = 1; i < x; i++) // tao dong ngang
+    {
+        gotoxy(i, 0); printf("%c", 205); // dong ngang tren
+        gotoxy(i, y); printf("%c", 205);  // dong ngang duoi
+    }
+    for (int i = 1; i < y; i++)  // dong ke thang dung
+    {
+        gotoxy(0, i); printf("%c", 186); // dong thang ben trai
+        gotoxy(x, i); printf("%c", 186); // dong thang ben phai
+    }
+    gotoxy(x, 0); printf("%c", 187); // cai moc cau ben phai ben tre^n
+    gotoxy(x, y); printf("%c", 188); // cai moc cau ben phai ben duoi
+    gotoxy(0, 0); printf("%c", 201); // cai moc cau ben trai tren
+    gotoxy(0, y); printf("%c", 200); // moc cau ben trai duoi
+    gotoxy(26, 0); cout << "  MENU  ";
+    cout << endl;
 }
-void Login(Students*& stu)
+Students *Find_User_By_ID(Students* stu,string ID){
+    while (stu != nullptr) {
+        if (stu->ID == ID) return stu;
+        stu = stu->pNext;
+    }
+    return nullptr;
+}
+bool CheckUser(Students* stu,Students* &stu_cur,string ID, string pass)
 {
+   
+    if (stu == nullptr) return false;
+    // stu la dong dau tien Name ,NO LAST NAME...
+    stu_cur=Find_User_By_ID(stu->pNext, ID);
+    if (stu_cur == nullptr || stu_cur->password != pass) return false;
+    return true;
+}
+void Login(Students* stu)
+{
+    
     string user;
     string pass;
-    do
+    Students* stu_cur = nullptr;
+    while (1)
     {
-        cout << "Username: " << endl;
-        cin >> user;
-        cout << "Password: " << endl;
-        cin >> pass;
-        if (CheckUser(stu, user, pass) == false)
+        cout << "Type any key to login or Type 0 to exit the program: ";
+        int option;
+        cin >> option;
+        if (option == 0) return;
+        cout << "Username: "; cin >> user; 
+        cout << "Password: "; cin >> pass;
+        
+        if (CheckUser(stu, stu_cur,user, pass) == false)
         {
             cout << "Wrong username or password " << endl;
             cout << "Please try again " << endl;
         }
-    } while (CheckUser(stu, user, pass) == false);
+        else break;
+    } 
     if (user[0] == '0')
     {
         //staff function
     }
     else
     {
-        //student function
+        string filename = "STUDENT_DATABASE.csv";
+        Option_Student_After_Login(stu, stu_cur, filename);
     }
 }
-=======
->>>>>>> Stashed changes
-}
-void Change_Password(Students* stu,Students* stu_cur, string ID, string New_Password,string filename) {
+void Change_Password(Students* stu,Students* stu_cur, string New_Password,string filename) {
     stu_cur->password = New_Password;
     export_file(stu, filename);
 }
@@ -205,9 +199,20 @@ void View_profile(Students *stu,Students* stu_cur) {
     cout << stu_cur->No << "," << stu_cur->ID << "," << stu_cur->NameFirst << "," << stu_cur->NameLast << "," << stu_cur->Gender
     << "," << stu_cur->Birth << "," << stu_cur->socialID << "," << stu_cur->username << "," << stu_cur->password << ","
         << stu_cur->classes << "\n";
-<<<<<<< Updated upstream
 }
-=======
+void Option_Student_After_Login(Students* stu, Students* stu_cur, string filename) {
+    while (1) {
+        cout << "1.View Profile\n";
+        cout << "2.Change Password\n";
+        cout << "0.Log out\n";
+        int option;
+        cin >> option;
+        if (option == 0) { Login(stu); return; }
+        if (option == 1) View_profile(stu, stu_cur); 
+        if (option == 2) {
+            string pass;
+            cout << "New Password="; cin >> pass;
+            Change_Password(stu, stu_cur, pass, filename);
+        }
+    }
 }
->>>>>>> 7047496c390092f7c13b93e1ad6edc911ceba7ff
->>>>>>> Stashed changes
