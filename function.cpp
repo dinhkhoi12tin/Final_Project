@@ -1,17 +1,20 @@
 #include "Header.h";
-void LoadFileStudents(Students*& stu)
+void LoadFileStudents(Students*& stu,string filename)
 {
 	ifstream input;
-	input.open(" CSV ");
+	input.open(filename);
 	if (!input.is_open())
 	{
 		cout << "Cannot open file " << endl;
 	}
 	else
 	{
+        string line1;
+        getline(input, line1, '\n');
 		Students* pCur = stu;
-		while (!input.eof())
+		while (input.good())
 		{
+          
 			if (stu == nullptr)
 			{
 				stu = new Students;
@@ -22,11 +25,51 @@ void LoadFileStudents(Students*& stu)
 				pCur->pNext = new Students;
 				pCur = pCur->pNext;
 			}
-			input >> pCur->No >> pCur->ID >> pCur->NameFirst >> pCur->NameLast >>  pCur->Gender >> pCur->Birth >> pCur->socialID >> pCur->username >> pCur->password;
+            getline(input, pCur->No, ',');        
+            getline(input, pCur->ID, ',');        
+            getline(input, pCur->NameFirst, ','); 
+            getline(input, pCur->NameLast, ','); 
+            getline(input, pCur->Gender, ',');   
+            getline(input, pCur->Birth, ',');
+            getline(input, pCur->socialID, ',');
+            getline(input, pCur->username, ',');
+            getline(input, pCur->password, ',');
+            getline(input, pCur->classes, '\n');
 			pCur->pNext = nullptr;
 		}
 	}
 	input.close();
+}
+void Release_memory(Students*& stu) {
+    while (stu != nullptr) {
+        Students * ptemp = stu;
+        stu = stu->pNext;
+        delete ptemp;
+    }
+}
+void display_information_students(Students* stu) {
+    while (stu != nullptr) {
+        int space[] = { 10,10,20,8,12,10,10,15,10 };
+        cout << stu->No << setw(space[0]) << stu->ID << setw(space[1]) << stu->NameFirst << setw(space[2]) << stu->NameLast;
+        cout << setw(space[3]) << stu->Gender << setw(space[4]) << stu->Birth << setw(space[5]) << stu->socialID;
+        cout << setw(space[6]) << stu->username << setw(space[7]) << stu->password << setw(space[8]) << stu->classes;
+        cout << "\n";
+        stu = stu->pNext;
+    }
+}
+void export_file(Students * stu,string filename) {
+    ofstream output;
+    output.open(filename);
+    output << "No" << "," << "Student ID" << "," << "Name First" << "," << "Name Last" << "," << "Gender"
+        << "," << "Brith" << "," << "Social ID" << "," << "Username" << "," << "Password" << "," << "Classes" << "\n";
+    while (stu != nullptr) {
+   
+        output << stu->No << "," << stu->ID << "," << stu->NameFirst << "," << stu->NameLast << "," << stu->Gender
+            << "," << stu->Birth << "," << stu->socialID << "," << stu->username << "," << stu->password << ","
+            << stu->classes << "\n";
+        stu = stu->pNext;
+    }
+   output.close();
 }
 void gotoxy(int x, int y)
     {

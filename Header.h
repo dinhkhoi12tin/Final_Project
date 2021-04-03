@@ -3,6 +3,7 @@
 #include<iostream>
 #include<fstream>
 #include<string>
+#include<iomanip>
 using namespace std;
 struct Students
 {
@@ -14,10 +15,14 @@ struct Students
 	string socialID;
 	string username;
 	string password;
+	string classes;
 	Students* pNext;
 };
 
 void createframe(); // Truong Gia Huy function
 void gotoxy(int x, int y);
 void displayUI();
-void LoadFileStudents(Students*& stu);
+void LoadFileStudents(Students*& stu, string filename);
+void export_file(Students * stu,string filename);
+void Release_memory(Students *& stu);
+void display_information_students(Students* stu);
