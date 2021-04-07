@@ -163,7 +163,8 @@ void Login(Students* stu)
     Students* stu_cur = nullptr;
     while (1)
     {
-        cout << "Type any key to login or Type 0 to exit the program: ";
+        cout << "1.Login\n";
+        cout << "0.Exit program\n";
         int option;
         cin >> option;
         if (option == 0) return;

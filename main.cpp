@@ -7,6 +7,6 @@ int main()
     //display_information_students(stu);
     Login(stu);
     Release_memory(stu);
-    //displayUI();
+    displayUI();
 }
    
