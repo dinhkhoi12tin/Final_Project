@@ -58,18 +58,12 @@ void display(Class * classhead,string classname) {
     }
 }
 int main()
-{    
+{
     //Students* stu = nullptr;
     //string filename_input = "STUDENT_DATABASE.csv";
-   // LoadFileStudents(stu, filename_input);
+    // LoadFileStudents(stu, filename_input);
     //display_information_students(stu);
     //Login(stu);
     //Release_memory(stu);
     //displayUI();
-    Class* classhead = 0;
-    create_class(classhead);
-    display(classhead,"CLC03");
-    cout<<"day la code cua khang";
-    
 }
-   

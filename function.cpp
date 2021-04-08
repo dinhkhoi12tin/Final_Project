@@ -1,6 +1,8 @@
 #include "Header.h";
 void LoadFileStudents(Students*& stu,string filename)
 {
+    Students* stu = nullptr;
+    filename = "STUDENT_DATABASE.csv";
 	ifstream input;
 	input.open(filename);
 	if (!input.is_open())
@@ -38,12 +40,45 @@ void LoadFileStudents(Students*& stu,string filename)
 	}
 	input.close();
 }
-void Release_memory(Students*& stu) {
-    while (stu != nullptr) {
-        Students * ptemp = stu;
-        stu = stu->pNext;
-        delete ptemp;
+void LoadFileStaff(Students*& sta, string filename)
+{
+    Students* sta = nullptr;
+    filename = "STAFF-CSV-DATABASE.csv";
+    ifstream input;
+    input.open(filename);
+    if (!input.is_open())
+    {
+        cout << "Cannot open file " << endl;
     }
+    else
+    {
+        Students* pCur = sta;
+        while (input.good())
+        {
+
+            if (sta == nullptr)
+            {
+                sta = new Students;
+                pCur = sta;
+            }
+            else
+            {
+                pCur->pNext = new Students;
+                pCur = pCur->pNext;
+            }
+            getline(input, pCur->No, ',');
+            getline(input, pCur->ID, ',');
+            getline(input, pCur->NameFirst, ',');
+            getline(input, pCur->NameLast, ',');
+            getline(input, pCur->Gender, ',');
+            getline(input, pCur->Birth, ',');
+            getline(input, pCur->socialID, ',');
+            getline(input, pCur->username, ',');
+            getline(input, pCur->password, ',');
+            pCur->pNext = nullptr;
+        }
+    }
+    input.close();
 }
 void display_information_students(Students* stu) {
     while (stu != nullptr) {
@@ -55,7 +90,18 @@ void display_information_students(Students* stu) {
         stu = stu->pNext;
     }
 }
-void export_file(Students * stu,string filename) {
+void display_information_staff(Students* sta)
+{
+    while (sta != nullptr) {
+        int space[] = { 10,10,20,8,12,10,10,15,10 };
+        cout << sta->No << setw(space[0]) << sta->ID << setw(space[1]) << sta->NameFirst << setw(space[2]) << sta->NameLast;
+        cout << setw(space[3]) << sta->Gender << setw(space[4]) << sta->Birth << setw(space[5]) << sta->socialID;
+        cout << setw(space[6]) << sta->username << setw(space[7]) << sta->password;
+        cout << "\n";
+        sta = sta->pNext;
+    }
+}
+void export_file(Students *stu,string filename) {
     ofstream output;
     output.open(filename);
    // output << "No" << "," << "Student ID" << "," << "Name First" << "," << "Name Last" << "," << "Gender"
@@ -155,13 +201,9 @@ bool CheckUser(Students* stu,Students* &stu_cur,string ID, string pass)
     if (stu_cur == nullptr || stu_cur->password != pass) return false;
     return true;
 }
-void Login(Students* stu)
+void Login(Students* stu, Students* stu_cur, string &user, string &pass)
 {
-    
-    string user;
-    string pass;
-    Students* stu_cur = nullptr;
-    while (1)
+    while(1)
     {
         cout << "1.Login\n";
         cout << "0.Exit program\n";
@@ -177,15 +219,6 @@ void Login(Students* stu)
             cout << "Please try again " << endl;
         }
         else break;
-    } 
-    if (user[0] == '0')
-    {
-        //staff function
-    }
-    else
-    {
-        string filename = "STUDENT_DATABASE.csv";
-        Option_Student_After_Login(stu, stu_cur, filename);
     }
 }
 void Change_Password(Students* stu,Students* stu_cur, string New_Password,string filename) {
@@ -201,14 +234,19 @@ void View_profile(Students *stu,Students* stu_cur) {
     << "," << stu_cur->Birth << "," << stu_cur->socialID << "," << stu_cur->username << "," << stu_cur->password << ","
         << stu_cur->classes << "\n";
 }
-void Option_Student_After_Login(Students* stu, Students* stu_cur, string filename) {
+void Option_After_Login(Students* stu, Students* stu_cur, string filename, string& user, string& pass) {
     while (1) {
         cout << "1.View Profile\n";
         cout << "2.Change Password\n";
+        if (user[0] == '0')
+        {
+            //Add staff function
+        }
+        else //Add student function
         cout << "0.Log out\n";
         int option;
         cin >> option;
-        if (option == 0) { Login(stu); return; }
+        if (option == 0) { Login(stu,stu_cur, user, pass); return; }
         if (option == 1) View_profile(stu, stu_cur); 
         if (option == 2) {
             string pass;
@@ -216,4 +254,23 @@ void Option_Student_After_Login(Students* stu, Students* stu_cur, string filenam
             Change_Password(stu, stu_cur, pass, filename);
         }
     }
+}
+void Option()
+{
+    string filenameStu = "STUDENT_DATABASE.csv";
+    string filenameSta = "STAFF-CSV-DATABASE.csv";
+    string user;
+    string pass;
+    Students* stu = nullptr;
+    Students* sta = nullptr;
+    Students* stu_cur = nullptr;
+    Students* sta_cur = nullptr;
+    LoadFileStudents(stu, filenameStu);
+    LoadFileStaff(sta, filenameSta);
+    Login(stu, stu_cur, user, pass);
+    if (user[0] == '0')
+    {
+        Option_After_Login(stu, stu_cur, filenameSta, user, pass);
+    }
+    else Option_After_Login(stu, stu_cur, filenameStu, user, pass);
 }
