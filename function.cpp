@@ -154,7 +154,7 @@ void displayUI()
         } while (options != 0);
     }
 void createframe() {
-    int x = 60;  // change size of input
+    int x = 90;  // change size of input
     int y = 10;
     HANDLE  hConsole;
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
