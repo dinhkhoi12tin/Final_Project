@@ -185,10 +185,14 @@ void createframe() {
     gotoxy(26, 0); cout << "  MENU  ";
     cout << endl;
 }
-Students *Find_User_By_ID(Students* stu,string ID){
+Students *Find_User_By_ID(Students* stu, Students* sta, string ID){
     while (stu != nullptr) {
         if (stu->ID == ID) return stu;
         stu = stu->pNext;
+    }
+    while (sta != nullptr) {
+        if (sta->ID == ID) return sta;
+        sta = sta->pNext;
     }
     return nullptr;
 }
@@ -238,12 +242,15 @@ void Option_After_Login(Students* stu, Students* stu_cur, string filename, strin
     while (1) {
         cout << "1.View Profile\n";
         cout << "2.Change Password\n";
+        cout << "0.Log out\n";
         if (user[0] == '0')
         {
-            //Add staff function
+            cout << "4.Create Class\n";
         }
-        else //Add student function
-        cout << "0.Log out\n";
+        else
+        {
+            //Add student function
+        }
         int option;
         cin >> option;
         if (option == 0) { Login(stu,stu_cur, user, pass); return; }
@@ -253,6 +260,18 @@ void Option_After_Login(Students* stu, Students* stu_cur, string filename, strin
             cout << "New Password="; cin >> pass;
             Change_Password(stu, stu_cur, pass, filename);
         }
+        if (user[0] == '0')
+        {
+            if (option == 4)
+            {
+                //Create class;
+            }
+        }
+        else
+        {
+            //Add student function
+        }
+        
     }
 }
 void Option()
