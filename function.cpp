@@ -135,18 +135,18 @@ void displayUI()
             hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
             createframe();
             SetConsoleTextAttribute(hConsole, 121);
-            gotoxy(20, 4); cout << "1. Profile";
-            gotoxy(20, 5); cout << "2. Change password"; // can be added later on
+            gotoxy(50, 4); cout << "1. Profile";
+            gotoxy(50, 5); cout << "2. Change password"; // can be added later on
             if (staffFlag == 1) // chừng nào check là staff được thì sẽ sửa.
             {   
-                gotoxy(20, 3); cout << "Welcome Staff";
-                gotoxy(20, 6); cout << "3. Create SchoolYear";
-                gotoxy(20, 7); cout << "0. Logout";
+                gotoxy(50, 3); cout << "Welcome Staff";
+                gotoxy(50, 6); cout << "3. Create SchoolYear";
+                gotoxy(50, 7); cout << "0. Logout";
             }
             else
             {
-                gotoxy(20, 3); cout << "Welcome Students";
-                gotoxy(20, 6); cout << "0. Logout";
+                gotoxy(50, 3); cout << "Welcome Students";
+                gotoxy(50, 6); cout << "0. Logout";
             }
             SetConsoleTextAttribute(hConsole, 6);
             gotoxy(0, 11); cout << " >> Please, select your functions: ";
@@ -159,10 +159,11 @@ void createframe() {
     HANDLE  hConsole;
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, 119);
-    for (int i = 0; i < y; i++)
+    for (int i = 30; i < y; i++)
     {
         for (int j = 0; j < x; j++)
         {
+            gotoxy(j, i);
             cout << " ";
         }
         cout << endl;
@@ -180,9 +181,9 @@ void createframe() {
     }
     gotoxy(x, 0); printf("%c", 187); // cai moc cau ben phai ben tre^n
     gotoxy(x, y); printf("%c", 188); // cai moc cau ben phai ben duoi
-    gotoxy(0, 0); printf("%c", 201); // cai moc cau ben trai tren
-    gotoxy(0, y); printf("%c", 200); // moc cau ben trai duoi
-    gotoxy(26, 0); cout << "  MENU  ";
+    gotoxy(30, 0); printf("%c", 201); // cai moc cau ben trai tren
+    gotoxy(30, y); printf("%c", 200); // moc cau ben trai duoi
+    gotoxy(56, 0); cout << "  MENU  ";
     cout << endl;
 }
 Students *Find_User_By_ID(Students* stu, Students* sta, string ID){
