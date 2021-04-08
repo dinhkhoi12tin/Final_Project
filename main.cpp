@@ -69,6 +69,7 @@ int main()
     Class* classhead = 0;
     create_class(classhead);
     display(classhead,"CLC03");
+    cout<<"day la code cua khang";
     
 }
    
