@@ -1,4 +1,5 @@
-#include "Header.h";
+
+#include"Header.h"
 void LoadFileStudents(Students*& stu,string filename)
 {
 	ifstream input;
