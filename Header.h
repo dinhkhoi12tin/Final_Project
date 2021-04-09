@@ -18,8 +18,6 @@ struct Students
 	string classes;
 	Students* pNext;
 };
-
-
 void createframe(); // Truong Gia Huy function
 void gotoxy(int x, int y);
 void displayUI();
@@ -34,3 +32,4 @@ bool CheckUser(Students* stu,Students*sta, Students*& stu_cur,string ID, string 
 void Login(Students* stu,Students* sta, Students* stu_cur, string& user, string& pass);
 Students* Find_User_By_ID(Students* stu, string ID);
 void Option_After_Login(Students* stu, Students* sta, Students* stu_cur, string filename, string& user, string& pass);
+void Option();
