@@ -125,6 +125,7 @@ void gotoxy(int x, int y)
     }
 void displayUI()
     {
+        int offset = 30;
         int staffFlag = 1;
         int options;
         do
@@ -135,56 +136,57 @@ void displayUI()
             hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
             createframe();
             SetConsoleTextAttribute(hConsole, 121);
-            gotoxy(50, 4); cout << "1. Profile";
-            gotoxy(50, 5); cout << "2. Change password"; // can be added later on
+            gotoxy(20 + offset, 4); cout << "1. Profile";
+            gotoxy(20 + offset, 5); cout << "2. Change password"; // can be added later on
             if (staffFlag == 1) // chừng nào check là staff được thì sẽ sửa.
             {   
-                gotoxy(50, 3); cout << "Welcome Staff";
-                gotoxy(50, 6); cout << "3. Create SchoolYear";
-                gotoxy(50, 7); cout << "0. Logout";
+                gotoxy(20 + offset, 3); cout << "Welcome Staff";
+                gotoxy(20 + offset, 6); cout << "3. Create SchoolYear";
+                gotoxy(20 + offset, 7); cout << "0. Logout";
             }
             else
             {
-                gotoxy(50, 3); cout << "Welcome Students";
-                gotoxy(50, 6); cout << "0. Logout";
+                gotoxy(20 + offset, 3); cout << "Welcome Students";
+                gotoxy(20 + offset, 6); cout << "0. Logout";
             }
             SetConsoleTextAttribute(hConsole, 6);
-            gotoxy(0, 11); cout << " >> Please, select your functions: ";
+            gotoxy(0 + offset, 11); cout << " >> Please, select your functions: ";
             cin >> options;
         } while (options != 0);
     }
 void createframe() {
-    int x = 90;  // change size of input
-    int y = 10;
-    HANDLE  hConsole;
-    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, 119);
-    for (int i = 30; i < y; i++)
-    {
-        for (int j = 0; j < x; j++)
+     int offset = 30;
+        int x = 60 + offset;  // change size of input
+        int y = 10;
+        HANDLE  hConsole;
+        hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(hConsole, 119);
+        for (int i = 0 ; i < y; i++)
         {
-            gotoxy(j, i);
-            cout << " ";
+            for (int j = 0 + offset; j < x; j++)
+            {
+                gotoxy(j, i);
+                cout << " " ;
+            }
+            cout << endl;
         }
+        SetConsoleTextAttribute(hConsole, 158);
+        for (int i = 0 + offset; i < x; i++) // tao dong ngang
+        {
+            gotoxy(i, 0); printf("%c", 205); // dong ngang tren
+            gotoxy(i, y); printf("%c", 205);  // dong ngang duoi
+        }
+        for (int i = 1; i < y; i++)  // dong ke thang dung
+        {
+            gotoxy(0 + offset, i); printf("%c", 186); // dong thang ben trai
+            gotoxy(x, i); printf("%c", 186); // dong thang ben phai
+        }
+        gotoxy(x, 0); printf("%c", 187); // cai moc cau ben phai ben tre^n
+        gotoxy(x, y); printf("%c", 188); // cai moc cau ben phai ben duoi
+        gotoxy(0 + offset, 0); printf("%c", 201); // cai moc cau ben trai tren
+        gotoxy(0 + offset, y); printf("%c", 200); // moc cau ben trai duoi
+        gotoxy(26 + offset, 0); cout << "  MENU  ";
         cout << endl;
-    }
-    SetConsoleTextAttribute(hConsole, 158);
-    for (int i = 1; i < x; i++) // tao dong ngang
-    {
-        gotoxy(i, 0); printf("%c", 205); // dong ngang tren
-        gotoxy(i, y); printf("%c", 205);  // dong ngang duoi
-    }
-    for (int i = 1; i < y; i++)  // dong ke thang dung
-    {
-        gotoxy(0, i); printf("%c", 186); // dong thang ben trai
-        gotoxy(x, i); printf("%c", 186); // dong thang ben phai
-    }
-    gotoxy(x, 0); printf("%c", 187); // cai moc cau ben phai ben tre^n
-    gotoxy(x, y); printf("%c", 188); // cai moc cau ben phai ben duoi
-    gotoxy(30, 0); printf("%c", 201); // cai moc cau ben trai tren
-    gotoxy(30, y); printf("%c", 200); // moc cau ben trai duoi
-    gotoxy(56, 0); cout << "  MENU  ";
-    cout << endl;
 }
 Students *Find_User_By_ID(Students* stu, string ID){
     while (stu != nullptr) {
