@@ -186,27 +186,24 @@ void createframe() {
     gotoxy(56, 0); cout << "  MENU  ";
     cout << endl;
 }
-Students *Find_User_By_ID(Students* stu, Students* sta, string ID){
+Students *Find_User_By_ID(Students* stu, string ID){
     while (stu != nullptr) {
         if (stu->ID == ID) return stu;
         stu = stu->pNext;
     }
-    while (sta != nullptr) {
-        if (sta->ID == ID) return sta;
-        sta = sta->pNext;
-    }
     return nullptr;
 }
-bool CheckUser(Students* stu,Students* &stu_cur,string ID, string pass)
+bool CheckUser(Students* stu,Students* sta, Students* &stu_cur,string ID, string pass)
 {
    
     if (stu == nullptr) return false;
     // stu la dong dau tien Name ,NO LAST NAME...
     stu_cur=Find_User_By_ID(stu->pNext, ID);
+    if (!stu_cur) stu_cur = Find_User_By_ID(sta->pNext, ID);
     if (stu_cur == nullptr || stu_cur->password != pass) return false;
     return true;
 }
-void Login(Students* stu, Students* stu_cur, string &user, string &pass)
+void Login(Students* stu, Students* sta, Students* stu_cur, string &user, string &pass)
 {
     while(1)
     {
@@ -218,7 +215,7 @@ void Login(Students* stu, Students* stu_cur, string &user, string &pass)
         cout << "Username: "; cin >> user; 
         cout << "Password: "; cin >> pass;
         
-        if (CheckUser(stu, stu_cur,user, pass) == false)
+        if (CheckUser(stu, sta, stu_cur, user, pass) == false)
         {
             cout << "Wrong username or password " << endl;
             cout << "Please try again " << endl;
@@ -226,9 +223,10 @@ void Login(Students* stu, Students* stu_cur, string &user, string &pass)
         else break;
     }
 }
-void Change_Password(Students* stu,Students* stu_cur, string New_Password,string filename) {
+void Change_Password(Students* stu, Students* sta, Students*& stu_cur, string New_Password,string filename) {
     stu_cur->password = New_Password;
-    export_file(stu, filename);
+    if (stu_cur->username[0] != '0') export_file(stu, filename);
+    if (stu_cur->username[0] == '0') export_file(sta, filename);
 }
 void View_profile(Students *stu,Students* stu_cur) {
     cout << stu->No << "," << stu->ID << "," << stu->NameFirst << "," << stu->NameLast << "," << stu->Gender
@@ -239,7 +237,7 @@ void View_profile(Students *stu,Students* stu_cur) {
     << "," << stu_cur->Birth << "," << stu_cur->socialID << "," << stu_cur->username << "," << stu_cur->password << ","
         << stu_cur->classes << "\n";
 }
-void Option_After_Login(Students* stu, Students* stu_cur, string filename, string& user, string& pass) {
+void Option_After_Login(Students* stu, Students* sta, Students* stu_cur, string filename, string& user, string& pass) {
     while (1) {
         cout << "1.View Profile\n";
         cout << "2.Change Password\n";
@@ -254,12 +252,12 @@ void Option_After_Login(Students* stu, Students* stu_cur, string filename, strin
         }
         int option;
         cin >> option;
-        if (option == 0) { Login(stu,stu_cur, user, pass); return; }
+        if (option == 0) { Login(stu,sta,stu_cur, user, pass); return; }
         if (option == 1) View_profile(stu, stu_cur); 
         if (option == 2) {
             string pass;
             cout << "New Password="; cin >> pass;
-            Change_Password(stu, stu_cur, pass, filename);
+            Change_Password(stu, sta, stu_cur, pass, filename);
         }
         if (user[0] == '0')
         {
@@ -287,10 +285,10 @@ void Option()
     Students* sta_cur = nullptr;
     LoadFileStudents(stu, filenameStu);
     LoadFileStaff(sta, filenameSta);
-    Login(stu, stu_cur, user, pass);
+    Login(stu, sta, stu_cur, user, pass);
     if (user[0] == '0')
     {
-        Option_After_Login(stu, stu_cur, filenameSta, user, pass);
+        Option_After_Login(stu, sta, stu_cur, filenameSta, user, pass);
     }
-    else Option_After_Login(stu, stu_cur, filenameStu, user, pass);
+    else Option_After_Login(stu, sta, stu_cur, filenameStu, user, pass);
 }
