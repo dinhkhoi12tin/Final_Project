@@ -130,6 +130,7 @@ void displayUI()
     int options;
     do
     {
+        int offset = 30;
         int staffFlag = 1;
         int options;
         do
