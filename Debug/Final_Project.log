@@ -1,0 +1,17 @@
+﻿  function.cpp
+D:\Final_Project\Final_Project\function.cpp(123,21): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
+D:\Final_Project\Final_Project\function.cpp(123,24): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
+D:\Final_Project\Final_Project\function.cpp(201,43): error C2668: 'Find_User_By_ID': ambiguous call to overloaded function
+D:\Final_Project\Final_Project\function.cpp(189,11): message : could be 'Students *Find_User_By_ID(Students *&,std::string)'
+D:\Final_Project\Final_Project\Header.h(33,11): message : or       'Students *Find_User_By_ID(Students *,std::string)'
+D:\Final_Project\Final_Project\function.cpp(201,43): message : while trying to match the argument list '(Students *, std::string)'
+D:\Final_Project\Final_Project\function.cpp(202,59): error C2668: 'Find_User_By_ID': ambiguous call to overloaded function
+D:\Final_Project\Final_Project\function.cpp(189,11): message : could be 'Students *Find_User_By_ID(Students *&,std::string)'
+D:\Final_Project\Final_Project\Header.h(33,11): message : or       'Students *Find_User_By_ID(Students *,std::string)'
+D:\Final_Project\Final_Project\function.cpp(202,59): message : while trying to match the argument list '(Students *, std::string)'
+D:\Final_Project\Final_Project\function.cpp(218,12): error C2668: 'CheckUser': ambiguous call to overloaded function
+D:\Final_Project\Final_Project\function.cpp(196,6): message : could be 'bool CheckUser(Students *&,Students *&,Students *&,std::string,std::string)'
+D:\Final_Project\Final_Project\Header.h(31,6): message : or       'bool CheckUser(Students *,Students *,Students *&,std::string,std::string)'
+D:\Final_Project\Final_Project\function.cpp(218,12): message : while trying to match the argument list '(Students *, Students *, Students *, std::string, std::string)'
+D:\Final_Project\Final_Project\function.cpp(252,57): error C2065: 'pass': undeclared identifier
+D:\Final_Project\Final_Project\function.cpp(284,36): error C2065: 'pass': undeclared identifier
