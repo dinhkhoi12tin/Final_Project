@@ -1,5 +1,6 @@
 #include "Header1.h"
-void create_new_year(string& newyear) {
+void create_new_year() {
+    string newyear;
     cout << "type new year:"; cin >> newyear;
 }
 Class* Find(Class* classhead, string classname) {
@@ -65,8 +66,9 @@ void create_class(Class*& classhead) {
         classhead = newclass;
     }
 }
-void Menu_Feature_First() {
+void Menu_Feature_First_Staff() {
     Class* classhead = 0;
+    create_new_year();
     while (1) {
         cout << "1.create class\n";
         cout << "2.add one by one student to class\n";
@@ -74,7 +76,6 @@ void Menu_Feature_First() {
         cout << "0.exit\n";
         int option;
         cin >> option;
-        // Class* classhead = 0;
         if (option == 1) create_class(classhead);
         if (option == 2) add_one_by_one(classhead);
         if (option == 3) add_by_file_csv(classhead);
