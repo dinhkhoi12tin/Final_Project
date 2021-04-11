@@ -148,7 +148,7 @@
     <ClInclude Include="Header1.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="STAFF-CSV-DATABASE.csv" />
+    <None Include="STAFF.csv" />
     <None Include="STUDENT-CSV-DATABASE.csv" />
     <None Include="STUDENT_DATABASE.csv" />
   </ItemGroup>

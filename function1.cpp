@@ -27,13 +27,74 @@ void add_one_by_one(Class*& classhead) {
         cout << "Gender:"; getline(cin, newst->Gender, '\n');
         cout << "Birth:"; getline(cin, newst->Birth, '\n');
         cout << "socialID:"; getline(cin, newst->socialID, '\n');
+        newst->username = newst->password = newst->ID;
+     
         newst->pNext = pcur->sthead;
         pcur->sthead = newst;
     }
 }
-void display(Class* classhead, string classname) {
-    Students* sthead = Find(classhead, classname)->sthead;
-    display_information_students(sthead);
+void display(Class* classhead) {
+    while (classhead) {
+        Students* sthead = classhead->sthead;
+        display_information_students(sthead);
+        classhead = classhead->Next;
+    }
+}
+void Export_new(Class* classhead,Students* stu) {
+    Students* stu_cur = stu;
+    while (stu->pNext && stu->pNext->No!="") stu = stu->pNext;
+    while (classhead) {
+        Students* sthead = classhead->sthead;
+        while (sthead) {
+            stu->pNext = sthead;
+            stu = stu->pNext;
+            cout << stu->socialID << "\n";
+            sthead = sthead->pNext;
+        }
+      //  display_information_students(sthead);
+        classhead = classhead->Next;
+    }
+    string filename = "STUDENT_DATABASE.csv";
+    export_file(stu_cur, filename);
+   // display_information_students(stu_cur);
+}
+void LoadFileNewStudents(Students*& stu, string filename)
+{
+    ifstream input;
+    input.open(filename);
+    if (!input.is_open())
+    {
+        cout << "Cannot open file " << endl;
+    }
+    else
+    {
+        Students* pCur = stu;
+        while (input.good())
+        {
+
+            if (stu == nullptr)
+            {
+                stu = new Students;
+                pCur = stu;
+            }
+            else
+            {
+                pCur->pNext = new Students;
+                pCur = pCur->pNext;
+            }
+            getline(input, pCur->No, ',');
+            getline(input, pCur->ID, ',');
+            getline(input, pCur->NameFirst, ',');
+            getline(input, pCur->NameLast, ',');
+            getline(input, pCur->Gender, ',');
+            getline(input, pCur->Birth, ',');
+            getline(input, pCur->socialID, ',');
+            if (pCur!=stu)pCur->username = pCur->password = pCur->ID;
+            getline(input, pCur->classes, '\n');
+            pCur->pNext = nullptr;
+        }
+    }
+    input.close();
 }
 void add_by_file_csv(Class*& classhead) {
     while (1) {
@@ -43,7 +104,7 @@ void add_by_file_csv(Class*& classhead) {
         cin >> filename;
         if (filename[0] == '-') break;
         Students* Newst = 0;
-        LoadFileStudents(Newst, filename);
+        LoadFileNewStudents(Newst, filename);
         Newst = Newst->pNext;
         while (Newst) {
             Class* Cur = Find(classhead, Newst->classes);
@@ -66,7 +127,7 @@ void create_class(Class*& classhead) {
         classhead = newclass;
     }
 }
-void Menu_Feature_First_Staff() {
+void Menu_Feature_First_Staff(Students* stu) {
     Class* classhead = 0;
     create_new_year();
     while (1) {
@@ -81,4 +142,6 @@ void Menu_Feature_First_Staff() {
         if (option == 3) add_by_file_csv(classhead);
         if (option == 0) break;
     }
+    Export_new(classhead,stu);
+ 
 }

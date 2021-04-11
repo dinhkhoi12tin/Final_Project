@@ -84,7 +84,7 @@ void Release_memory(Students*& stu) {
     }
 }
 void display_information_students(Students* stu) {
-    while (stu != nullptr) {
+    while (stu) {
         int space[] = { 10,10,20,8,12,10,10,15,10 };
         cout << stu->No << setw(space[0]) << stu->ID << setw(space[1]) << stu->NameFirst << setw(space[2]) << stu->NameLast;
         cout << setw(space[3]) << stu->Gender << setw(space[4]) << stu->Birth << setw(space[5]) << stu->socialID;
@@ -213,7 +213,7 @@ void Login(Students* stu, Students* sta, Students*& stu_cur)
         string filenameSta = "STAFF.csv";
         cout << "-1.exit\n";
         cout << "Username: "; cin >> user;
-        if (user[0] == '-') break;
+        if (user == "-1")  break; 
         cout << "Password: "; cin >> pass;
         if (user[0] != '0')
         {
@@ -224,6 +224,7 @@ void Login(Students* stu, Students* sta, Students*& stu_cur)
             }
             else {
                 Option_After_Login(stu, sta, stu_cur, filenameStu);
+               
             }
         }
         if (user[0] == '0')
@@ -235,6 +236,8 @@ void Login(Students* stu, Students* sta, Students*& stu_cur)
             }
             else {
                 Option_After_Login(stu, sta, stu_cur, filenameSta);
+            
+               
             }
         }
     }
@@ -257,6 +260,7 @@ void View_profile(Students* stu, Students* stu_cur) {
 }
 void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, string filename) {
     while (1) {
+        
         cout << "1.View Profile\n";
         cout << "2.Change Password\n";
         if (stu_cur->username[0] != '0') cout << "3.\n"; //cout student name of function
@@ -264,7 +268,7 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
         cout << "0.Log out\n";
         int option;
         cin >> option;
-        if (option == 0) { Login(stu, sta, stu_cur); }
+        if (option == 0)  break; 
         if (option == 1) View_profile(stu, stu_cur);
         if (option == 2) {
             string pass;
@@ -274,7 +278,7 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
         }
         if (stu_cur->username[0] != '0' && option == 3); // student function;
         if (stu_cur->username[0] == '0' && option == 3) {
-            Menu_Feature_First_Staff();
+            Menu_Feature_First_Staff(stu);
         }
 
     }

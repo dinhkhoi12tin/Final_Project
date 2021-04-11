@@ -34,13 +34,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="STUDENT-CSV-DATABASE.csv">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="STUDENT_DATABASE.csv">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="STAFF-CSV-DATABASE.csv">
+    <None Include="STAFF.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="STUDENT-CSV-DATABASE.csv">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

@@ -10,5 +10,6 @@ void add_one_by_one(Class*& classhead);
 void display(Class* classhead, string classname);
 void add_by_file_csv(Class*& classhead);
 void create_class(Class*& classhead);
-void Menu_Feature_First_Staff();
+void Menu_Feature_First_Staff(Students * stu);
+void Export_new(Class* classhead, Students* stu);
 

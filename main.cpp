@@ -1,7 +1,8 @@
 #include"Header1.h"
 int main()
 {
-    Menu();
+    displayUI();
+   // Menu();
    
     return 0;
 }
