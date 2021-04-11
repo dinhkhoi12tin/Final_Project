@@ -8,6 +8,7 @@ Class* Find(Class* classhead, string classname) {
         if (classhead->class_name == classname) return classhead;
         classhead = classhead->Next;
     }
+    return nullptr; // not all control paths return a value, temporary fix.
 }
 void add_one_by_one(Class*& classhead) {
     while (1) {

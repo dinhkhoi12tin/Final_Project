@@ -126,67 +126,79 @@ void gotoxy(int x, int y)
 }
 void displayUI()
 {
+    int offset = 30;
     int staffFlag = 1;
     int options;
     do
     {
-        int offset = 30;
-        int staffFlag = 1;
-        int options;
-        do
-        {
-           
-            system("CLS");
-            HANDLE  hConsole;
-            hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-            createframe();
-            SetConsoleTextAttribute(hConsole, 121);
-            gotoxy(20 + offset, 4); cout << "1. Profile";
-            gotoxy(20 + offset, 5); cout << "2. Change password"; // can be added later on
-            if (staffFlag == 1) // chừng nào check là staff được thì sẽ sửa.
-            {   
-                gotoxy(20 + offset, 3); cout << "Welcome Staff";
-                gotoxy(20 + offset, 6); cout << "3. Create SchoolYear";
-                gotoxy(20 + offset, 7); cout << "0. Logout";
-            }
-            else
-            {
-                gotoxy(20 + offset, 3); cout << "Welcome Students";
-                gotoxy(20 + offset, 6); cout << "0. Logout";
-            }
-            SetConsoleTextAttribute(hConsole, 6);
-            gotoxy(0 + offset, 11); cout << " >> Please, select your functions: ";
-            cin >> options;
-        } while (options != 0);
-    }
-void createframe() {
-     int offset = 30;
-        int x = 60 + offset;  // change size of input
-        int y = 10;
+        system("CLS");
         HANDLE  hConsole;
         hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-        SetConsoleTextAttribute(hConsole, 119);
-        for (int i = 0 ; i < y; i++)
+        createframe();
+        SetConsoleTextAttribute(hConsole, 121);
+        gotoxy(20 + offset, 4); cout << "1. Profile";
+        gotoxy(20 + offset, 5); cout << "2. Change password"; // can be added later on
+        if (staffFlag == 1) // chừng nào check là staff được thì sẽ sửa.
         {
-            for (int j = 0 + offset; j < x; j++)
-            {
-                gotoxy(j, i);
-                cout << " " ;
-            }
-            cout << endl;
+            gotoxy(20 + offset, 3); cout << "Welcome Staff";
+            gotoxy(20 + offset, 6); cout << "3. Create SchoolYear";
+            gotoxy(20 + offset, 7); cout << "0. Logout";
         }
-        SetConsoleTextAttribute(hConsole, 158);
-        for (int i = 0 + offset; i < x; i++) // tao dong ngang
+        else
         {
-            gotoxy(i, 0); printf("%c", 205); // dong ngang tren
-            gotoxy(i, y); printf("%c", 205);  // dong ngang duoi
+            gotoxy(20 + offset, 3); cout << "Welcome Students";
+            gotoxy(20 + offset, 6); cout << "0. Logout";
         }
-        for (int i = 1; i < y; i++)  // dong ke thang dung
+        SetConsoleTextAttribute(hConsole, 6);
+        gotoxy(0 + offset, 11); cout << " >> Please, select your functions: ";
+        cin >> options;
+    } while (options != 0);
+}
+void createframe()
+{
+    int offset = 30;
+    int x = 60 + offset;  // change size of input
+    int y = 10;
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 119);
+    for (int i = 0; i < y; i++)
+    {
+        for (int j = 0 + offset; j < x; j++)
         {
-            gotoxy(0 + offset, i); printf("%c", 186); // dong thang ben trai
-            gotoxy(x, i); printf("%c", 186); // dong thang ben phai
+            gotoxy(j, i);
+            cout << " ";
         }
-
+        cout << endl;
+    }
+    SetConsoleTextAttribute(hConsole, 158);
+    for (int i = 0 + offset; i < x; i++) // tao dong ngang
+    {
+        gotoxy(i, 0); printf("%c", 205); // dong ngang tren
+        gotoxy(i, y); printf("%c", 205);  // dong ngang duoi
+    }
+    for (int i = 1; i < y; i++)  // dong ke thang dung
+    {
+        gotoxy(0 + offset, i); printf("%c", 186); // dong thang ben trai
+        gotoxy(x, i); printf("%c", 186); // dong thang ben phai
+    }
+    gotoxy(x, 0); printf("%c", 187); // cai moc cau ben phai ben tre^n
+    gotoxy(x, y); printf("%c", 188); // cai moc cau ben phai ben duoi
+    gotoxy(0 + offset, 0); printf("%c", 201); // cai moc cau ben trai tren
+    gotoxy(0 + offset, y); printf("%c", 200); // moc cau ben trai duoi
+    gotoxy(26 + offset, 0); cout << "  MENU  ";
+    cout << endl;
+}
+Students* Find_User_By_ID(Students* stu, string ID) 
+{
+    while (stu != nullptr) {
+        if (stu->ID == ID) return stu;
+        stu = stu->pNext;
+    }
+    return nullptr;
+}
+bool CheckUser(Students * stu, Students * &stu_cur, string ID, string pass)
+{
     if (stu == nullptr) return false;
     // stu la dong dau tien Name ,NO LAST NAME...
     stu_cur = Find_User_By_ID(stu->pNext, ID);
@@ -196,21 +208,31 @@ void createframe() {
 }
 void Login(Students* stu, Students* sta, Students*& stu_cur)
 {
+    int offset = 30;
+    createframe();
     while (1)
     {
         string user;
         string pass;
         string filenameStu = "STUDENT_DATABASE.csv";
         string filenameSta = "STAFF.csv";
+        
         cout << "-1.exit\n";
-        cout << "Username: "; cin >> user;
+        HANDLE  hConsole;
+        hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(hConsole, 121);
+        gotoxy(20 + offset, 3); cout << "Username: "; cin >> user;
         if (user[0] == '-') break;
-        cout << "Password: "; cin >> pass;
+        gotoxy(20 + offset, 4); cout << "Password: "; cin >> pass;
         if (user[0] != '0')
         {
             if (CheckUser(stu, stu_cur, user, pass) == false)
             {
+                gotoxy(20 + offset, 3); cout << "Username:                     ";
+                gotoxy(10 + offset, 6);
                 cout << "Wrong username or password " << endl;
+                gotoxy(20 + offset, 4); cout << "Password:                     ";
+                gotoxy(10 + offset, 7);
                 cout << "Please try again " << endl;
             }
             else {
@@ -221,7 +243,11 @@ void Login(Students* stu, Students* sta, Students*& stu_cur)
         {
             if (CheckUser(sta, stu_cur, user, pass) == false)
             {
+                gotoxy(20 + offset, 3); cout << "Username:                     ";
+                gotoxy(10 + offset, 6);
                 cout << "Wrong username or password " << endl;
+                gotoxy(20 + offset, 4); cout << "Password:                     ";
+                gotoxy(10 + offset, 7);
                 cout << "Please try again " << endl;
             }
             else {
@@ -247,18 +273,29 @@ void View_profile(Students* stu, Students* stu_cur) {
     cout << "\n";
 }
 void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, string filename) {
+    int offset = 30;
     while (1) {
+        createframe();
+        HANDLE  hConsole;
+        hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(hConsole, 121);
+        gotoxy(20 + offset, 4);
         cout << "1.View Profile\n";
-        cout << "2.Change Password\n";
-        if (stu_cur->username[0] != '0') cout << "3.\n"; //cout student name of function
-        if (stu_cur->username[0] == '0') cout << "3.create new year\n"; // cout staff name of function
-        cout << "0.Log out\n";
+        gotoxy(20 + offset, 5); cout << "2.Change Password\n";
+        gotoxy(20 + offset, 6); if (stu_cur->username[0] != '0') cout << "3.\n"; //cout student name of function
+        gotoxy(20 + offset, 6); if (stu_cur->username[0] == '0') cout << "3.Create new year\n"; // cout staff name of function
+        gotoxy(20 + offset, 7); cout << "0.Log out\n";
         int option;
+        SetConsoleTextAttribute(hConsole, 6);
+        gotoxy(0 + offset, 11); cout << " >> Please, select your functions: ";
         cin >> option;
         if (option == 0) { Login(stu, sta, stu_cur); }
         if (option == 1) View_profile(stu, stu_cur);
         if (option == 2) {
             string pass;
+            createframe();
+            SetConsoleTextAttribute(hConsole, 121);
+            gotoxy(20 + offset, 4);
             cout << "New Password="; cin >> pass;
             if(stu_cur->username[0] != '0')Change_Password(stu, stu_cur, pass, filename);
             if(stu_cur->username[0] == '0')Change_Password(sta, stu_cur, pass, filename);
