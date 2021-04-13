@@ -1,6 +1,1 @@
-﻿  function.cpp
-D:\Final_Project\Final_Project\function.cpp(1,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Final_Project\Final_Project\function.cpp(124,17): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
-D:\Final_Project\Final_Project\function.cpp(124,20): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
-D:\Final_Project\Final_Project\function.cpp(304,56): warning C4390: ';': empty controlled statement found; is this the intent?
-  Final_Project.vcxproj -> D:\Final_Project\Debug\Final_Project.exe
+﻿D:\Final_Project\Final_Project\Final_Project.vcxproj : error MSB4025: The project file could not be loaded. Could not find file 'D:\Final_Project\Final_Project\Final_Project.vcxproj'.
