@@ -302,9 +302,9 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
         gotoxy(20 + offset, 7); cout << "0.Log out\n";
         int option;
         SetConsoleTextAttribute(hConsole, 6);
-        gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "   ";
-        gotoxy(35 + offset, 11);  cin >> option;
-        if (option == 0)  break;
+        gotoxy(0 + offset, 11); cout << " >> Please, select your functions: ";
+        cin >> option;
+        if (option == 0)  break; 
         if (option == 1) View_profile(stu, stu_cur);
         if (option == 2) {
             string pass;
@@ -312,13 +312,14 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
             SetConsoleTextAttribute(hConsole, 121);
             gotoxy(20 + offset, 4);
             cout << "New Password="; cin >> pass;
-            if (stu_cur->username[0] != '0')Change_Password(stu, stu_cur, pass, filename);
-            if (stu_cur->username[0] == '0')Change_Password(sta, stu_cur, pass, filename);
+            if(stu_cur->username[0] != '0')Change_Password(stu, stu_cur, pass, filename);
+            if(stu_cur->username[0] == '0')Change_Password(sta, stu_cur, pass, filename);
         }
         if (stu_cur->username[0] != '0' && option == 3); // student function;
         if (stu_cur->username[0] == '0' && option == 3) {
-            Menu_Feature_First_Staff(stu); 
+            Menu_Feature_First_Staff(stu);
         }
+
     }
 }
 void Menu()
@@ -331,4 +332,5 @@ void Menu()
     LoadFileStudents(stu, filenameStu);
     LoadFileStaff(sta, filenameSta);
     Login(stu, sta, stu_cur);
+  
 }
