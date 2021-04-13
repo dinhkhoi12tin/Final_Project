@@ -8,6 +8,7 @@ Class* Find(Class* classhead, string classname) {
         if (classhead->class_name == classname) return classhead;
         classhead = classhead->Next;
     }
+    return 0;
 }
 void add_one_by_one(Class*& classhead) {
     while (1) {
@@ -47,8 +48,8 @@ void Export_new(Class* classhead,Students* stu) {
         Students* sthead = classhead->sthead;
         while (sthead) {
             stu->pNext = sthead;
+        
             stu = stu->pNext;
-            cout << stu->socialID << "\n";
             sthead = sthead->pNext;
         }
       //  display_information_students(sthead);

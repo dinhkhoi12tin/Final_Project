@@ -18,9 +18,9 @@ struct Students
 	string classes;
 	Students* pNext;
 };
-void createframe();
-void gotoxy(int x, int y);
-void displayUI();
+//void createframe();
+//void gotoxy(int x, int y);
+//void displayUI();
 void LoadFileStudents(Students*& stu, string filename);
 void LoadFileStaff(Students*& sta, string filename);
 void export_file(Students* stu, string filename);

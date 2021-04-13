@@ -124,69 +124,79 @@ void gotoxy(int x, int y)
     COORD c = { x, y };
     SetConsoleCursorPosition(h, c);
 }
-void displayUI()
+/*void displayUI()
 {
     int staffFlag = 1;
     int options;
     do
     {
+        int offset = 30;
+        int staffFlag = 1;
+        int options;
+        do
+        {
 
-        system("CLS");
+            system("CLS");
+            HANDLE  hConsole;
+            hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+            createframe();
+            SetConsoleTextAttribute(hConsole, 121);
+            gotoxy(20 + offset, 4); cout << "1. Profile";
+            gotoxy(20 + offset, 5); cout << "2. Change password"; // can be added later on
+            if (staffFlag == 1) // chừng nào check là staff được thì sẽ sửa.
+            {
+                gotoxy(20 + offset, 3); cout << "Welcome Staff";
+                gotoxy(20 + offset, 6); cout << "3. Create SchoolYear";
+                gotoxy(20 + offset, 7); cout << "0. Logout";
+            }
+            else
+            {
+                gotoxy(20 + offset, 3); cout << "Welcome Students";
+                gotoxy(20 + offset, 6); cout << "0. Logout";
+            }
+            SetConsoleTextAttribute(hConsole, 6);
+            gotoxy(0 + offset, 11); cout << " >> Please, select your functions: ";
+            cin >> options;
+        } while (options != 0);
+    }
+}
+/*bool createframe() {
+     int offset = 30;
+        int x = 60 + offset;  // change size of input
+        int y = 10;
         HANDLE  hConsole;
         hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-        createframe();
-        SetConsoleTextAttribute(hConsole, 121);
-        gotoxy(20, 4); cout << "1. Profile";
-        gotoxy(20, 5); cout << "2. Change password"; // can be added later on
-        if (staffFlag == 1) // chừng nào check là staff được thì sẽ sửa.
+        SetConsoleTextAttribute(hConsole, 119);
+        for (int i = 0 ; i < y; i++)
         {
-            gotoxy(20, 3); cout << "Welcome Staff";
-            gotoxy(20, 6); cout << "3. Create SchoolYear";
-            gotoxy(20, 7); cout << "0. Logout";
+            for (int j = 0 + offset; j < x; j++)
+            {
+                gotoxy(j, i);
+                cout << " " ;
+            }
+            cout << endl;
         }
-        else
+        SetConsoleTextAttribute(hConsole, 158);
+        for (int i = 0 + offset; i < x; i++) // tao dong ngang
         {
-            gotoxy(20, 3); cout << "Welcome Students";
-            gotoxy(20, 6); cout << "0. Logout";
+            gotoxy(i, 0); printf("%c", 205); // dong ngang tren
+            gotoxy(i, y); printf("%c", 205);  // dong ngang duoi
         }
-        SetConsoleTextAttribute(hConsole, 6);
-        gotoxy(0, 11); cout << " >> Please, select your functions: ";
-        cin >> options;
-    } while (options != 0);
-}
-void createframe() {
-    int x = 60;  // change size of input
-    int y = 10;
-    HANDLE  hConsole;
-    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, 119);
-    for (int i = 0; i < y; i++)
-    {
-        for (int j = 0; j < x; j++)
+        for (int i = 1; i < y; i++)  // dong ke thang dung
         {
-            cout << " ";
+            gotoxy(0 + offset, i); printf("%c", 186); // dong thang ben trai
+            gotoxy(x, i); printf("%c", 186); // dong thang ben phai
         }
-        cout << endl;
-    }
-    SetConsoleTextAttribute(hConsole, 158);
-    for (int i = 1; i < x; i++) // tao dong ngang
-    {
-        gotoxy(i, 0); printf("%c", 205); // dong ngang tren
-        gotoxy(i, y); printf("%c", 205);  // dong ngang duoi
-    }
-    for (int i = 1; i < y; i++)  // dong ke thang dung
-    {
-        gotoxy(0, i); printf("%c", 186); // dong thang ben trai
-        gotoxy(x, i); printf("%c", 186); // dong thang ben phai
-    }
-    gotoxy(x, 0); printf("%c", 187); // cai moc cau ben phai ben tre^n
-    gotoxy(x, y); printf("%c", 188); // cai moc cau ben phai ben duoi
-    gotoxy(0, 0); printf("%c", 201); // cai moc cau ben trai tren
-    gotoxy(0, y); printf("%c", 200); // moc cau ben trai duoi
-    gotoxy(26, 0); cout << "  MENU  ";
-    cout << endl;
-}
-Students* Find_User_By_ID(Students* stu, string ID) {
+
+    if (stu == nullptr) return false;
+    // stu la dong dau tien Name ,NO LAST NAME...
+    stu_cur = Find_User_By_ID(stu->pNext, ID);
+
+    if (stu_cur == nullptr || stu_cur->password != pass) return false;
+    return true;
+}*/
+Students* Find_User_By_ID(Students* stu, string ID)
+{
     while (stu != nullptr) {
         if (stu->ID == ID) return stu;
         stu = stu->pNext;
@@ -195,7 +205,6 @@ Students* Find_User_By_ID(Students* stu, string ID) {
 }
 bool CheckUser(Students* stu, Students*& stu_cur, string ID, string pass)
 {
-
     if (stu == nullptr) return false;
     // stu la dong dau tien Name ,NO LAST NAME...
     stu_cur = Find_User_By_ID(stu->pNext, ID);
@@ -223,6 +232,7 @@ void Login(Students* stu, Students* sta, Students*& stu_cur)
                 cout << "Please try again " << endl;
             }
             else {
+               
                 Option_After_Login(stu, sta, stu_cur, filenameStu);
                
             }
@@ -251,11 +261,9 @@ void View_profile(Students* stu, Students* stu_cur) {
         << "," << stu->Birth << "," << stu->socialID << "," << stu->username << "," << stu->password;
     if (stu_cur->ID[0] != '0') cout << "," << stu->classes;
     cout<<"\n";
-
     cout << stu_cur->No << "," << stu_cur->ID << "," << stu_cur->NameFirst << "," << stu_cur->NameLast << "," << stu_cur->Gender
         << "," << stu_cur->Birth << "," << stu_cur->socialID << "," << stu_cur->username << "," << stu_cur->password;
-     
-    if (stu_cur->ID[0] != '0') cout << "," << stu->classes;
+    if (stu_cur->ID[0] != '0') cout << "," << stu_cur->classes;
     cout << "\n";
 }
 void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, string filename) {
