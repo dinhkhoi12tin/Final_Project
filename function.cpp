@@ -209,9 +209,9 @@ bool CheckUser(Students* stu, Students*& stu_cur, string ID, string pass)
 void Login(Students* stu, Students* sta, Students*& stu_cur)
 {
     int offset = 30;
-    createframe();
     while (1)
     {
+        createframe();
         string user;
         string pass;
         string filenameStu = "STUDENT_DATABASE.csv";
@@ -232,11 +232,10 @@ void Login(Students* stu, Students* sta, Students*& stu_cur)
                 gotoxy(20 + offset, 4); cout << "Password:                     ";
                 gotoxy(10 + offset, 7);
                 cout << "Please try again " << endl;
-            }
+                Sleep(2000);
+            }   
             else {
-
                 Option_After_Login(stu, sta, stu_cur, filenameStu);
-
             }
         }
         if (user[0] == '0')
@@ -249,11 +248,10 @@ void Login(Students* stu, Students* sta, Students*& stu_cur)
                 gotoxy(20 + offset, 4); cout << "Password:                     ";
                 gotoxy(10 + offset, 7);
                 cout << "Please try again " << endl;
+                Sleep(2000);
             }
             else {
                 Option_After_Login(stu, sta, stu_cur, filenameSta);
-
-
             }
         }
     }
@@ -263,14 +261,30 @@ void Change_Password(Students* stu, Students*& stu_cur, string New_Password, str
     export_file(stu, filename);
 }
 void View_profile(Students* stu, Students* stu_cur) {
-    cout << stu->No << "," << stu->ID << "," << stu->NameFirst << "," << stu->NameLast << "," << stu->Gender
-        << "," << stu->Birth << "," << stu->socialID << "," << stu->username << "," << stu->password;
-    if (stu_cur->ID[0] != '0') cout << "," << stu->classes;
-    cout<<"\n";
-    cout << stu_cur->No << "," << stu_cur->ID << "," << stu_cur->NameFirst << "," << stu_cur->NameLast << "," << stu_cur->Gender
-        << "," << stu_cur->Birth << "," << stu_cur->socialID << "," << stu_cur->username << "," << stu_cur->password;
-    if (stu_cur->ID[0] != '0') cout << "," << stu_cur->classes;
-    cout << "\n";
+    createframe();
+    int offset = 30;
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
+    gotoxy(12 + offset, 2); cout << stu->No << ":  " << stu_cur->No;
+    gotoxy(12 + offset, 3); cout << stu->ID << ":  " << stu_cur->ID;
+    gotoxy(12 + offset, 4); cout << "Name:  " << stu_cur->NameLast << " " << stu_cur->NameFirst;
+    gotoxy(12 + offset, 5); cout << stu->Gender << ":  " << stu_cur->Gender;
+    gotoxy(12 + offset, 6); cout << stu->Birth << ":  " << stu_cur->Birth;
+    gotoxy(12 + offset, 7); cout << stu->socialID << ":  " << stu_cur->socialID;
+    gotoxy(12 + offset, 8); cout << stu->username << ":  " << stu_cur->username;
+    gotoxy(12 + offset, 9); cout << stu->password << ":  " << stu_cur->password;
+    if (stu_cur->ID[0] != '0')
+    {
+        gotoxy(2 + offset, 10); cout << stu->classes << ":  " << stu_cur->classes;
+    }
+    int wait = 0;
+    do
+    {
+        SetConsoleTextAttribute(hConsole, 6);
+        gotoxy(0 + offset, 11); cout << " >> Press any to stop.  "; gotoxy(32 + offset, 11); cout << "        ";
+        gotoxy(32 + offset, 11);  cin >> wait;
+    } while (wait = 0);
 }
 void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, string filename) {
     int offset = 30;
@@ -303,7 +317,7 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
         }
         if (stu_cur->username[0] != '0' && option == 3); // student function;
         if (stu_cur->username[0] == '0' && option == 3) {
-           // Menu_Feature_First_Staff(stu);
+            Menu_Feature_First_Staff(stu); 
         }
     }
 }
@@ -317,5 +331,4 @@ void Menu()
     LoadFileStudents(stu, filenameStu);
     LoadFileStaff(sta, filenameSta);
     Login(stu, sta, stu_cur);
-  
 }
