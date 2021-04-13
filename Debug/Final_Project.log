@@ -2,5 +2,8 @@
 D:\Final_Project\Final_Project\function.cpp(1,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Final_Project\Final_Project\function.cpp(124,17): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
 D:\Final_Project\Final_Project\function.cpp(124,20): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
-D:\Final_Project\Final_Project\function.cpp(287,56): warning C4390: ';': empty controlled statement found; is this the intent?
+D:\Final_Project\Final_Project\function.cpp(309,56): warning C4390: ';': empty controlled statement found; is this the intent?
+  function1.cpp
+  main.cpp
+  Generating Code...
   Final_Project.vcxproj -> D:\Final_Project\Debug\Final_Project.exe

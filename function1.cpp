@@ -9,6 +9,7 @@ Class* Find(Class* classhead, string classname) {
         classhead = classhead->Next;
     }
     return 0;
+
 }
 void add_one_by_one(Class*& classhead) {
     while (1) {

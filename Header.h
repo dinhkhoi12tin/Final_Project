@@ -18,12 +18,12 @@ struct Students
 	string classes;
 	Students* pNext;
 };
-//void createframe();
-//void gotoxy(int x, int y);
-//void displayUI();
+void createframe();
+void gotoxy(int x, int y);
+void displayUI();
 void LoadFileStudents(Students*& stu, string filename);
 void LoadFileStaff(Students*& sta, string filename);
-void export_file(Students* stu, string filename);
+void export_file(Students* stu, string filename);	
 void Release_memory(Students*& stu);
 void display_information_students(Students* stu);
 //void display_information_staffs(Students* stu);
