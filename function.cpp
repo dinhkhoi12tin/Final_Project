@@ -216,11 +216,6 @@ void Login(Students* stu, Students* sta, Students*& stu_cur)
         string pass;
         string filenameStu = "STUDENT_DATABASE.csv";
         string filenameSta = "STAFF.csv";
-        
-        cout << "-1.exit\n";
-        cout << "Username: "; cin >> user;
-        if (user == "-1")  break; 
-        cout << "Password: "; cin >> pass;
         HANDLE  hConsole;
         hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleTextAttribute(hConsole, 121);
@@ -239,9 +234,9 @@ void Login(Students* stu, Students* sta, Students*& stu_cur)
                 cout << "Please try again " << endl;
             }
             else {
-               
+
                 Option_After_Login(stu, sta, stu_cur, filenameStu);
-               
+
             }
         }
         if (user[0] == '0')
@@ -257,8 +252,8 @@ void Login(Students* stu, Students* sta, Students*& stu_cur)
             }
             else {
                 Option_After_Login(stu, sta, stu_cur, filenameSta);
-            
-               
+
+
             }
         }
     }
