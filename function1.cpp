@@ -16,9 +16,14 @@ Class* Find(Class* classhead, string classname) {
     return 0;
 }
 void add_one_by_one(Class*& classhead) {
+    int offset = 30;
     while (1) {
-        cout << "Type -1 to finish\n";
-        cout << "Name class:";
+        createframe();
+        HANDLE  hConsole;
+        hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(hConsole, 121);
+        gotoxy(20 + offset, 3); cout << "Type -1 to finish\n";
+        gotoxy(20 + offset, 4); cout << "Name class:";
         string nameclass;
         cin >> nameclass;
         if (nameclass[0] == '-') break;
@@ -26,13 +31,13 @@ void add_one_by_one(Class*& classhead) {
         Students* newst = new Students;
         cin.ignore();
         newst->classes = nameclass;
-        cout << "No:"; getline(cin, newst->No, '\n');
-        cout << "ID:"; getline(cin, newst->ID, '\n');
-        cout << "NameFirst:"; getline(cin, newst->NameFirst, '\n');
-        cout << "NameLast:"; getline(cin, newst->NameLast, '\n');
-        cout << "Gender:"; getline(cin, newst->Gender, '\n');
-        cout << "Birth:"; getline(cin, newst->Birth, '\n');
-        cout << "socialID:"; getline(cin, newst->socialID, '\n');
+        gotoxy(20 + offset, 3); cout << "No:"; getline(cin, newst->No, '\n');
+        gotoxy(20 + offset, 4); cout << "ID:"; getline(cin, newst->ID, '\n');
+        gotoxy(20 + offset, 5); cout << "NameFirst:"; getline(cin, newst->NameFirst, '\n');
+        gotoxy(20 + offset, 6); cout << "NameLast:"; getline(cin, newst->NameLast, '\n');
+        gotoxy(20 + offset, 7); cout << "Gender:"; getline(cin, newst->Gender, '\n');
+        gotoxy(20 + offset, 8); cout << "Birth:"; getline(cin, newst->Birth, '\n');
+        gotoxy(20 + offset, 9); cout << "socialID:"; getline(cin, newst->socialID, '\n');
         newst->username = newst->password = newst->ID;
      
         newst->pNext = pcur->sthead;
@@ -103,9 +108,14 @@ void LoadFileNewStudents(Students*& stu, string filename)
     input.close();
 }
 void add_by_file_csv(Class*& classhead) {
+    int offset = 30;
     while (1) {
-        cout << "-1.exit\n";
-        cout << "filename:";
+        createframe();
+        HANDLE  hConsole;
+        hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(hConsole, 121);
+        gotoxy(20 + offset, 3); cout << "-1.exit\n";
+        gotoxy(20 + offset, 4); cout << "filename:";
         string filename;
         cin >> filename;
         if (filename[0] == '-') break;
@@ -122,10 +132,15 @@ void add_by_file_csv(Class*& classhead) {
     }
 }
 void create_class(Class*& classhead) {
+    int offset = 30;
     while (1) {
+        createframe();
         string classname;
-        cout << "Type -1 to finish\n";
-        cout << "type name of class:"; cin >> classname;
+        HANDLE hConsole;
+        hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(hConsole, 121);
+        gotoxy(20 + offset, 3); cout << "Type -1 to finish\n";
+        gotoxy(20 + offset, 4); cout << "type name of class:"; cin >> classname;
         if (classname[0] == '-') break;
         Class* newclass = new Class;
         newclass->class_name = classname;
@@ -134,13 +149,18 @@ void create_class(Class*& classhead) {
     }
 }
 void Menu_Feature_First_Staff(Students* stu) {
+    int offset = 30;
     Class* classhead = 0;
     create_new_year();
     while (1) {
-        cout << "1.create class\n";
-        cout << "2.add one by one student to class\n";
-        cout << "3.add by file csv\n";
-        cout << "0.exit\n";
+        createframe();
+        HANDLE  hConsole;
+        hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(hConsole, 121);
+        gotoxy(20 + offset, 3); cout << "1.create class\n";
+        gotoxy(20 + offset, 4); cout << "2.add one by one student to class\n";
+        gotoxy(20 + offset, 5); cout << "3.add by file csv\n";
+        gotoxy(20 + offset, 6); cout << "0.exit\n";
         int option;
         cin >> option;
         if (option == 1) create_class(classhead);
@@ -150,34 +170,4 @@ void Menu_Feature_First_Staff(Students* stu) {
     }
     Export_new(classhead,stu);
     
-}
-void displayUI()
-{
-        int offset = 30;
-        int staffFlag = 1;
-        int options;
-        do
-        {
-            system("CLS");
-            HANDLE  hConsole;
-            hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-            createframe();
-            SetConsoleTextAttribute(hConsole, 121);
-            gotoxy(20 + offset, 4); cout << "1. create class";
-            gotoxy(20 + offset, 5); cout << "2. add one by one student to class"; 
-            if (staffFlag == 1) 
-            {
-                gotoxy(20 + offset, 3); cout << "Welcome Staff";
-                gotoxy(20 + offset, 6); cout << "3. add by file csv";
-                gotoxy(20 + offset, 7); cout << "0. exit";
-            }
-            else
-            {
-                gotoxy(20 + offset, 3); cout << "Welcome Students";
-                gotoxy(20 + offset, 6); cout << "0. exit";
-            }
-            SetConsoleTextAttribute(hConsole, 6);
-            gotoxy(0 + offset, 11); cout << " >> Please, select your functions: ";
-            cin >> options;
-        } while (options != 0);
 }
