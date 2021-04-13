@@ -302,8 +302,8 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
         gotoxy(20 + offset, 7); cout << "0.Log out\n";
         int option;
         SetConsoleTextAttribute(hConsole, 6);
-        gotoxy(0 + offset, 11); cout << " >> Please, select your functions: ";
-        cin >> option;
+        gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "   ";
+        gotoxy(35 + offset, 11);  cin >> option;
         if (option == 0)  break; 
         if (option == 1) View_profile(stu, stu_cur);
         if (option == 2) {
