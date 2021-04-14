@@ -27,6 +27,8 @@ void add_one_by_one(Class*& classhead) {
         string nameclass;
         cin >> nameclass;
         if (nameclass[0] == '-') break;
+        createframe();
+        SetConsoleTextAttribute(hConsole, 121);
         Class* pcur = Find(classhead, nameclass);
         Students* newst = new Students;
         cin.ignore();
@@ -157,12 +159,14 @@ void Menu_Feature_First_Staff(Students* stu) {
         HANDLE  hConsole;
         hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleTextAttribute(hConsole, 121);
-        gotoxy(20 + offset, 3); cout << "1.create class\n";
-        gotoxy(20 + offset, 4); cout << "2.add one by one student to class\n";
-        gotoxy(20 + offset, 5); cout << "3.add by file csv\n";
-        gotoxy(20 + offset, 6); cout << "0.exit\n";
+        gotoxy(0 + offset, 3); cout << "1.create class\n";
+        gotoxy(0 + offset, 4); cout << "2.add one by one student to class\n";
+        gotoxy(0 + offset, 5); cout << "3.add by file csv\n";
+        gotoxy(0 + offset, 6); cout << "0.exit\n";
         int option;
-        cin >> option;
+        SetConsoleTextAttribute(hConsole, 121);
+        gotoxy(0 + offset, 11); cout<<" >> Please, select your functions: "; gotoxy(35 + offset, 11);cout << "   ";
+        gotoxy(35 + offset, 11); cin >> option;
         if (option == 1) create_class(classhead);
         if (option == 2) add_one_by_one(classhead);
         if (option == 3) add_by_file_csv(classhead);
