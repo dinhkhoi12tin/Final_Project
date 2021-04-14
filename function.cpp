@@ -283,8 +283,8 @@ void View_profile(Students* stu, Students* stu_cur) {
     do
     {
         SetConsoleTextAttribute(hConsole, 6);
-        gotoxy(0 + offset, 11); cout << " >> Press any to stop.  "; gotoxy(32 + offset, 11); cout << "        ";
-        gotoxy(32 + offset, 11);  cin >> wait;
+        gotoxy(0 + offset, 11); cout << " >> Press any to stop.  "; gotoxy(24 + offset, 11); cout << "        ";
+        gotoxy(25 + offset, 11);  cin >> wait;
     } while (wait = 0);
 }
 void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, string filename) {
