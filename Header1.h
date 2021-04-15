@@ -22,17 +22,17 @@ struct Semester {
     string sem_name;
     int dateStart;
     int dateEnd;
-    Course* Cou;
+    Course* courseh;
 };
 
 struct Year {
     string year_name;
-    Semester sem[3];
+    Semester* sem = new Semester[3];
     int dateStart, dateEnd;
     Year* Next;
 };
 
-void create_new_year(Year* yearh);
+void create_new_year(Year*& yearh);
 Class* Find(Class* classhead, string classname);
 void add_one_by_one(Class*& classhead);
 void display(Class* classhead);
@@ -41,5 +41,5 @@ void create_class(Class*& classhead);
 void Menu_Feature_First_Staff(Students * stu);
 void Export_new(Class* classhead, Students* stu);
 void CreateSem(Year* yearh, Year*& year_cur);
-void PrintSem(Year* yearh, Year*& year_cur);
+//void PrintSem(Year* yearh, Year*& year_cur);
 void Menu_Op();
