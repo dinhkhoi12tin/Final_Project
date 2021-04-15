@@ -5,19 +5,10 @@ struct Class {
     Class* Next = 0;
 };
 
-struct Year {
-    string year_name;
-    Semester* sem;
-    int dateStart, dateEnd;
-    Year* Next;
-};
-
-struct Semester {
-    string sem_name;
-    int dateStart;
-    int dateEnd;
-    Semester* Next;
-    Course* Cou;
+struct Session {
+    string date;
+    string timeofSes;
+    Session* Next;
 };
 
 struct Course {
@@ -27,10 +18,18 @@ struct Course {
     Course* Next;
 };
 
-struct Session {
-    string date;
-    string timeofSes;
-    Session* Next;
+struct Semester {
+    string sem_name;
+    int dateStart;
+    int dateEnd;
+    Course* Cou;
+};
+
+struct Year {
+    string year_name;
+    Semester sem[3];
+    int dateStart, dateEnd;
+    Year* Next;
 };
 
 void create_new_year(Year* yearh);
@@ -41,4 +40,6 @@ void add_by_file_csv(Class*& classhead);
 void create_class(Class*& classhead);
 void Menu_Feature_First_Staff(Students * stu);
 void Export_new(Class* classhead, Students* stu);
-
+void CreateSem(Year* yearh, Year*& year_cur);
+void PrintSem(Year* yearh, Year*& year_cur);
+void Menu_Op();
