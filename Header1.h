@@ -12,7 +12,7 @@ struct Session {
 
 struct Course {
     string course_id, course_name, teacher_name, cre_num;
-    int maxnum_stu = 50, dateofWeek;
+    int maxnum_stu = 50;
     Session* ses = new Session[2];
     Course* Next;
     int startdate, enddate;
@@ -41,5 +41,7 @@ void Menu_Feature_First_Staff(Students * stu);
 void Export_new(Class* classhead, Students* stu);
 void create_new_year(Year*& yearh);
 void CreateSem(Year*& yearh, Year*& year_cur);
+void CreateCourse(Year*& yearh, Year*& year_cur, Course*& courseh, int num_sem);
+void CreateSes(Year* yearh, Course*& course_cur, int num_sem);
 //void PrintSem(Year* yearh, Year*& year_cur);
 void Menu_Op();
