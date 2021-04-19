@@ -40,13 +40,15 @@ void Menu_Op()
 */
 
 void create_new_year(Year*& yearh) {
-    string newyear;
     int offset = 30;
     createframe();
     HANDLE hConsole;
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, 121);
     gotoxy(20 + offset, 3);
+
+
+    string newyear;
     cout << "Type name of new year:";
     cin >> newyear;
     Year* yearcur = new Year;
