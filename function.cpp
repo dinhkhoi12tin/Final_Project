@@ -142,7 +142,6 @@ void displayUI()
         if (staffFlag == 1) // chừng nào check là staff được thì sẽ sửa.
         {
             gotoxy(20 + offset, 3); cout << "Welcome Staff";
-            gotoxy(20 + offset, 6); cout << "3. Create SchoolYear";
             gotoxy(20 + offset, 7); cout << "0. Logout";
         }
         else
