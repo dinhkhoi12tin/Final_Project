@@ -13,6 +13,7 @@ struct Session {
 struct Course {
     string course_id, course_name, teacher_name, cre_num;
     int maxnum_stu = 50;
+    int num_stu; // So luong hoc sinh da dang ki
     Session* ses = new Session[2];
     Course* Next;
     int startdate, enddate;

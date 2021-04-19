@@ -97,19 +97,22 @@ void CreateCourse(Year*& yearh, Year*& year_cur, Course*& courseh, int num_sem)
         }
         coursecur->maxnum_stu = 50;
         cout << "Input name of the course: " << endl;
-        cin >> coursecur->course_name;
+        cin.ignore();
+        getline(cin, coursecur->course_name);
         cout << "Input ID of the course: " << endl;
         cin >> coursecur->course_id;
         cout << "Input name of teacher of the course: " << endl;
-        cin >> coursecur->teacher_name;
+        cin.ignore();
+        getline(cin, coursecur->teacher_name);
         cout << "Input the number of credits of the course: " << endl;
         cin >> coursecur->cre_num;
         cout << "Input the registration start day of the course: " << endl;
         cin >> coursecur->startdate;
         cout << "Input the registration end day of the course: " << endl;
         cin >> coursecur->enddate;
+        CreateSes(yearh, coursecur, num_sem);
     }
-    //Create Session
+    /*Create Session
     string course_id;
     for (int i = 0; i < n; i++)
     {
@@ -117,7 +120,7 @@ void CreateCourse(Year*& yearh, Year*& year_cur, Course*& courseh, int num_sem)
         cin >> course_id;
         Course* course_cur = Find_Course(year_cur, courseh, course_id, num_sem);
         CreateSes(yearh, course_cur, num_sem);
-    }
+    }*/
 }
 
 void CreateSes(Year* yearh, Course*& course_cur, int num_sem)
