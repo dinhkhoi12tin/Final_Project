@@ -16,7 +16,6 @@ struct Course {
     int num_stu; // So luong hoc sinh da dang ki
     Session* ses = new Session[2];
     Course* Next;
-    int startdate, enddate;
 };
 
 struct Semester {
@@ -24,6 +23,8 @@ struct Semester {
     int dateStart;
     int dateEnd;
     Course* courseh;
+    int regStart;
+    int regEnd;
 };
 
 struct Year {
@@ -40,9 +41,10 @@ void add_by_file_csv(Class*& classhead);
 void create_class(Class*& classhead);
 void Menu_Feature_First_Staff(Students * stu);
 void Export_new(Class* classhead, Students* stu);
-void create_new_year(Year*& yearh);
-void CreateSem(Year*& yearh, Year*& year_cur);
-void CreateCourse(Year*& yearh, Year*& year_cur, Course*& courseh, int num_sem);
-void CreateSes(Year* yearh, Course*& course_cur, int num_sem);
+void create_new_year(Year*& yearh, Year*& year_cur);
+void CreateSem(Year*& year_cur, int& n);
+void CreateCourse(Course*& courseh, int num_sem, int n);
+void CreateSes(Course*& course_cur, int num_sem);
+void View_List_Course(Year* year_cur, int n);
 //void PrintSem(Year* yearh, Year*& year_cur);
 void Menu_Op();
