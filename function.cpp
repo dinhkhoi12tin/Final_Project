@@ -206,6 +206,28 @@ bool CheckUser(Students* stu, Students*& stu_cur, string ID, string pass)
     if (stu_cur == nullptr || stu_cur->password != pass) return false;
     return true;
 }
+void InputMaskedPassword(string &password)
+{
+    password = "";
+    char ch;
+    ch = _getch();
+    while (ch != 13) {//character 13 is enter
+    
+        if (ch == '\b')   //If the 'Backspace' key is pressed
+        {
+            if (password.size() != 0)  //If the password string contains data, erase last character
+            {
+                cout << "\b \b";
+                password.erase(password.size() - 1, 1);
+            }
+        }
+        else {
+        password.push_back(ch);
+        cout << '*';
+        }
+        ch = _getch();
+    }
+}
 void Login(Students* stu, Students* sta, Students*& stu_cur)
 {
     int offset = 30;
@@ -221,7 +243,8 @@ void Login(Students* stu, Students* sta, Students*& stu_cur)
         SetConsoleTextAttribute(hConsole, 121);
         gotoxy(20 + offset, 3); cout << "Username: "; cin >> user;
         if (user[0] == '-') break;
-        gotoxy(20 + offset, 4); cout << "Password: "; cin >> pass;
+        gotoxy(20 + offset, 4); cout << "Password: "; 
+        InputMaskedPassword(pass);
         if (user[0] != '0')
         {
             if (CheckUser(stu, stu_cur, user, pass) == false)
