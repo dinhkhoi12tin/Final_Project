@@ -6,7 +6,7 @@ void create_new_year() {
     HANDLE hConsole;
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, 121);
-    gotoxy(20 + offset,3); cout << "type new year:"; cin >> newyear;
+    gotoxy(20 + offset, 3); cout << "type new year:"; cin >> newyear;
 }
 Class* Find(Class* classhead, string classname) {
     while (classhead) {
@@ -33,15 +33,14 @@ void add_one_by_one(Class*& classhead) {
         Students* newst = new Students;
         cin.ignore();
         newst->classes = nameclass;
-        gotoxy(20 + offset, 3); cout << "No:"; getline(cin, newst->No, '\n');
-        gotoxy(20 + offset, 4); cout << "ID:"; getline(cin, newst->ID, '\n');
-        gotoxy(20 + offset, 5); cout << "NameFirst:"; getline(cin, newst->NameFirst, '\n');
-        gotoxy(20 + offset, 6); cout << "NameLast:"; getline(cin, newst->NameLast, '\n');
-        gotoxy(20 + offset, 7); cout << "Gender:"; getline(cin, newst->Gender, '\n');
-        gotoxy(20 + offset, 8); cout << "Birth:"; getline(cin, newst->Birth, '\n');
-        gotoxy(20 + offset, 9); cout << "socialID:"; getline(cin, newst->socialID, '\n');
+        gotoxy(20 + offset, 2); cout << "No:"; getline(cin, newst->No, '\n');
+        gotoxy(20 + offset, 3); cout << "ID:"; getline(cin, newst->ID, '\n');
+        gotoxy(20 + offset, 4); cout << "NameFirst:"; getline(cin, newst->NameFirst, '\n');
+        gotoxy(20 + offset, 5); cout << "NameLast:"; getline(cin, newst->NameLast, '\n');
+        gotoxy(20 + offset, 6); cout << "Gender:"; getline(cin, newst->Gender, '\n');
+        gotoxy(20 + offset, 7); cout << "Birth:"; getline(cin, newst->Birth, '\n');
+        gotoxy(20 + offset, 8); cout << "socialID:"; getline(cin, newst->socialID, '\n');
         newst->username = newst->password = newst->ID;
-     
         newst->pNext = pcur->sthead;
         pcur->sthead = newst;
     }
@@ -53,23 +52,23 @@ void display(Class* classhead) {
         classhead = classhead->Next;
     }
 }
-void Export_new(Class* classhead,Students* stu) {
+void Export_new(Class* classhead, Students* stu) {
     Students* stu_cur = stu;
-    while (stu->pNext && stu->pNext->No!="") stu = stu->pNext;
+    while (stu->pNext && stu->pNext->No != "") stu = stu->pNext;
     while (classhead) {
         Students* sthead = classhead->sthead;
         while (sthead) {
             stu->pNext = sthead;
-        
+
             stu = stu->pNext;
             sthead = sthead->pNext;
         }
-      //  display_information_students(sthead);
+        //display_information_students(sthead);
         classhead = classhead->Next;
     }
     string filename = "STUDENT_DATABASE.csv";
     export_file(stu_cur, filename);
-   // display_information_students(stu_cur);
+    //display_information_students(stu_cur);
 }
 void LoadFileNewStudents(Students*& stu, string filename)
 {
@@ -102,7 +101,7 @@ void LoadFileNewStudents(Students*& stu, string filename)
             getline(input, pCur->Gender, ',');
             getline(input, pCur->Birth, ',');
             getline(input, pCur->socialID, ',');
-            if (pCur!=stu)pCur->username = pCur->password = pCur->ID;
+            if (pCur != stu)pCur->username = pCur->password = pCur->ID;
             getline(input, pCur->classes, '\n');
             pCur->pNext = nullptr;
         }
@@ -159,19 +158,18 @@ void Menu_Feature_First_Staff(Students* stu) {
         HANDLE  hConsole;
         hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleTextAttribute(hConsole, 121);
-        gotoxy(0 + offset, 3); cout << "1.create class\n";
-        gotoxy(0 + offset, 4); cout << "2.add one by one student to class\n";
-        gotoxy(0 + offset, 5); cout << "3.add by file csv\n";
-        gotoxy(0 + offset, 6); cout << "0.exit\n";
+        gotoxy(20 + offset, 3); cout << "1.create class\n";
+        gotoxy(20 + offset, 4); cout << "2.add one by one student to class\n";
+        gotoxy(20 + offset, 5); cout << "3.add by file csv\n";
+        gotoxy(20 + offset, 6); cout << "0.exit\n";
         int option;
-        SetConsoleTextAttribute(hConsole, 121);
-        gotoxy(0 + offset, 11); cout<<" >> Please, select your functions: "; gotoxy(35 + offset, 11);cout << "   ";
-        gotoxy(35 + offset, 11); cin >> option;
+        SetConsoleTextAttribute(hConsole, 6);
+        gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "   ";
+        gotoxy(35 + offset, 11);  cin >> option;
         if (option == 1) create_class(classhead);
         if (option == 2) add_one_by_one(classhead);
         if (option == 3) add_by_file_csv(classhead);
         if (option == 0) break;
     }
-    Export_new(classhead,stu);
-    
+    Export_new(classhead, stu);
 }
