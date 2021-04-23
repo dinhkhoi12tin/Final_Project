@@ -1,4 +1,4 @@
-#include"Header1.h"
+#include"Header.h"
 Year* Find_Year(Year* yearh, string name_year)
 {
     while (yearh != nullptr) {
@@ -8,19 +8,21 @@ Year* Find_Year(Year* yearh, string name_year)
     return nullptr;
 }
 
-Course* Find_Course(Year*& year_cur, Course* courseh, string id_course, int num_sem)
+Course* Find_Course(Year* yearh, string id_course)
 {
-    while (year_cur->sem[num_sem - 1].courseh != nullptr)
+    while (1)
     {
-        if (year_cur->sem[num_sem - 1].courseh->course_id == id_course) return year_cur->sem[num_sem - 1].courseh;
-        year_cur->sem[num_sem - 1].courseh = year_cur->sem[num_sem - 1].courseh->Next;
+        for (int num_sem = 0; num_sem < 2; ++num_sem){
+            if (yearh->sem[num_sem].courseh->course_id == id_course)
+                return yearh->sem[num_sem].courseh;
+        }
+        yearh = yearh->Next;
     }
     return nullptr;
 }
 
-void Menu_Op()
+void Menu_Op(Year*& yearh)
 {
-    Year* yearh = nullptr;
     create_new_year(yearh);
 }
 
@@ -134,10 +136,53 @@ void CreateSes(Year* yearh, Course*& course_cur, int num_sem)
         cout << "S2. 9:30" << endl;
         cout << "S3. 13:30" << endl;
         cout << "S4. 15:30" << endl;
-        do
-        {
-            cin >> course_cur->ses[i].timeofSes;
-        } while (course_cur->ses[i].timeofSes != "S1" && course_cur->ses[i].timeofSes != "S2" && course_cur->ses[i].timeofSes != "S3" && course_cur->ses[i].timeofSes != "S4");
+        cin >> course_cur->ses[i].timeofSes;
     }   
 }
+bool check(Students* stu_cur, Course* Cour) {
+    if (Cour->num_stu == 50 || stu_cur->num_Cour==5) return 0;
+    while (stu_cur->Cour) {
+        for (int i = 1; i <= stu_cur->num_Cour; ++i) {
+            if (stu_cur->Cour[i].ses[1].date == Cour->ses[1].date
+                && stu_cur->Cour[i].ses[1].timeofSes == Cour->ses[1].timeofSes) return 0;
 
+            if (stu_cur->Cour[i].ses[0].date == Cour->ses[0].date
+                && stu_cur->Cour[i].ses[0].timeofSes == Cour->ses[0].timeofSes) return 0;
+        }
+        stu_cur->Cour = stu_cur->Cour->Next;
+    }
+}
+void Enroll_Course(Students*& stu_cur, Year*& yearh) {
+    string year_name;
+   // cout << "Year: "; cin >>year_name;
+   // int semes;
+   // cout << "Semester: "; cin >> semes;
+    string ID;
+    cout << "type Id course: "; cin >> ID;
+    Course* Cour = Find_Course(yearh, ID);
+    if (check(stu_cur, Cour)) {
+        Cour->Stu[++Cour->num_stu]=*stu_cur;
+        stu_cur->Cour[++stu_cur->num_Cour]=*Cour;
+    }
+}
+void View_Course(Students* stu_cur) {
+    for (int i = 1; i <= stu_cur->num_Cour; ++i) {
+        cout << stu_cur->Cour[i].course_name << " ";
+    }
+}
+void Remove_Course(Students*& stu_cur) {
+    string ID;
+    cout << "type ID course to remove: "; cin >> ID;
+    Course* new_Cour = new Course[6];
+    int num = stu_cur->num_Cour;
+    for (int i = 1; i <= num; ++i)
+        new_Cour[i] = stu_cur->Cour[i];
+    int cnt = 0;
+    stu_cur->Cour = new Course[6];
+    for (int i = 1; i <= num; ++i) {
+        if (new_Cour[i].course_id != ID) {
+            stu_cur->Cour[++cnt] = new_Cour[i];
+        }
+    }
+    stu_cur->num_Cour--;
+}

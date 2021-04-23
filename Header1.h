@@ -32,7 +32,7 @@ struct Year {
     int dateStart, dateEnd;
     Year* Next;
 };
-
+void Enroll_Course(Students*& stu_cur, Year*& yearh);
 Class* Find(Class* classhead, string classname);
 void add_one_by_one(Class*& classhead);
 void display(Class* classhead);

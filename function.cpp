@@ -1,4 +1,4 @@
-#include "Header1.h";
+#include "Header.h";
 void Menu_Feature_First_Staff(Students* stu);
 void LoadFileStudents(Students*& stu, string filename)
 {
@@ -207,7 +207,7 @@ bool CheckUser(Students* stu, Students*& stu_cur, string ID, string pass)
     if (stu_cur == nullptr || stu_cur->password != pass) return false;
     return true;
 }
-void Login(Students* stu, Students* sta, Students*& stu_cur)
+void Login(Students* stu, Students* sta, Students*& stu_cur, Year *& yearh)
 {
     int offset = 30;
     while (1)
@@ -236,7 +236,7 @@ void Login(Students* stu, Students* sta, Students*& stu_cur)
                 Sleep(1500);
             }
             else {
-                Option_After_Login(stu, sta, stu_cur, filenameStu);
+                Option_After_Login(stu, sta, stu_cur, filenameStu, yearh);
             }
         }
         if (user[0] == '0')
@@ -252,7 +252,7 @@ void Login(Students* stu, Students* sta, Students*& stu_cur)
                 Sleep(1500);
             }
             else {
-                Option_After_Login(stu, sta, stu_cur, filenameSta);
+                Option_After_Login(stu, sta, stu_cur, filenameSta, yearh);
             }
         }
     }
@@ -287,7 +287,7 @@ void View_profile(Students* stu, Students* stu_cur) {
         gotoxy(25 + offset, 11);  cin >> wait;
     } while (wait = 0);
 }
-void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, string filename) {
+void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, string filename, Year*& yearh) {
     int offset = 30;
     while (1) {
         createframe();
@@ -298,7 +298,7 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
 
         cout << "1.View Profile\n";
         gotoxy(20 + offset, 5); cout << "2.Change Password\n";
-        gotoxy(20 + offset, 6); if (stu_cur->username[0] != '0') cout << "3.\n"; //cout student name of function
+        gotoxy(20 + offset, 6); if (stu_cur->username[0] != '0') cout << "3.Enroll in a course\n"; //cout student name of function
         gotoxy(20 + offset, 6); if (stu_cur->username[0] == '0') cout << "3.Create new year\n"; // cout staff name of function
         gotoxy(20 + offset, 7); cout << "0.Log out\n";
         int option;
@@ -316,7 +316,9 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
             if (stu_cur->username[0] != '0')Change_Password(stu, stu_cur, pass, filename);
             if (stu_cur->username[0] == '0')Change_Password(sta, stu_cur, pass, filename);
         }
-        if (stu_cur->username[0] != '0' && option == 3); // student function;
+        if (stu_cur->username[0] != '0' && option == 3) {
+            Enroll_Course(stu_cur,yearh);
+        } // student function;
         if (stu_cur->username[0] == '0' && option == 3) {
             Menu_Feature_First_Staff(stu);
         }
@@ -332,6 +334,8 @@ void Menu()
     string filenameSta = "STAFF.csv";
     LoadFileStudents(stu, filenameStu);
     LoadFileStaff(sta, filenameSta);
-    Login(stu, sta, stu_cur);
+    Year* yearh = nullptr;
+
+    Login(stu, sta, stu_cur, yearh);
 
 }
