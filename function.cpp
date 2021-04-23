@@ -355,5 +355,4 @@ void Menu()
     LoadFileStudents(stu, filenameStu);
     LoadFileStaff(sta, filenameSta);
     Login(stu, sta, stu_cur);
-
 }

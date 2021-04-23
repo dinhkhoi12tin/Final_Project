@@ -1,5 +1,5 @@
 #include "Header1.h"
-void create_new_year() {
+/*void create_new_year(Year* yearh) {
     int offset = 30;
     createframe();
     string newyear;
@@ -7,7 +7,11 @@ void create_new_year() {
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, 121);
     gotoxy(20 + offset, 3); cout << "type new year:"; cin >> newyear;
-}
+    Year* yearcur = new Year;
+    yearcur->year_name = newyear;
+    yearcur->Next = yearh;
+    yearh = yearcur;
+}*/
 Class* Find(Class* classhead, string classname) {
     while (classhead) {
         if (classhead->class_name == classname) return classhead;
@@ -152,7 +156,7 @@ void create_class(Class*& classhead) {
 void Menu_Feature_First_Staff(Students* stu) {
     int offset = 30;
     Class* classhead = 0;
-    create_new_year();
+    //create_new_year();
     while (1) {
         createframe();
         HANDLE  hConsole;

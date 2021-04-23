@@ -8,7 +8,7 @@ Year* Find_Year(Year* yearh, string name_year)
     return nullptr;
 }
 
-Course* Find_Course(Year*& year_cur, Course* courseh, string id_course, int num_sem)
+Course* Find_Course(Year* year_cur, string id_course, int num_sem)
 {
     while (year_cur->sem[num_sem - 1].courseh != nullptr)
     {
@@ -22,9 +22,12 @@ void Menu_Op()
 {
     Year* yearh = nullptr;
     Year* year_cur = nullptr;
+    int num_sem = 0;
     int n;
     create_new_year(yearh, year_cur);
-    CreateSem(year_cur, n);
+    CreateSem(year_cur, n, num_sem);
+    //Delete_Course(year_cur, n, num_sem);
+    Update_Course(year_cur, num_sem);
     View_List_Course(year_cur, n);
 }
 
@@ -60,9 +63,8 @@ void create_new_year(Year*& yearh, Year*& year_cur) {
     year_cur = Find_Year(yearh, newyear);
 }
 
-void CreateSem(Year*& year_cur, int& n)
+void CreateSem(Year*& year_cur, int& n, int& num_sem)
 {
-    int num_sem;
     int offset = 30;
     createframe();
     HANDLE hConsole;
@@ -170,45 +172,51 @@ void CreateSes(Course*& course_cur, int num_sem)
 void View_List_Course(Year* year_cur, int n)
 {
     int choice;
-    cout << "1 2 3";
+    cout << "1 2 3"; // choose semester
     cin >> choice;
-    Course* coursecur = year_cur->sem[choice - 1].courseh;
-    for (int i = 0; i < n; i++)
+    if (year_cur->sem[choice - 1].courseh == nullptr) cout << "Nothing";
+    else
     {
-        cout << i << ". " << coursecur->course_name;
-        coursecur = coursecur->Next;
-        cout << endl;
-    }
-    int choice2;
-    cout << "Input the course you want to view: ";
-    cin >> choice2;
-    coursecur = year_cur->sem[choice - 1].courseh;
-    for (int i = 0; i < choice2; i++)
-    {
-        coursecur = coursecur->Next;
-    }
-    cout << "Course ID: "  << coursecur->course_id << endl;
-    cout << "Course Name: " << coursecur->course_name << endl;
-    cout << "Course Credit: " << coursecur->cre_num << endl;
-    cout << "Course's teacher's name: " << coursecur->teacher_name << endl;
-    for (int i = 0; i < 2; i++)
-    {
-        cout << coursecur->ses[i].date << " ";
-        cout << coursecur->ses[i].timeofSes;
-        cout << endl;
+        Course* coursecur = year_cur->sem[choice - 1].courseh;
+        for (int i = 0; i < n; i++)
+        {
+            cout << i << ". " << coursecur->course_name;
+            coursecur = coursecur->Next;
+            cout << endl;
+        }
+        int choice2;
+        cout << "Input the course you want to view: ";
+        cin >> choice2;
+        coursecur = year_cur->sem[choice - 1].courseh;
+        for (int i = 0; i < choice2; i++)
+        {
+            coursecur = coursecur->Next;
+        }
+        cout << "Course ID: " << coursecur->course_id << endl;
+        cout << "Course Name: " << coursecur->course_name << endl;
+        cout << "Course Credit: " << coursecur->cre_num << endl;
+        cout << "Course's teacher's name: " << coursecur->teacher_name << endl;
+        cout << "Course Session: ";
+        for (int i = 0; i < 2; i++)
+        {
+            cout << coursecur->ses[i].date << " ";
+            cout << coursecur->ses[i].timeofSes;
+            cout << endl;
+        }
     }
 }
 
-/*void Delete_Course(Course*& courseh, int num_sem)
+void Delete_Course(Year*& year_cur, int&n,  int num_sem)
 {
     string tempID;
-    cout << "Input the ID of course: " << endl;
+    cout << "Input the ID of course you want to delete: " << endl;
     cin >> tempID;
-    Course* coursecur = courseh;
-    if (courseh->course_id == tempID)
+    Course* coursecur = year_cur->sem[num_sem-1].courseh;
+    if (year_cur->sem[num_sem - 1].courseh->course_id == tempID)
     {
-        courseh = courseh->Next;
+        year_cur->sem[num_sem - 1].courseh = year_cur->sem[num_sem - 1].courseh->Next;
         delete coursecur;
+        n--;
     }
     while (coursecur->Next != nullptr )
     {
@@ -217,9 +225,58 @@ void View_List_Course(Year* year_cur, int n)
             Course* pDel = coursecur->Next;
             coursecur->Next = coursecur->Next->Next;
             delete pDel;
+            n--;
             break;
         }
         else coursecur = coursecur->Next;
     }
 }
-*/
+
+void Update_Course(Year*& year_cur, int num_sem)
+{
+    string tempID;
+    cout << "Input the ID of course you want to change: " << endl;
+    cin >> tempID;
+    Course* coursecur = Find_Course(year_cur, tempID, num_sem);
+    int choice;
+    cout << "1. Change the name of the course: " << endl;
+    cout << "2. Change the ID of the course: " << endl;
+    cout << "3. Change the name of the teacher of the course: " << endl;
+    cout << "4. Change the number of credits of the course: " << endl;
+    cout << "5. Change the sessions of the course: " << endl;
+    cin >> choice;
+    if (choice == 1)
+    {
+        cout << "Input new name of the course: ";
+        cin.ignore();
+        getline(cin, coursecur->course_name);
+    }
+    if (choice == 2)
+    {
+        cout << "Input new ID of the course: ";
+        cin.ignore();
+        getline(cin, coursecur->course_id);
+    }
+    if (choice == 3)
+    {
+        cout << "Input new name of the teacher of the course: ";
+        cin.ignore();
+        getline(cin, coursecur->teacher_name);
+    }
+    if (choice == 4)
+    {
+        cout << "Input new number of credits of the course: ";
+        cin >> coursecur->cre_num;
+    }
+    if (choice == 5)
+    {
+        cout << "Input new sessions of the course: ";
+        for (int i = 0; i < 2; i++)
+        {
+            cout << "Input new day of course: " << endl;
+            cin >> coursecur->ses[i].date;
+            cout << "Input new session: " << endl;
+            cin >> coursecur->ses[i].timeofSes;
+        }
+    }
+}
