@@ -140,12 +140,12 @@ void CreateCourse(Course*& courseh, int num_sem, int n)
 void CreateSes(Course*& course_cur, int num_sem)
 {
     int offset = 30;
-    createframe();
-    HANDLE hConsole;
-    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, 121);
     for(int i = 0; i < 2; i++)
     {
+        createframe();
+        HANDLE hConsole;
+        hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(hConsole, 121);
         gotoxy(8 + offset, 3); 
         cout << "Input the course's day in week: " ;
         cin >> course_cur->ses[i].date;
