@@ -169,7 +169,7 @@ void Menu_Feature_First_Staff(Students* stu, Year*& yearh) {
         gotoxy(20 + offset, 6); cout << "0.exit\n";
         int option;
         SetConsoleTextAttribute(hConsole, 6);
-        gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "   ";
+        gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "                    ";
         gotoxy(35 + offset, 11);  cin >> option;
         if (option == 1) create_class(classhead);
         if (option == 2) add_one_by_one(classhead);

@@ -12,7 +12,7 @@ Course* Find_Course(Year* yearh, string id_course)
 {
     while (yearh)
     {
-        for (int num_sem = 0; num_sem < 3; ++num_sem){
+        for (int num_sem = 0; num_sem < 3; ++num_sem) {
             if (yearh->sem[num_sem].courseh->course_id == id_course)
                 return yearh->sem[num_sem].courseh;
         }
@@ -78,19 +78,19 @@ void CreateSem(Year*& year_cur, int& n, int& num_sem)
     if (num_sem == 1) year_cur->sem[num_sem - 1].sem_name = "Semester 1";
     if (num_sem == 2) year_cur->sem[num_sem - 1].sem_name = "Semester 2";
     if (num_sem == 3) year_cur->sem[num_sem - 1].sem_name = "Semester 3";
-    gotoxy(8 + offset, 4); 
+    gotoxy(8 + offset, 4);
     cout << "Input the start of semester " << num_sem << ": ";
     cin >> year_cur->sem[num_sem - 1].dateStart;
-    gotoxy(8 + offset, 5); 
+    gotoxy(8 + offset, 5);
     cout << "Input the end of semester " << num_sem << ": ";
     cin >> year_cur->sem[num_sem - 1].dateEnd;
-    createframe(); 
+    createframe();
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, 121);
-    gotoxy(8 + offset, 3); 
-    cout << "Input the registration start day of the course: " ;
+    gotoxy(8 + offset, 3);
+    cout << "Input the registration start day of the course: ";
     cin >> year_cur->sem[num_sem - 1].regStart;
-    gotoxy(8 + offset, 4); 
+    gotoxy(8 + offset, 4);
     cout << "Input the registration end day of the course: ";
     cin >> year_cur->sem[num_sem - 1].regEnd;
     //Create Course
@@ -144,34 +144,33 @@ void CreateCourse(Course*& courseh, int num_sem, int n)
 void CreateSes(Course*& course_cur, int num_sem)
 {
     int offset = 30;
-    for(int i = 0; i < 2; i++)
+    for (int i = 0; i < 2; i++)
     {
         createframe();
         HANDLE hConsole;
         hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleTextAttribute(hConsole, 121);
-        gotoxy(8 + offset, 3); 
-        cout << "Input the course's day in week: " ;
+        gotoxy(8 + offset, 3);
+        cout << "Input the course's day in week: ";
         cin >> course_cur->ses[i].date;
         gotoxy(8 + offset, 4);
-        cout << "Input the session: " ;
-        gotoxy(8 + offset, 5); 
-        cout << "S1. 7:30" ;
-        gotoxy(8 + offset, 6); 
-        cout << "S2  9:30" ;
-        gotoxy(8 + offset, 7); 
-        cout << "S3. 13:30" ;
+        cout << "Input the session: ";
+        gotoxy(8 + offset, 5);
+        cout << "S1. 7:30";
+        gotoxy(8 + offset, 6);
+        cout << "S2  9:30";
+        gotoxy(8 + offset, 7);
+        cout << "S3. 13:30";
         gotoxy(8 + offset, 8);
-        cout << "S4. 15:30" ;
+        cout << "S4. 15:30";
         do
         {
+            gotoxy(57, 4); cout << "         ";
             gotoxy(57, 4);
             cin >> course_cur->ses[i].timeofSes;
         } while (course_cur->ses[i].timeofSes != "S1" && course_cur->ses[i].timeofSes != "S2" && course_cur->ses[i].timeofSes != "S3" && course_cur->ses[i].timeofSes != "S4");
-    }   
+    }
 }
-
-
 
 void View_List_Course(Year* year_cur, int n)
 {
@@ -210,19 +209,19 @@ void View_List_Course(Year* year_cur, int n)
     }
 }
 
-void Delete_Course(Year*& year_cur, int&n,  int num_sem)
+void Delete_Course(Year*& year_cur, int& n, int num_sem)
 {
     string tempID;
     cout << "Input the ID of course you want to delete: " << endl;
     cin >> tempID;
-    Course* coursecur = year_cur->sem[num_sem-1].courseh;
+    Course* coursecur = year_cur->sem[num_sem - 1].courseh;
     if (year_cur->sem[num_sem - 1].courseh->course_id == tempID)
     {
         year_cur->sem[num_sem - 1].courseh = year_cur->sem[num_sem - 1].courseh->Next;
         delete coursecur;
         n--;
     }
-    while (coursecur->Next != nullptr )
+    while (coursecur->Next != nullptr)
     {
         if (coursecur->Next->course_id == tempID)
         {
@@ -286,7 +285,16 @@ void Update_Course(Year*& year_cur, int num_sem)
 
 }
 
-
+void Convert_Date(string s)
+{
+    int dd, mm, yyyy;
+    dd = ((int)s[0] - 48) * 10 + ((int)s[1] - 48);
+    cout << dd;
+    mm = ((int)s[3] - 48) * 10 + ((int)s[4] - 48);
+    cout << mm;
+    yyyy = ((int)s[6] - 48) * 1000 + ((int)s[7] - 48) * 100 + ((int)s[8] - 48) * 10 + ((int)s[9] - 48);
+    cout << yyyy;
+}
 bool check(Students* stu_cur, Course* Cour) {
     if (Cour->num_stu == 50 || stu_cur->num_Cour == 5) return 0;
     while (stu_cur->Cour) {
@@ -339,5 +347,34 @@ void Remove_Course(Students*& stu_cur, Year*& yearh) {
         }
     }
     Cou->num_stu--;
+}
+void View_List_Of_Classes(Class* classhead)
+{
+    if (classhead != nullptr)
+    {
+        View_List_Of_Classes(classhead->Next);
+        cout << classhead->class_name << endl;
+    }
+}
+void View_Classes_Students(Students* sthead)
+{
+    if (sthead != nullptr)
+    {
+        View_Classes_Students(sthead->pNext);
+        cout << sthead->ID << " " << sthead->NameFirst << " " << sthead->NameLast << " " << sthead->Gender <<endl;
+    }
+}
 
+void View_List_Of_Students_Course(Year * year_cur, int num_sem)
+{
+    string tempID;
+    cout << "Input the ID of the course: ";
+    cin >> tempID;
+    Course* course_cur = Find_Course(year_cur, tempID);
+    int n = course_cur->num_stu;
+    for (int i = 0; i < n; i++)
+    {
+        cout << i << ". " << course_cur->Stu[i].ID << " " << course_cur->Stu[i].NameFirst << " " << course_cur->Stu[i].NameLast << " " << course_cur->Stu[i].Gender;
+        cout << endl;
+    }
 }

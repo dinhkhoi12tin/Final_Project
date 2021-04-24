@@ -127,7 +127,7 @@ void gotoxy(int x, int y)
 }
 void displayUI()
 {
-    int offset = 30;
+    int offset = 3;
     int staffFlag = 1;
     int options;
     do
@@ -207,13 +207,13 @@ bool CheckUser(Students* stu, Students*& stu_cur, string ID, string pass)
     if (stu_cur == nullptr || stu_cur->password != pass) return false;
     return true;
 }
-void InputMaskedPassword(string &password)
+void InputMaskedPassword(string& password)
 {
     password = "";
     char ch;
     ch = _getch();
     while (ch != 13) {//character 13 is enter
-    
+
         if (ch == '\b')   //If the 'Backspace' key is pressed
         {
             if (password.size() != 0)  //If the password string contains data, erase last character
@@ -223,8 +223,8 @@ void InputMaskedPassword(string &password)
             }
         }
         else {
-        password.push_back(ch);
-        cout << '*';
+            password.push_back(ch);
+            cout << '*';
         }
         ch = _getch();
     }
@@ -244,7 +244,7 @@ void Login(Students* stu, Students* sta, Students*& stu_cur, Year*& yearh)
         SetConsoleTextAttribute(hConsole, 121);
         gotoxy(20 + offset, 3); cout << "Username: "; cin >> user;
         if (user[0] == '-') break;
-        gotoxy(20 + offset, 4); cout << "Password: "; 
+        gotoxy(20 + offset, 4); cout << "Password: ";
         InputMaskedPassword(pass);
         if (user[0] != '0')
         {
@@ -306,7 +306,7 @@ void View_profile(Students* stu, Students* stu_cur) {
     do
     {
         SetConsoleTextAttribute(hConsole, 6);
-        gotoxy(0 + offset, 11); cout << " >> Press any to stop.  "; gotoxy(24 + offset, 11); cout << "        ";
+        gotoxy(0 + offset, 11); cout << " >> Press any to stop.  "; gotoxy(24 + offset, 11); cout << "                               ";
         gotoxy(25 + offset, 11);  cin >> wait;
     } while (wait = 0);
 }
@@ -340,10 +340,10 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
             if (stu_cur->username[0] == '0')Change_Password(sta, stu_cur, pass, filename);
         }
         if (stu_cur->username[0] != '0' && option == 3) {
-            Enroll_Course(stu_cur,yearh);
+            Enroll_Course(stu_cur, yearh);
         } // student function;
         if (stu_cur->username[0] == '0' && option == 3) {
-            Menu_Feature_First_Staff(stu,yearh);
+            Menu_Feature_First_Staff(stu, yearh);
         }
 
     }
