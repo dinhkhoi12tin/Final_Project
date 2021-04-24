@@ -142,7 +142,6 @@ void displayUI()
         if (staffFlag == 1) // chừng nào check là staff được thì sẽ sửa.
         {
             gotoxy(20 + offset, 3); cout << "Welcome Staff";
-            gotoxy(20 + offset, 6); cout << "3. Create SchoolYear";
             gotoxy(20 + offset, 7); cout << "0. Logout";
         }
         else
@@ -207,7 +206,29 @@ bool CheckUser(Students* stu, Students*& stu_cur, string ID, string pass)
     if (stu_cur == nullptr || stu_cur->password != pass) return false;
     return true;
 }
-void Login(Students* stu, Students* sta, Students*& stu_cur, Year *& yearh)
+void InputMaskedPassword(string &password)
+{
+    password = "";
+    char ch;
+    ch = _getch();
+    while (ch != 13) {//character 13 is enter
+    
+        if (ch == '\b')   //If the 'Backspace' key is pressed
+        {
+            if (password.size() != 0)  //If the password string contains data, erase last character
+            {
+                cout << "\b \b";
+                password.erase(password.size() - 1, 1);
+            }
+        }
+        else {
+        password.push_back(ch);
+        cout << '*';
+        }
+        ch = _getch();
+    }
+}
+void Login(Students* stu, Students* sta, Students*& stu_cur, Year*& yearh)
 {
     int offset = 30;
     while (1)
@@ -222,7 +243,8 @@ void Login(Students* stu, Students* sta, Students*& stu_cur, Year *& yearh)
         SetConsoleTextAttribute(hConsole, 121);
         gotoxy(20 + offset, 3); cout << "Username: "; cin >> user;
         if (user[0] == '-') break;
-        gotoxy(20 + offset, 4); cout << "Password: "; cin >> pass;
+        gotoxy(20 + offset, 4); cout << "Password: "; 
+        InputMaskedPassword(pass);
         if (user[0] != '0')
         {
             if (CheckUser(stu, stu_cur, user, pass) == false)
@@ -320,7 +342,7 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
             Enroll_Course(stu_cur,yearh);
         } // student function;
         if (stu_cur->username[0] == '0' && option == 3) {
-            Menu_Feature_First_Staff(stu);
+            Menu_Feature_First_Staff(stu,yearh);
         }
 
     }
@@ -335,7 +357,5 @@ void Menu()
     LoadFileStudents(stu, filenameStu);
     LoadFileStaff(sta, filenameSta);
     Year* yearh = nullptr;
-
     Login(stu, sta, stu_cur, yearh);
-
 }
