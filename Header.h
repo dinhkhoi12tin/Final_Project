@@ -113,3 +113,4 @@ void Update_Course(Year*& year_cur, int num_sem);
 void Convert_Date(string s);
 void View_List_Of_Classes(Class* classhead);
 void View_Classes_Students(Students* sthead);
+void View_List_Of_Students_Course(Year* year_cur, int num_sem);

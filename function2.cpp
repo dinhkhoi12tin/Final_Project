@@ -364,3 +364,17 @@ void View_Classes_Students(Students* sthead)
         cout << sthead->ID << " " << sthead->NameFirst << " " << sthead->NameLast << " " << sthead->Gender <<endl;
     }
 }
+
+void View_List_Of_Students_Course(Year * year_cur, int num_sem)
+{
+    string tempID;
+    cout << "Input the ID of the course: ";
+    cin >> tempID;
+    Course* course_cur = Find_Course(year_cur, tempID);
+    int n = course_cur->num_stu;
+    for (int i = 0; i < n; i++)
+    {
+        cout << i << ". " << course_cur->Stu[i].ID << " " << course_cur->Stu[i].NameFirst << " " << course_cur->Stu[i].NameLast << " " << course_cur->Stu[i].Gender;
+        cout << endl;
+    }
+}
