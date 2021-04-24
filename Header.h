@@ -60,7 +60,7 @@ struct Semester {
     int regEnd;
 };
 
-struct Year{
+struct Year {
     string year_name;
     Semester* sem = new Semester[3];
     int dateStart, dateEnd;
@@ -111,3 +111,5 @@ void View_List_Course(Year* year_cur, int n);
 void Delete_Course(Year*& year_cur, int& n, int num_sem);
 void Update_Course(Year*& year_cur, int num_sem);
 void Convert_Date(string s);
+void View_List_Of_Classes(Class* classhead);
+void View_Classes_Students(Students* sthead);
