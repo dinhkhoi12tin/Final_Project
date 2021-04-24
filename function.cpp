@@ -127,7 +127,7 @@ void gotoxy(int x, int y)
 }
 void displayUI()
 {
-    int offset = 30;
+    int offset = 3;
     int staffFlag = 1;
     int options;
     do
