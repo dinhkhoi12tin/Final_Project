@@ -86,8 +86,6 @@ Students* Find_User_By_ID(Students* stu, string ID);
 void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, string filename, Year*& yearh);
 void Menu();
 
-
-
 void Enroll_Course(Students*& stu_cur, Year*& yearh);
 Class* Find(Class* classhead, string classname);
 void add_one_by_one(Class*& classhead);
@@ -112,4 +110,4 @@ void Menu_Op(Year*& yearh);
 void View_List_Course(Year* year_cur, int n);
 void Delete_Course(Year*& year_cur, int& n, int num_sem);
 void Update_Course(Year*& year_cur, int num_sem);
-
+void Convert_Date(string s);

@@ -39,7 +39,7 @@ void add_one_by_one(Class*& classhead);
 void display(Class* classhead);
 void add_by_file_csv(Class*& classhead);
 void create_class(Class*& classhead);
-void Menu_Feature_First_Staff(Students * stu);
+void Menu_Feature_First_Staff(Students * stu, Year*& yearh);
 void Export_new(Class* classhead, Students* stu);
 void create_new_year(Year*& yearh, Year*& year_cur);
 void CreateSem(Year*& year_cur, int& n, int& num_sem);
@@ -50,3 +50,4 @@ void Delete_Course(Year*& year_cur,int& n, int num_sem);
 void Update_Course(Year*& year_cur, int num_sem);
 //void PrintSem(Year* yearh, Year*& year_cur);
 void Menu_Op();
+

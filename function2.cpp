@@ -171,8 +171,6 @@ void CreateSes(Course*& course_cur, int num_sem)
     }   
 }
 
-
-
 void View_List_Course(Year* year_cur, int n)
 {
     int choice;
@@ -286,7 +284,16 @@ void Update_Course(Year*& year_cur, int num_sem)
 
 }
 
-
+void Convert_Date(string s)
+{
+    int dd, mm, yyyy;
+    dd = ((int)s[0]-48) * 10 + ((int)s[1]-48);
+    cout << dd;
+    mm = ((int)s[3] - 48) * 10 + ((int)s[4] - 48);
+    cout << mm;
+    yyyy = ((int)s[6] - 48) * 1000 + ((int)s[7] - 48) * 100 + ((int)s[8] - 48) * 10 + ((int)s[9] - 48);
+    cout << yyyy;
+}
 bool check(Students* stu_cur, Course* Cour) {
     if (Cour->num_stu == 50 || stu_cur->num_Cour == 5) return 0;
     while (stu_cur->Cour) {
