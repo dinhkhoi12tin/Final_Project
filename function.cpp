@@ -127,7 +127,7 @@ void gotoxy(int x, int y)
 }
 void displayUI()
 {
-    int offset = 30;
+    int offset = 3;
     int staffFlag = 1;
     int options;
     do
@@ -142,7 +142,6 @@ void displayUI()
         if (staffFlag == 1) // chừng nào check là staff được thì sẽ sửa.
         {
             gotoxy(20 + offset, 3); cout << "Welcome Staff";
-            gotoxy(20 + offset, 6); cout << "3. Create SchoolYear";
             gotoxy(20 + offset, 7); cout << "0. Logout";
         }
         else
@@ -322,7 +321,7 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
         cout << "1.View Profile\n";
         gotoxy(20 + offset, 5); cout << "2.Change Password\n";
         gotoxy(20 + offset, 6); if (stu_cur->username[0] != '0') cout << "3.Enroll in a course\n"; //cout student name of function
-        gotoxy(20 + offset, 6); if (stu_cur->username[0] == '0') cout << "3.Create new year\n"; // cout staff name of function
+        gotoxy(20 + offset, 6); if (stu_cur->username[0] == '0') cout << "3.Adcademic Year Options\n"; // cout staff name of function
         gotoxy(20 + offset, 7); cout << "0.Log out\n";
         int option;
         SetConsoleTextAttribute(hConsole, 6);
