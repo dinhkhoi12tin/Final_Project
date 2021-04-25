@@ -295,6 +295,7 @@ void Convert_Date(string s)
     yyyy = ((int)s[6] - 48) * 1000 + ((int)s[7] - 48) * 100 + ((int)s[8] - 48) * 10 + ((int)s[9] - 48);
     cout << yyyy;
 }
+
 bool check(Students* stu_cur, Course* Cour) {
     if (Cour->num_stu == 50 || stu_cur->num_Cour == 5) return 0;
     while (stu_cur->Cour) {
@@ -309,6 +310,7 @@ bool check(Students* stu_cur, Course* Cour) {
     }
     return 1;
 }
+
 void Enroll_Course(Students*& stu_cur, Year*& yearh) {
     string ID;
     cout << "type Id course: "; cin >> ID;
@@ -323,11 +325,13 @@ void Enroll_Course(Students*& stu_cur, Year*& yearh) {
         cout << "khong the dang ki\n";
     }
 }
+
 void View_Course(Students* stu_cur) {
     for (int i = 1; i <= stu_cur->num_Cour; ++i) {
         cout << stu_cur->Cour[i].course_name << " ";
     }
 }
+
 void Remove_Course(Students*& stu_cur, Year*& yearh) {
     string ID;
     cout << "type ID course to remove: "; cin >> ID;
@@ -348,6 +352,7 @@ void Remove_Course(Students*& stu_cur, Year*& yearh) {
     }
     Cou->num_stu--;
 }
+
 void View_List_Of_Classes(Class* classhead)
 {
     if (classhead != nullptr)
@@ -356,6 +361,7 @@ void View_List_Of_Classes(Class* classhead)
         cout << classhead->class_name << endl;
     }
 }
+
 void View_Classes_Students(Students* sthead)
 {
     if (sthead != nullptr)
@@ -377,4 +383,4 @@ void View_List_Of_Students_Course(Year * year_cur, int num_sem)
         cout << i << ". " << course_cur->Stu[i].ID << " " << course_cur->Stu[i].NameFirst << " " << course_cur->Stu[i].NameLast << " " << course_cur->Stu[i].Gender;
         cout << endl;
     }
-}
+}   

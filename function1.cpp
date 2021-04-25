@@ -156,6 +156,9 @@ void create_class(Class*& classhead) {
 }
 void Menu_Feature_First_Staff(Students* stu, Year*& yearh) {
     int offset = 30;
+    Year* year_cur = nullptr;
+    int num_sem = 0;
+    int n;
     Class* classhead = 0;
     //create_new_year();
     while (1) {
@@ -163,10 +166,13 @@ void Menu_Feature_First_Staff(Students* stu, Year*& yearh) {
         HANDLE  hConsole;
         hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleTextAttribute(hConsole, 121);
-        gotoxy(20 + offset, 3); cout << "1.create class\n";
-        gotoxy(20 + offset, 4); cout << "2.add one by one student to class\n";
-        gotoxy(20 + offset, 5); cout << "3.add by file csv\n";
-        gotoxy(20 + offset, 6); cout << "0.exit\n";
+        gotoxy(20 + offset, 2); cout << "1.create class\n";
+        gotoxy(20 + offset, 3); cout << "2.add one by one student to class\n";
+        gotoxy(20 + offset, 4); cout << "3.add by file csv\n";
+        gotoxy(20 + offset, 5); cout << "4.create new year";
+        gotoxy(20 + offset, 6); cout << "5.create new semester";
+        gotoxy(20 + offset, 7); cout << "6.view courses";
+        gotoxy(20 + offset, 10); cout << "0.exit\n";
         int option;
         SetConsoleTextAttribute(hConsole, 6);
         gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "                    ";
@@ -174,6 +180,20 @@ void Menu_Feature_First_Staff(Students* stu, Year*& yearh) {
         if (option == 1) create_class(classhead);
         if (option == 2) add_one_by_one(classhead);
         if (option == 3) add_by_file_csv(classhead);
+        if (option == 4) create_new_year(yearh, year_cur);
+        if (option == 5) CreateSem(year_cur, n, num_sem);
+        if (option == 6)
+        {
+            View_List_Course(year_cur, n);
+            gotoxy(20 + offset, 8); cout << "1.edit courses information";
+            gotoxy(20 + offset, 9); cout << "2.delete courses";
+                                    cout << "0.Exit";
+            int option1;
+            cout << "Choose option: " << endl;
+            if (option1 == 0) break;
+            if (option1 == 1) Update_Course(year_cur, num_sem);
+            if (option1 == 2) Delete_Course(year_cur, n, num_sem);
+        }
         if (option == 0) break;
     }
     Export_new(classhead, stu);
