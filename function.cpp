@@ -139,7 +139,7 @@ void displayUI()
         SetConsoleTextAttribute(hConsole, 121);
         gotoxy(20 + offset, 4); cout << "1. Profile";
         gotoxy(20 + offset, 5); cout << "2. Change password"; // can be added later on
-        if (staffFlag == 1) // chừng nào check là staff được thì sẽ sửa.
+        if (staffFlag == 1) 
         {
             gotoxy(20 + offset, 3); cout << "Welcome Staff";
             gotoxy(20 + offset, 6); cout << "3. Create SchoolYear";
