@@ -166,11 +166,9 @@ void Menu_Feature_First_Staff(Students* stu, Year*& yearh) {
         HANDLE  hConsole;
         hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleTextAttribute(hConsole, 121);
-        gotoxy(20 + offset, 2); cout << "1.create class\n";
         gotoxy(20 + offset, 3); cout << "2.add one by one student to class\n";
         gotoxy(20 + offset, 4); cout << "3.add by file csv\n";
         gotoxy(20 + offset, 5); cout << "4.create new year";
-        gotoxy(20 + offset, 6); cout << "5.create new semester";
         gotoxy(20 + offset, 7); cout << "6.view courses";
         gotoxy(20 + offset, 10); cout << "0.exit\n";
         int option;
