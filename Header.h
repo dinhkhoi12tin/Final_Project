@@ -56,14 +56,15 @@ struct Semester {
     string dateStart;
     string dateEnd;
     Course* courseh;
-    int regStart;
-    int regEnd;
+    string regStart;
+    string regEnd;
 };
 
 struct Year {
     string year_name;
     Semester* sem = new Semester[3];
-    int dateStart, dateEnd;
+    string dateStart;
+    string dateEnd;
     Year* Next;
 };
 void createframe();
