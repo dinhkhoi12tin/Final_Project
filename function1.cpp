@@ -169,6 +169,7 @@ void Menu_Feature_First_Staff(Students* stu, Year*& yearh) {
         gotoxy(20 + offset, 3); cout << "2.add one by one student to class\n";
         gotoxy(20 + offset, 4); cout << "3.add by file csv\n";
         gotoxy(20 + offset, 5); cout << "4.create new year";
+        gotoxy(20 + offset, 6); cout << "5.create semester";//Sua o day nha !! Tao sua dai ma sai r :)) 
         gotoxy(20 + offset, 7); cout << "6.view courses";
         gotoxy(20 + offset, 10); cout << "0.exit\n";
         int option;
@@ -188,6 +189,7 @@ void Menu_Feature_First_Staff(Students* stu, Year*& yearh) {
                                     cout << "0.Exit";
             int option1;
             cout << "Choose option: " << endl;
+            cin >> option1;
             if (option1 == 0) break;
             if (option1 == 1) Update_Course(year_cur, num_sem);
             if (option1 == 2) Delete_Course(year_cur, n, num_sem);
