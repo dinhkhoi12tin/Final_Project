@@ -184,14 +184,25 @@ void CreateSes(Course*& course_cur, int num_sem)
 
 void View_List_Course(Year* year_cur, int n)
 {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
     int choice;
-    cout << "Input the semester you want to view:";
-    cout << "1 2 3"; // choose semester
+    gotoxy(8 + offset, 3);
+    cout << "Input the semester you want to view";
+    cout << " (1 2 3): "; // choose semester
     cin >> choice;
-    if (year_cur->sem[choice - 1].courseh == nullptr) cout << "Semester does not exist";
+    if (year_cur->sem[choice - 1].courseh == nullptr) {
+        createframe();
+        gotoxy(8 + offset, 3);
+        cout << "Semester does not exist";
+    }
     else
     {
         Course* coursecur = year_cur->sem[choice - 1].courseh;
+        gotoxy(38, 3);
         for (int i = 0; i < n; i++)
         {
             cout << i << ". " << coursecur->course_name;
@@ -199,6 +210,11 @@ void View_List_Course(Year* year_cur, int n)
             cout << endl;
         }
         int choice2;
+        createframe();
+        HANDLE  hConsole;
+        hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(hConsole, 121);
+        gotoxy(8 + offset, 3);
         cout << "Input the course you want to view: ";
         cin >> choice2;
         coursecur = year_cur->sem[choice - 1].courseh;
@@ -206,14 +222,24 @@ void View_List_Course(Year* year_cur, int n)
         {
             coursecur = coursecur->Next;
         }
-        cout << "Course ID: " << coursecur->course_id << endl;
-        cout << "Course Name: " << coursecur->course_name << endl;
-        cout << "Course Credit: " << coursecur->cre_num << endl;
+
+        createframe();
+        SetConsoleTextAttribute(hConsole, 121);
+        gotoxy(8 + offset, 1);
+        cout << "Course ID: " << coursecur->course_id <<endl;
+        gotoxy(8 + offset, 2);
+        cout << "Course Name: " << coursecur->course_name <<endl;
+        gotoxy(8 + offset, 3);
+        cout << "Course Credit: " << coursecur->cre_num <<endl;
+        gotoxy(8 + offset, 4);
         cout << "Course's teacher's name: " << coursecur->teacher_name << endl;
+        gotoxy(8 + offset, 5);
         cout << "Course's Session: ";
         for (int i = 0; i < 2; i++)
         {
+            gotoxy(58, 5);
             cout << coursecur->ses[i].date << " ";
+            gotoxy(58, 6);
             cout << coursecur->ses[i].timeofSes;
             cout << endl;
         }

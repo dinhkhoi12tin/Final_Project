@@ -176,7 +176,7 @@ void Menu_Feature_First_Staff(Students* stu, Year*& yearh) {
         int option;
         SetConsoleTextAttribute(hConsole, 6);
         gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "                    ";
-        gotoxy(35 + offset, 11);  cin >> option;
+        gotoxy(36 + offset, 11);  cin >> option;
         if (option == 1) create_class(classhead);
         if (option == 2) add_one_by_one(classhead);
         if (option == 3) add_by_file_csv(classhead);
@@ -184,13 +184,14 @@ void Menu_Feature_First_Staff(Students* stu, Year*& yearh) {
         if (option == 5) CreateSem(year_cur, n, num_sem);
         if (option == 6)
         {
-            createframe();
             View_List_Course(year_cur, n);
             gotoxy(20 + offset, 7); cout << "1.Edit courses information";
             gotoxy(20 + offset, 8); cout << "2.Delete courses";
             gotoxy(20 + offset, 9); cout << "0.Exit";
             int option1;
-            cout << "Choose option: " << endl;
+            gotoxy(20 + offset, 10);
+            cout << "Choose option: " <<endl;
+            gotoxy(65, 10);
             cin >> option1;
             if (option1 == 0) break;
             if (option1 == 1) Update_Course(year_cur, num_sem);
