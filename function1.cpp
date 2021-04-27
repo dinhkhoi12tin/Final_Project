@@ -120,8 +120,8 @@ void add_by_file_csv(Class*& classhead) {
         HANDLE  hConsole;
         hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleTextAttribute(hConsole, 121);
-        gotoxy(20 + offset, 3); cout << "-1.exit\n";
-        gotoxy(20 + offset, 4); cout << "filename:";
+        gotoxy(20 + offset, 3); cout << "Type -1.exit\n";
+        gotoxy(20 + offset, 4); cout << "Input filename to load:";
         string filename;
         cin >> filename;
         if (filename[0] == '-') break;
@@ -146,7 +146,7 @@ void create_class(Class*& classhead) {
         hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleTextAttribute(hConsole, 121);
         gotoxy(20 + offset, 3); cout << "Type -1 to finish\n";
-        gotoxy(20 + offset, 4); cout << "type name of class:"; cin >> classname;
+        gotoxy(20 + offset, 4); cout << "Input Name:"; cin >> classname;
         if (classname[0] == '-') break;
         Class* newclass = new Class;
         newclass->class_name = classname;
@@ -166,12 +166,13 @@ void Menu_Feature_First_Staff(Students* stu, Year*& yearh) {
         HANDLE  hConsole;
         hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleTextAttribute(hConsole, 121);
-        gotoxy(20 + offset, 3); cout << "2.add one by one student to class\n";
-        gotoxy(20 + offset, 4); cout << "3.add by file csv\n";
-        gotoxy(20 + offset, 5); cout << "4.create new year";
-        gotoxy(20 + offset, 6); cout << "5.create semester";//Sua o day nha !! Tao sua dai ma sai r :)) 
-        gotoxy(20 + offset, 7); cout << "6.view courses";
-        gotoxy(20 + offset, 10); cout << "0.exit\n";
+        gotoxy(20 + offset, 2); cout << "1.Create classes";
+        gotoxy(20 + offset, 3); cout << "2.Add student to class\n";
+        gotoxy(20 + offset, 4); cout << "3.Add student to class by file csv\n";
+        gotoxy(20 + offset, 5); cout << "4.Create new year";
+        gotoxy(20 + offset, 6); cout << "5.Create semester";//Sua o day nha !! Tao sua dai ma sai r :)) 
+        gotoxy(20 + offset, 7); cout << "6.View created courses";
+        gotoxy(20 + offset, 8); cout << "0.exit\n";
         int option;
         SetConsoleTextAttribute(hConsole, 6);
         gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "                    ";
@@ -183,10 +184,11 @@ void Menu_Feature_First_Staff(Students* stu, Year*& yearh) {
         if (option == 5) CreateSem(year_cur, n, num_sem);
         if (option == 6)
         {
+            createframe();
             View_List_Course(year_cur, n);
-            gotoxy(20 + offset, 8); cout << "1.edit courses information";
-            gotoxy(20 + offset, 9); cout << "2.delete courses";
-                                    cout << "0.Exit";
+            gotoxy(20 + offset, 7); cout << "1.Edit courses information";
+            gotoxy(20 + offset, 8); cout << "2.Delete courses";
+            gotoxy(20 + offset, 9); cout << "0.Exit";
             int option1;
             cout << "Choose option: " << endl;
             cin >> option1;
