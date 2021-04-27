@@ -88,6 +88,8 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
 void Menu();
 
 void Enroll_Course(Students*& stu_cur, Year*& yearh);
+void View_Course(Students* stu_cur);
+void Remove_Course(Students*& stu_cur, Year*& yearh);
 Class* Find(Class* classhead, string classname);
 void add_one_by_one(Class*& classhead);
 void display(Class* classhead);

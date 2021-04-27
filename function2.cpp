@@ -322,7 +322,7 @@ bool check(Students* stu_cur, Course* Cour) {
 }
 void Enroll_Course(Students*& stu_cur, Year*& yearh) {
     string ID;
-    cout << "type Id course: "; cin >> ID;
+    cout << "Input Id course: "; cin >> ID;
     Course* Cour = Find_Course(yearh, ID);
     if (check(stu_cur, Cour)) {
         Cour->Stu[++Cour->num_stu] =
@@ -331,12 +331,18 @@ void Enroll_Course(Students*& stu_cur, Year*& yearh) {
         stu_cur->Cour[++stu_cur->num_Cour] = *Cour;
     }
     else {
-        cout << "khong the dang ki\n";
+        cout << "Unable to register\n";
     }
 }
 void View_Course(Students* stu_cur) {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
     for (int i = 1; i <= stu_cur->num_Cour; ++i) {
-        cout << stu_cur->Cour[i].course_name << " ";
+
+        gotoxy(20 + offset, i + 2); cout << stu_cur->Cour[i].course_name << " ";
     }
 }
 void Remove_Course(Students*& stu_cur, Year*& yearh) {

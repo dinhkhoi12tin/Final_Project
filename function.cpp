@@ -318,9 +318,15 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
         SetConsoleTextAttribute(hConsole, 121);
         gotoxy(20 + offset, 4); cout << "1.View Profile\n";
         gotoxy(20 + offset, 5); cout << "2.Change Password\n";
-        gotoxy(20 + offset, 6); if (stu_cur->username[0] != '0') cout << "3.Enroll in a course\n"; //cout student name of function
-        gotoxy(20 + offset, 6); if (stu_cur->username[0] == '0') cout << "3.Academic Year Options\n"; // cout staff name of function
+        gotoxy(20 + offset, 6);
+        if (stu_cur->username[0] != '0') {
+            cout << "3. Enroll in a course\n";
+            gotoxy(20 + offset, 7); cout << "4. View enrolled courses";
+            gotoxy(20 + offset, 8); cout << "0.Log out\n";
+        }//cout student name of function
+        if (stu_cur->username[0] == '0'){ cout << "3.Academic Year Options\n"; // cout staff name of function
         gotoxy(20 + offset, 7); cout << "0.Log out\n";
+    }
         int option;
         SetConsoleTextAttribute(hConsole, 6);
         gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "   ";
@@ -342,7 +348,17 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
         if (stu_cur->username[0] == '0' && option == 3) {
             Menu_Feature_First_Staff(stu, yearh);
         }
-
+        if (stu_cur->username[0] == '0' && option == 4) {
+            View_Course(stu_cur);
+            //if (time == true)
+            //{
+                 gotoxy(20 + offset, 8); cout << "1. Remove Enrolled Courses";
+                 gotoxy(20 + offset, 9); cout << "0. Exit";
+                 cin >> option;
+                 if (option == 0) break;
+                 if (option == 1) Remove_Course(stu_cur, yearh);
+            //}
+        }
     }
 }
 void Menu()
