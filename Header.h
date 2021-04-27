@@ -5,6 +5,7 @@
 #include<string>
 #include<iomanip>
 #include<conio.h>
+#include<ctime>
 using namespace std;
 struct Session {
     string date;
@@ -112,10 +113,13 @@ void Menu_Op(/*Year*& yearh*/);
 void View_List_Course(Year* year_cur, int n);
 void Delete_Course(Year*& year_cur, int& n, int num_sem);
 void Update_Course(Year*& year_cur, int num_sem);
-void Convert_Date(string s);
+
 void View_List_Of_Classes(Class* classhead);
 void View_Classes_Students(Students* sthead);
 void View_List_Of_Students_Course(Year* year_cur, int num_sem);
 
-void CreateCourseByFile(Course*& courseh, int num_sem,int& n, ifstream& input);
+void CreateCourseByFile(Course*& courseh, int num_sem, int& n, ifstream& input);
 void CreateSem(Year*& year_cur, int& n, int& num_sem);
+void GetCurrentDate(int& Year, int& Month, int& Day);
+void Convert_Date(string s, int& dd, int& mm, int& yyyy);
+bool CheckRegistrationDate(Year* year_cur, int num_sem);

@@ -190,15 +190,18 @@ void Menu_Feature_First_Staff(Students* stu, Year*& yearh) {
             gotoxy(20 + offset, 9); cout << "0.Exit";
             int option1;
             gotoxy(20 + offset, 10);
-            cout << "Choose option: " <<endl;
+            cout << "Choose option: " << endl;
             gotoxy(65, 10);
             cin >> option1;
             if (option1 == 0) break;
             if (option1 == 1) Update_Course(year_cur, num_sem);
             if (option1 == 2) Delete_Course(year_cur, n, num_sem);
         }
+        /*if (option == 7) test ngay thang
+        {
+            cout << CheckRegistrationDate(year_cur, 1)
+        }*/
         if (option == 0) break;
     }
     Export_new(classhead, stu);
 }
-    

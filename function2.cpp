@@ -102,7 +102,7 @@ void CreateSem(Year*& year_cur, int& n, int& num_sem)
     cin >> n;*/
     //CreateCourse(year_cur->sem[num_sem - 1].courseh, num_sem, n);
     ifstream input;
-    CreateCourseByFile(year_cur->sem[num_sem - 1].courseh, num_sem,n , input);
+    CreateCourseByFile(year_cur->sem[num_sem - 1].courseh, num_sem, n, input);
 }
 
 /*void CreateCourse(Course*& courseh, int num_sem, int n)
@@ -155,7 +155,7 @@ void CreateCourseByFile(Course*& courseh, int num_sem, int& n, ifstream& input)
     else
     {
         Course* coursecur = nullptr;
-        while(input.good())
+        while (input.good())
         {
             if (courseh == nullptr)
             {
@@ -174,9 +174,9 @@ void CreateCourseByFile(Course*& courseh, int num_sem, int& n, ifstream& input)
             getline(input, coursecur->cre_num, ',');
             for (int i = 0; i < 2; i++)
             {
-                getline(input, coursecur->ses[i].date , ',');
-                if(i == 0) getline(input, coursecur->ses[0].timeofSes, ',');
-                if(i == 1) getline(input, coursecur->ses[1].timeofSes, '\n');
+                getline(input, coursecur->ses[i].date, ',');
+                if (i == 0) getline(input, coursecur->ses[0].timeofSes, ',');
+                if (i == 1) getline(input, coursecur->ses[1].timeofSes, '\n');
             }
             n++;
             coursecur->Next = nullptr;
@@ -195,7 +195,7 @@ void CreateSes(Course*& course_cur, int num_sem)
         hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleTextAttribute(hConsole, 121);
         gotoxy(8 + offset, 3);
-        cout << "Input the No. " << i+1 << " course's day: ";
+        cout << "Input the No. " << i + 1 << " course's day: ";
         gotoxy(8 + offset, 4); cout << "Mon       /       Tue";
         gotoxy(8 + offset, 5); cout << "Wed       /       Thu";
         gotoxy(8 + offset, 6); cout << "Fri       /       Sat";
@@ -250,9 +250,9 @@ void View_List_Course(Year* year_cur, int n)
         HANDLE  hConsole;
         hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleTextAttribute(hConsole, 121);
-        for (int i = 0; i < n-1; i++)
+        for (int i = 0; i < n - 1; i++)
         {
-            gotoxy(38, i+3);
+            gotoxy(38, i + 3);
             cout << i << ". " << coursecur->course_name;
             coursecur = coursecur->Next;
             cout << endl;
@@ -270,11 +270,11 @@ void View_List_Course(Year* year_cur, int n)
         createframe();
         SetConsoleTextAttribute(hConsole, 121);
         gotoxy(8 + offset, 1);
-        cout << "Course ID: " << coursecur->course_id <<endl;
+        cout << "Course ID: " << coursecur->course_id << endl;
         gotoxy(8 + offset, 2);
-        cout << "Course Name: " << coursecur->course_name <<endl;
+        cout << "Course Name: " << coursecur->course_name << endl;
         gotoxy(8 + offset, 3);
-        cout << "Course Credit: " << coursecur->cre_num <<endl;
+        cout << "Course Credit: " << coursecur->cre_num << endl;
         gotoxy(8 + offset, 4);
         cout << "Course's teacher's name: " << coursecur->teacher_name << endl;
         gotoxy(8 + offset, 5);
@@ -366,16 +366,7 @@ void Update_Course(Year*& year_cur, int num_sem)
 
 }
 
-void Convert_Date(string s)
-{
-    int dd, mm, yyyy;
-    dd = ((int)s[0] - 48) * 10 + ((int)s[1] - 48);
-    cout << dd;
-    mm = ((int)s[3] - 48) * 10 + ((int)s[4] - 48);
-    cout << mm;
-    yyyy = ((int)s[6] - 48) * 1000 + ((int)s[7] - 48) * 100 + ((int)s[8] - 48) * 10 + ((int)s[9] - 48);
-    cout << yyyy;
-}
+
 bool check(Students* stu_cur, Course* Cour) {
     if (Cour->num_stu == 50 || stu_cur->num_Cour == 5) return 0;
     while (stu_cur->Cour) {
@@ -448,7 +439,7 @@ void View_Classes_Students(Students* sthead)
     if (sthead != nullptr)
     {
         View_Classes_Students(sthead->pNext);
-        cout << sthead->ID << " " << sthead->NameFirst << " " << sthead->NameLast << " " << sthead->Gender <<endl;
+        cout << sthead->ID << " " << sthead->NameFirst << " " << sthead->NameLast << " " << sthead->Gender << endl;
     }
 }
 void View_List_Of_Students_Course(Year* year_cur, int num_sem)
@@ -462,5 +453,37 @@ void View_List_Of_Students_Course(Year* year_cur, int num_sem)
     {
         cout << i << ". " << course_cur->Stu[i].ID << " " << course_cur->Stu[i].NameFirst << " " << course_cur->Stu[i].NameLast << " " << course_cur->Stu[i].Gender;
         cout << endl;
+    }
+}
+void GetCurrentDate(int &Year, int &Month, int &Day) {
+    struct tm newtime;
+    time_t now = time(0);
+    localtime_s(&newtime, &now);
+    Year = 1900 + newtime.tm_year;
+    Month = 1 + newtime.tm_mon;
+    Day = newtime.tm_mday;
+    
+}
+void Convert_Date(string s, int &dd, int &mm, int &yyyy)
+{
+    dd = ((int)s[0] - 48) * 10 + ((int)s[1] - 48);
+    mm = ((int)s[3] - 48) * 10 + ((int)s[4] - 48);
+    yyyy = ((int)s[6] - 48) * 1000 + ((int)s[7] - 48) * 100 + ((int)s[8] - 48) * 10 + ((int)s[9] - 48);
+}
+bool CheckRegistrationDate(Year* year_cur, int num_sem)
+{
+    int CheckY, CheckM, CheckD;
+    GetCurrentDate(CheckY, CheckM, CheckD);
+    int dd1, mm1, yyyy1, dd2, mm2, yyyy2;
+    Convert_Date(year_cur->sem[num_sem - 1].regStart , dd1, mm1, yyyy1);
+    Convert_Date(year_cur->sem[num_sem - 1].regEnd, dd2, mm2, yyyy2);
+    int CD = (CheckY * 10000) + (CheckM * 100) + CheckD;
+    int SD = (yyyy1 * 10000) + (mm1 * 100) + dd1;
+    int ED = (yyyy2 * 10000) + (mm2 * 100) + dd2;
+    if (CD >= SD && CD <= ED) {
+        return 1;
+    }
+    else {
+        return 0;
     }
 }

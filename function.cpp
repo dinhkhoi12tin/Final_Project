@@ -324,9 +324,10 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
             gotoxy(20 + offset, 7); cout << "4. View enrolled courses";
             gotoxy(20 + offset, 8); cout << "0.Log out\n";
         }//cout student name of function
-        if (stu_cur->username[0] == '0'){ cout << "3.Academic Year Options\n"; // cout staff name of function
-        gotoxy(20 + offset, 7); cout << "0.Log out\n";
-    }
+        if (stu_cur->username[0] == '0') {
+            cout << "3.Academic Year Options\n"; // cout staff name of function
+            gotoxy(20 + offset, 7); cout << "0.Log out\n";
+        }
         int option;
         SetConsoleTextAttribute(hConsole, 6);
         gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "   ";
@@ -343,21 +344,38 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
             if (stu_cur->username[0] == '0')Change_Password(sta, stu_cur, pass, filename);
         }
         if (stu_cur->username[0] != '0' && option == 3) {
-            Enroll_Course(stu_cur, yearh);
+            cout << "input current semester:";
+            int semtest1;
+            cin >> semtest1; // placeholder
+            if (CheckRegistrationDate(yearh, semtest1))
+            {
+                Enroll_Course(stu_cur, yearh);
+            }
+            else cout << "Registering is currently not available";
         } // student function;
         if (stu_cur->username[0] == '0' && option == 3) {
             Menu_Feature_First_Staff(stu, yearh);
         }
         if (stu_cur->username[0] == '0' && option == 4) {
-            View_Course(stu_cur);
-            //if (time == true)
-            //{
-                 gotoxy(20 + offset, 8); cout << "1. Remove Enrolled Courses";
+            View_Course(stu_cur); // can phai enroll, thi khuc nay moi test duoc
+            cout << "input current semester:";
+            int semtest1;
+            cin >> semtest1; // placeholder
+            if (CheckRegistrationDate(yearh, semtest1))
+            {
+                 gotoxy(20 + offset, 8); cout << "1. Remove Enrolled Courses"; 
                  gotoxy(20 + offset, 9); cout << "0. Exit";
+                 cout << "pick an option: ";
                  cin >> option;
                  if (option == 0) break;
                  if (option == 1) Remove_Course(stu_cur, yearh);
-            //}
+            }
+            else
+            {
+                gotoxy(20 + offset, 8); cout << "0. Exit";
+                cin >> option;
+                break;
+            }
         }
     }
 }
