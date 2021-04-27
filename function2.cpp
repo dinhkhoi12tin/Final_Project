@@ -21,16 +21,18 @@ Course* Find_Course(Year* yearh, string id_course)
     return nullptr;
 }
 
-void Menu_Op(Year*& yearh)
+void Menu_Op(/*Year*& yearh*/)
 {
+    Year* yearh = nullptr;
     Year* year_cur = nullptr;
     int num_sem = 0;
-    int n;
+    int n = 0;
     create_new_year(yearh, year_cur);
     CreateSem(year_cur, n, num_sem);
-    //Delete_Course(year_cur, n, num_sem);
-    Update_Course(year_cur, num_sem);
     View_List_Course(year_cur, n);
+    //Delete_Course(year_cur, n, num_sem);
+    //Update_Course(year_cur, num_sem);
+    //View_List_Course(year_cur, n);
 }
 
 /*void PrintSem(Year* yearh, Year*& year_cur)
@@ -96,12 +98,14 @@ void CreateSem(Year*& year_cur, int& n, int& num_sem)
     //Create Course
     year_cur->sem[num_sem - 1].courseh = nullptr;
     gotoxy(8 + offset, 7);
-    cout << "Input the number of courses you want to create: ";
-    cin >> n;
-    CreateCourse(year_cur->sem[num_sem - 1].courseh, num_sem, n);
+    /*cout << "Input the number of courses you want to create: ";
+    cin >> n;*/
+    //CreateCourse(year_cur->sem[num_sem - 1].courseh, num_sem, n);
+    ifstream input;
+    CreateCourseByFile(year_cur->sem[num_sem - 1].courseh, num_sem,n , input);
 }
 
-void CreateCourse(Course*& courseh, int num_sem, int n)
+/*void CreateCourse(Course*& courseh, int num_sem, int n)
 {
     Course* coursecur = nullptr;
     int offset = 30;
@@ -139,6 +143,46 @@ void CreateCourse(Course*& courseh, int num_sem, int n)
         CreateSes(coursecur, num_sem);
         coursecur->Next = nullptr;
     }
+}*/
+
+void CreateCourseByFile(Course*& courseh, int num_sem, int& n, ifstream& input)
+{
+    input.open("Semester-1.csv");
+    if (!input.is_open())
+    {
+        cout << "Cannot open file " << endl;
+    }
+    else
+    {
+        Course* coursecur = nullptr;
+        while(input.good())
+        {
+            if (courseh == nullptr)
+            {
+                courseh = new Course;
+                coursecur = courseh;
+            }
+            else
+            {
+                coursecur->Next = new Course;
+                coursecur = coursecur->Next;
+            }
+            coursecur->maxnum_stu = 50;
+            getline(input, coursecur->course_name, ',');
+            getline(input, coursecur->course_id, ',');
+            getline(input, coursecur->teacher_name, ',');
+            getline(input, coursecur->cre_num, ',');
+            for (int i = 0; i < 2; i++)
+            {
+                getline(input, coursecur->ses[i].date , ',');
+                if(i == 0) getline(input, coursecur->ses[0].timeofSes, ',');
+                if(i == 1) getline(input, coursecur->ses[1].timeofSes, '\n');
+            }
+            n++;
+            coursecur->Next = nullptr;
+        }
+    }
+    input.close();
 }
 
 void CreateSes(Course*& course_cur, int num_sem)
@@ -202,19 +246,19 @@ void View_List_Course(Year* year_cur, int n)
     else
     {
         Course* coursecur = year_cur->sem[choice - 1].courseh;
-        gotoxy(38, 3);
-        for (int i = 0; i < n; i++)
+        createframe();
+        HANDLE  hConsole;
+        hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(hConsole, 121);
+        for (int i = 0; i < n-1; i++)
         {
+            gotoxy(38, i+3);
             cout << i << ". " << coursecur->course_name;
             coursecur = coursecur->Next;
             cout << endl;
         }
         int choice2;
-        createframe();
-        HANDLE  hConsole;
-        hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-        SetConsoleTextAttribute(hConsole, 121);
-        gotoxy(8 + offset, 3);
+        gotoxy(8 + offset, 2);
         cout << "Input the course you want to view: ";
         cin >> choice2;
         coursecur = year_cur->sem[choice - 1].courseh;

@@ -59,7 +59,6 @@ struct Semester {
     string regStart;
     string regEnd;
 };
-
 struct Year {
     string year_name;
     Semester* sem = new Semester[3];
@@ -107,7 +106,7 @@ void CreateCourse(Course*& courseh, int num_sem, int n);
 
 void CreateSes(Course*& course_cur, int num_sem);
 
-void Menu_Op(Year*& yearh);
+void Menu_Op(/*Year*& yearh*/);
 
 
 void View_List_Course(Year* year_cur, int n);
@@ -117,3 +116,6 @@ void Convert_Date(string s);
 void View_List_Of_Classes(Class* classhead);
 void View_Classes_Students(Students* sthead);
 void View_List_Of_Students_Course(Year* year_cur, int num_sem);
+
+void CreateCourseByFile(Course*& courseh, int num_sem,int& n, ifstream& input);
+void CreateSem(Year*& year_cur, int& n, int& num_sem);
