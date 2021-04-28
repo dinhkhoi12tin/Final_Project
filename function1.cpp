@@ -154,9 +154,8 @@ void create_class(Class*& classhead) {
         classhead = newclass;
     }
 }
-void Menu_Feature_First_Staff(Students* stu, Year*& yearh) {
+void Menu_Feature_First_Staff(Students* stu, Year*& yearh, Year*& year_cur) {
     int offset = 30;
-    Year* year_cur = nullptr;
     int num_sem = 0;
     int n;
     Class* classhead = 0;

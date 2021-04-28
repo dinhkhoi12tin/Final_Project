@@ -80,11 +80,11 @@ void Change_Password(Students* stu, Students*& stu_cur, string New_Password, str
 void View_profile(Students* stu, Students* stu_cur);
 bool CheckUser(Students* stu, Students*& stu_cur, string ID, string pass);
 
-void Login(Students* stu, Students* sta, Students*& stu_cur, Year*& yearh);
+void Login(Students* stu, Students* sta, Students*& stu_cur, Year*& yearh, Year*& year_cur);
 
 void InputMaskedPassword(string& password);
 Students* Find_User_By_ID(Students* stu, string ID);
-void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, string filename, Year*& yearh);
+void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, string filename, Year*& yearh, Year*& year_cur);
 void Menu();
 
 void Enroll_Course(Students*& stu_cur, Year*& yearh);
@@ -96,14 +96,14 @@ void display(Class* classhead);
 void add_by_file_csv(Class*& classhead);
 void create_class(Class*& classhead);
 
-void Menu_Feature_First_Staff(Students* stu, Year*& yearh);
+void Menu_Feature_First_Staff(Students* stu, Year*& yearh, Year* &year_cur);
 
 void Export_new(Class* classhead, Students* stu);
 
 void create_new_year(Year*& yearh, Year*& year_cur);
 
 void CreateSem(Year*& year_cur, int& n, int& num_sem);
-void CreateCourse(Course*& courseh, int num_sem, int n);
+//void CreateCourse(Course*& courseh, int num_sem, int n);
 
 void CreateSes(Course*& course_cur, int num_sem);
 
