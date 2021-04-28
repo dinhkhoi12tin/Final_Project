@@ -30,7 +30,7 @@ void Menu_Op(/*Year*& yearh*/)
     create_new_year(yearh, year_cur);
     CreateSem(year_cur, n, num_sem);
     View_List_Course(year_cur, n);
-    //Delete_Course(year_cur, n, num_sem);
+    Delete_Course(year_cur, n, num_sem);
     //Update_Course(year_cur, num_sem);
     //View_List_Course(year_cur, n);
 }
@@ -292,8 +292,15 @@ void View_List_Course(Year* year_cur, int n)
 
 void Delete_Course(Year*& year_cur, int& n, int num_sem)
 {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
     string tempID;
-    cout << "Input the ID of course you want to delete: " << endl;
+    gotoxy(8 + offset, 3);
+    cout << "Input the ID of course you want to delete: " <<endl;
+    gotoxy(51 + offset, 3);
     cin >> tempID;
     Course* coursecur = year_cur->sem[num_sem - 1].courseh;
     if (year_cur->sem[num_sem - 1].courseh->course_id == tempID)
@@ -314,20 +321,37 @@ void Delete_Course(Year*& year_cur, int& n, int num_sem)
         }
         else coursecur = coursecur->Next;
     }
+    createframe();
+    gotoxy(8 + offset, 4);
+    cout << "Delete complete." << endl;
 }
 
 void Update_Course(Year*& year_cur, int num_sem)
 {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
     string tempID;
+    gotoxy(8 + offset, 3);
     cout << "Input the ID of course you want to change: " << endl;
+    gotoxy(51 + offset, 3);
     cin >> tempID;
     Course* coursecur = Find_Course(year_cur, tempID);
     int choice;
+    createframe();
+    gotoxy(8 + offset, 3);
     cout << "1. Change the name of the course: " << endl;
+    gotoxy(8 + offset, 4);
     cout << "2. Change the ID of the course: " << endl;
+    gotoxy(8 + offset, 5);
     cout << "3. Change the name of the teacher of the course: " << endl;
+    gotoxy(8 + offset, 6);
     cout << "4. Change the number of credits of the course: " << endl;
+    gotoxy(8 + offset, 7);
     cout << "5. Change the sessions of the course: " << endl;
+    gotoxy(8 + offset, 3);
     cin >> choice;
     if (choice == 1)
     {
