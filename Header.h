@@ -80,11 +80,11 @@ void Change_Password(Students* stu, Students*& stu_cur, string New_Password, str
 void View_profile(Students* stu, Students* stu_cur);
 bool CheckUser(Students* stu, Students*& stu_cur, string ID, string pass);
 
-void Login(Students* stu, Students* sta, Students*& stu_cur, Year*& yearh, Year*& year_cur);
+void Login(Students* stu, Students* sta, Students*& stu_cur, Year*& yearh, Year*& year_cur, int& num_sem, Class*& classhead);
 
 void InputMaskedPassword(string& password);
 Students* Find_User_By_ID(Students* stu, string ID);
-void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, string filename, Year*& yearh, Year*& year_cur);
+void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, string filename, Year*& yearh, Year*& year_cur, int& num_sem, Class*& classhead);
 void Menu();
 
 void Enroll_Course(Students*& stu_cur, Year*& yearh);
@@ -96,7 +96,7 @@ void display(Class* classhead);
 void add_by_file_csv(Class*& classhead);
 void create_class(Class*& classhead);
 
-void Menu_Feature_First_Staff(Students* stu, Year*& yearh, Year* &year_cur);
+void Menu_Feature_First_Staff(Students* stu, Year*& yearh, Year* &year_cur, int& num_sem, Class*& classhead);
 
 void Export_new(Class* classhead, Students* stu);
 

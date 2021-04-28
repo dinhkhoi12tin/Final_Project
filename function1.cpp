@@ -154,11 +154,9 @@ void create_class(Class*& classhead) {
         classhead = newclass;
     }
 }
-void Menu_Feature_First_Staff(Students* stu, Year*& yearh, Year*& year_cur) {
+void Menu_Feature_First_Staff(Students* stu, Year*& yearh, Year*& year_cur, int &num_sem, Class* &classhead) {
     int offset = 30;
-    int num_sem = 0;
     int n;
-    Class* classhead = 0;
     //create_new_year();
     while (1) {
         createframe();
@@ -203,4 +201,27 @@ void Menu_Feature_First_Staff(Students* stu, Year*& yearh, Year*& year_cur) {
         if (option == 0) break;
     }
     Export_new(classhead, stu);
+}
+void Staff_View_Information(Year* year_cur, int num_sem, Class*& classhead) {
+    int offset = 30;
+    while (1) {
+        createframe();
+        HANDLE  hConsole;
+        hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(hConsole, 121);
+        gotoxy(20 + offset, 2); cout << "1. View list of classes.";
+        gotoxy(20 + offset, 3); cout << "2. View list of students in a class. ";
+        gotoxy(20 + offset, 4); cout << "3. View list of courses..";
+        gotoxy(20 + offset, 5); cout << "4. View list of students in a course.";
+        gotoxy(20 + offset, 8); cout << "0.exit\n";
+        int option;
+        SetConsoleTextAttribute(hConsole, 6);
+        gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "                    ";
+        gotoxy(36 + offset, 11);  cin >> option;
+        if (option == 1) View_List_Of_Classes(classhead);
+        if (option == 2) View_Classes_Students(classhead->sthead);
+        if (option == 3) View_List_Course(year_cur, num_sem);
+        if (option == 4) View_List_Of_Students_Course(year_cur, num_sem);
+        if (option == 0) break;
+    }
 }

@@ -450,7 +450,7 @@ void Remove_Course(Students*& stu_cur, Year*& yearh) {
     }
     Cou->num_stu--;
 }
-void View_List_Of_Classes(Class* classhead)// function nay chua add, maybe can phai lam lai, de de display hon
+void View_List_Of_Classes(Class* classhead)
 {
     if (classhead != nullptr)
     {
@@ -458,7 +458,7 @@ void View_List_Of_Classes(Class* classhead)// function nay chua add, maybe can p
         cout << classhead->class_name << endl;
     }
 }
-void View_Classes_Students(Students* sthead) // function nay chua add
+void View_Classes_Students(Students* sthead)
 {
     if (sthead != nullptr)
     {
@@ -466,7 +466,7 @@ void View_Classes_Students(Students* sthead) // function nay chua add
         cout << sthead->ID << " " << sthead->NameFirst << " " << sthead->NameLast << " " << sthead->Gender << endl;
     }
 }
-void View_List_Of_Students_Course(Year* year_cur, int num_sem) // function nay chua add (16-20, chua add vao function)
+void View_List_Of_Students_Course(Year* year_cur, int num_sem)
 {
     string tempID;
     cout << "Input the ID of the course: ";

@@ -228,7 +228,7 @@ void InputMaskedPassword(string& password)
         ch = _getch();
     }
 }
-void Login(Students* stu, Students* sta, Students*& stu_cur, Year*& yearh, Year*& year_cur)
+void Login(Students* stu, Students* sta, Students*& stu_cur, Year*& yearh, Year*& year_cur, int& num_sem, Class*& classhead)
 {
     int offset = 30;
     while (1)
@@ -258,7 +258,7 @@ void Login(Students* stu, Students* sta, Students*& stu_cur, Year*& yearh, Year*
                 Sleep(1500);
             }
             else {
-                Option_After_Login(stu, sta, stu_cur, filenameStu, yearh, year_cur);
+                Option_After_Login(stu, sta, stu_cur, filenameStu, yearh, year_cur, num_sem, classhead);
             }
         }
         if (user[0] == '0')
@@ -274,7 +274,7 @@ void Login(Students* stu, Students* sta, Students*& stu_cur, Year*& yearh, Year*
                 Sleep(1500);
             }
             else {
-                Option_After_Login(stu, sta, stu_cur, filenameSta, yearh, year_cur);
+                Option_After_Login(stu, sta, stu_cur, filenameSta, yearh, year_cur, num_sem, classhead);
             }
         }
     }
@@ -309,7 +309,7 @@ void View_profile(Students* stu, Students* stu_cur) {
         gotoxy(25 + offset, 11);  cin >> wait;
     } while (wait = 0);
 }
-void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, string filename, Year*& yearh, Year*& year_cur) {
+void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, string filename, Year*& yearh, Year*& year_cur, int& num_sem, Class* &classhead) {
     int offset = 30;
     while (1) {
         createframe();
@@ -344,24 +344,18 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
             if (stu_cur->username[0] == '0')Change_Password(sta, stu_cur, pass, filename);
         }
         if (stu_cur->username[0] != '0' && option == 3) {
-            cout << "input current semester:";
-            int semtest1;
-            cin >> semtest1; // placeholder
-            if (CheckRegistrationDate(yearh, semtest1))
+            if (CheckRegistrationDate(yearh, num_sem))
             {
                 Enroll_Course(stu_cur, yearh);
             }
             else cout << "Registering is currently not available";
         } // student function;
         if (stu_cur->username[0] == '0' && option == 3) {
-            Menu_Feature_First_Staff(stu, yearh, year_cur);
+            Menu_Feature_First_Staff(stu, yearh, year_cur, num_sem, classhead);
         }
         if (stu_cur->username[0] == '0' && option == 4) {
             View_Course(stu_cur); // can phai enroll, thi khuc nay moi test duoc
-            cout << "input current semester:";
-            int semtest1;
-            cin >> semtest1; // placeholder
-            if (CheckRegistrationDate(yearh, semtest1))
+            if (CheckRegistrationDate(yearh, num_sem))
             {
                  gotoxy(20 + offset, 8); cout << "1. Remove Enrolled Courses"; 
                  gotoxy(20 + offset, 9); cout << "0. Exit";
@@ -381,14 +375,16 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
 }
 void Menu()
 {
+    Class* classhead = nullptr;
     Year* year_cur = nullptr;
     Students* stu = nullptr;
     Students* sta = nullptr;
     Students* stu_cur = nullptr;
+    int num_sem = 0;
     string filenameStu = "STUDENT_DATABASE.csv";
     string filenameSta = "STAFF.csv";
     LoadFileStudents(stu, filenameStu);
     LoadFileStaff(sta, filenameSta);
     Year* yearh = nullptr;
-    Login(stu, sta, stu_cur, yearh, year_cur);
+    Login(stu, sta, stu_cur, yearh, year_cur, num_sem, classhead);
 }
