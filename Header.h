@@ -46,6 +46,7 @@ struct Students
     Students* pNext;
     int num_Cour = 0;
     Course* Cour = new Course[7];
+    struct Scoreboard;
 };
 struct Class {
     string class_name = "";
@@ -67,6 +68,13 @@ struct Year {
     string dateEnd;
     Year* Next;
 };
+struct Scoreboard
+{
+    int Total;
+    int Final;
+    int Midterm;
+    int Other;
+};
 void createframe();
 void gotoxy(int x, int y);
 void displayUI();
@@ -87,9 +95,9 @@ Students* Find_User_By_ID(Students* stu, string ID);
 void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, string filename, Year*& yearh, Year*& year_cur, int& num_sem, Class*& classhead);
 void Menu();
 
-void Enroll_Course(Students*& stu_cur, Year*& yearh);
+void Enroll_Course(Students*& stu_cur, Year*& yearh, int num_sem);
 void View_Course(Students* stu_cur);
-void Remove_Course(Students*& stu_cur, Year*& yearh);
+void Remove_Course(Students*& stu_cur, Year*& yearh, int num_sem);
 Class* Find(Class* classhead, string classname);
 void add_one_by_one(Class*& classhead);
 void display(Class* classhead);
@@ -123,3 +131,4 @@ void CreateSem(Year*& year_cur, int& n, int& num_sem);
 void GetCurrentDate(int& Year, int& Month, int& Day);
 void Convert_Date(string s, int& dd, int& mm, int& yyyy);
 bool CheckRegistrationDate(Year* year_cur, int num_sem);
+void Export_List_Stu_In_Course(Year* year_cur, int num_sem);

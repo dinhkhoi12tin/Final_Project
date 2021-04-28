@@ -8,15 +8,12 @@ Year* Find_Year(Year* yearh, string name_year)
     return nullptr;
 }
 
-Course* Find_Course(Year* yearh, string id_course)
+Course* Find_Course(Year* yearh, string id_course, int num_sem)
 {
     while (yearh)
     {
-        for (int num_sem = 0; num_sem < 3; ++num_sem) {
-            if (yearh->sem[num_sem].courseh->course_id == id_course)
-                return yearh->sem[num_sem].courseh;
-        }
-        yearh = yearh->Next;
+        if (yearh->sem[num_sem - 1].courseh->course_id == id_course) return yearh->sem[num_sem- 1].courseh;
+        yearh->sem[num_sem - 1].courseh = yearh->sem[num_sem -1].courseh->Next;
     }
     return nullptr;
 }
@@ -129,7 +126,7 @@ void CreateSem(Year*& year_cur, int& n, int& num_sem)
         gotoxy(8 + offset, 3);
         cout << "Input the No. " << i + 1 << " course's name: ";
         cin.ignore();
-        getline(cin, coursecur->course_name);
+        getline(cin, coursecur->course_name);               
         gotoxy(8 + offset, 4);
         cout << "Input the No. " << i + 1 << " course's ID: ";
         cin >> coursecur->course_id;
@@ -143,7 +140,7 @@ void CreateSem(Year*& year_cur, int& n, int& num_sem)
         CreateSes(coursecur, num_sem);
         coursecur->Next = nullptr;
     }
-}*/
+}*/                                                                                                                                                                         
 
 void CreateCourseByFile(Course*& courseh, int num_sem, int& n, ifstream& input)
 {
@@ -338,7 +335,7 @@ void Update_Course(Year*& year_cur, int num_sem)
     cout << "Input the ID of course you want to change: " << endl;
     gotoxy(51 + offset, 3);
     cin >> tempID;
-    Course* coursecur = Find_Course(year_cur, tempID);
+    Course* coursecur = Find_Course(year_cur, tempID, num_sem);
     int choice;
     createframe();
     gotoxy(8 + offset, 3);
@@ -393,22 +390,19 @@ void Update_Course(Year*& year_cur, int num_sem)
 
 bool check(Students* stu_cur, Course* Cour) {
     if (Cour->num_stu == 50 || stu_cur->num_Cour == 5) return 0;
-    while (stu_cur->Cour) {
-        for (int i = 1; i <= stu_cur->num_Cour; ++i) {
-            if (stu_cur->Cour[i].ses[1].date == Cour->ses[1].date
-                && stu_cur->Cour[i].ses[1].timeofSes == Cour->ses[1].timeofSes) return 0;
+    for (int i = 1; i <= stu_cur->num_Cour; ++i) {
+        if (stu_cur->Cour[i].ses[1].date == Cour->ses[1].date
+            && stu_cur->Cour[i].ses[1].timeofSes == Cour->ses[1].timeofSes) return 0;
 
-            if (stu_cur->Cour[i].ses[0].date == Cour->ses[0].date
-                && stu_cur->Cour[i].ses[0].timeofSes == Cour->ses[0].timeofSes) return 0;
-        }
-        stu_cur->Cour = stu_cur->Cour->Next;
+        if (stu_cur->Cour[i].ses[0].date == Cour->ses[0].date
+            && stu_cur->Cour[i].ses[0].timeofSes == Cour->ses[0].timeofSes) return 0;
     }
     return 1;
 }
-void Enroll_Course(Students*& stu_cur, Year*& yearh) {
+void Enroll_Course(Students*& stu_cur, Year*& yearh, int num_sem) {
     string ID;
     cout << "Input Id course: "; cin >> ID;
-    Course* Cour = Find_Course(yearh, ID);
+    Course* Cour = Find_Course(yearh, ID, num_sem);
     if (check(stu_cur, Cour)) {
         Cour->Stu[++Cour->num_stu] =
         { stu_cur->No,stu_cur->ID,stu_cur->NameFirst,stu_cur->NameLast,stu_cur->Gender,
@@ -430,7 +424,7 @@ void View_Course(Students* stu_cur) {
         gotoxy(20 + offset, i + 2); cout << stu_cur->Cour[i].course_name << " ";
     }
 }
-void Remove_Course(Students*& stu_cur, Year*& yearh) {
+void Remove_Course(Students*& stu_cur, Year*& yearh, int num_sem) {
     string ID;
     cout << "type ID course to remove: "; cin >> ID;
     for (int i = 1; i <= stu_cur->num_Cour; ++i)
@@ -440,7 +434,7 @@ void Remove_Course(Students*& stu_cur, Year*& yearh) {
             break;
         }
     stu_cur->num_Cour--;
-    Course* Cou = Find_Course(yearh, ID);
+    Course* Cou = Find_Course(yearh, ID, num_sem);
     for (int i = 1; i <= Cou->num_stu; ++i) {
         if (Cou->Stu[i].ID == stu_cur->ID) {
             for (int j = i; j < Cou->num_stu; ++j)
@@ -471,7 +465,7 @@ void View_List_Of_Students_Course(Year* year_cur, int num_sem)
     string tempID;
     cout << "Input the ID of the course: ";
     cin >> tempID;
-    Course* course_cur = Find_Course(year_cur, tempID);
+    Course* course_cur = Find_Course(year_cur, tempID, num_sem);
     int n = course_cur->num_stu;
     for (int i = 0; i < n; i++)
     {
@@ -510,4 +504,36 @@ bool CheckRegistrationDate(Year* year_cur, int num_sem)
     else {
         return 0;
     }
+}
+void Export_List_Stu_In_Course(Year* year_cur, int num_sem)
+{
+    string tempID;
+    cout << "Input the ID of the course: ";
+    cin >> tempID;
+    ofstream output;
+    output.open("Stu_in_course.csv");
+    Course* course_cur = Find_Course(year_cur, tempID, num_sem);
+    int n = course_cur->num_stu;
+    for (int i = 0; i < n; i++)
+    {
+        output << course_cur->Stu[i].ID << "," << course_cur->Stu[i].NameFirst << "," << course_cur->Stu[i].NameLast << "," << course_cur->Stu[i].Gender;
+        output << endl;
+    }
+}
+void Inport_Scoreboard()
+{
+    ifstream input;
+    input.open("Scoreboard.csv");
+    if (!input.is_open())
+    {
+        cout << "Cannot open file " << endl;
+    }
+    else
+    {
+        while (input.good())
+        {
+            
+        }
+    }
+    input.close();
 }

@@ -346,14 +346,14 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
         if (stu_cur->username[0] != '0' && option == 3) {
             if (CheckRegistrationDate(yearh, num_sem))
             {
-                Enroll_Course(stu_cur, yearh);
+                Enroll_Course(stu_cur, yearh, num_sem);
             }
             else cout << "Registering is currently not available";
         } // student function;
         if (stu_cur->username[0] == '0' && option == 3) {
             Menu_Feature_First_Staff(stu, yearh, year_cur, num_sem, classhead);
         }
-        if (stu_cur->username[0] == '0' && option == 4) {
+        if (stu_cur->username[0] != '0' && option == 4) {
             View_Course(stu_cur); // can phai enroll, thi khuc nay moi test duoc
             if (CheckRegistrationDate(yearh, num_sem))
             {
@@ -362,7 +362,7 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
                  cout << "pick an option: ";
                  cin >> option;
                  if (option == 0) break;
-                 if (option == 1) Remove_Course(stu_cur, yearh);
+                 if (option == 1) Remove_Course(stu_cur, yearh, num_sem);
             }
             else
             {
