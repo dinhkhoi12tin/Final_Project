@@ -154,9 +154,8 @@ void create_class(Class*& classhead) {
         classhead = newclass;
     }
 }
-void Menu_Feature_First_Staff(Students* stu, Year*& yearh, Year*& year_cur, int &num_sem, Class* &classhead) {
+void Menu_Feature_First_Staff(Students* stu, Year*& yearh, Year*& year_cur, int &num_sem, Class* &classhead, int& n) {
     int offset = 30;
-    int n;
     //create_new_year();
     while (1) {
         createframe();
@@ -167,7 +166,7 @@ void Menu_Feature_First_Staff(Students* stu, Year*& yearh, Year*& year_cur, int 
         gotoxy(20 + offset, 3); cout << "2.Add student to class\n";
         gotoxy(20 + offset, 4); cout << "3.Add student to class by file csv\n";
         gotoxy(20 + offset, 5); cout << "4.Create new year";
-        gotoxy(20 + offset, 6); cout << "5.Create semester";//Sua o day nha !! Tao sua dai ma sai r :)) 
+        gotoxy(20 + offset, 6); cout << "5.Create semester";
         gotoxy(20 + offset, 7); cout << "6.View created courses";
         gotoxy(20 + offset, 8); cout << "0.exit\n";
         int option;
@@ -177,7 +176,7 @@ void Menu_Feature_First_Staff(Students* stu, Year*& yearh, Year*& year_cur, int 
         if (option == 1) create_class(classhead);
         if (option == 2) add_one_by_one(classhead);
         if (option == 3) add_by_file_csv(classhead);
-        if (option == 4) create_new_year(yearh, year_cur);
+        if (option == 4) create_new_year(yearh, year_cur, n);
         if (option == 5) CreateSem(year_cur, n, num_sem);
         if (option == 6)
         {

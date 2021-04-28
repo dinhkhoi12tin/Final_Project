@@ -18,7 +18,7 @@ Course* Find_Course(Year* yearh, string id_course, int num_sem)
     return nullptr;
 }
 
-void Menu_Op(/*Year*& yearh*/)
+/*void Menu_Op(Year*& yearh)
 {
     Year* yearh = nullptr;
     Year* year_cur = nullptr;
@@ -30,7 +30,7 @@ void Menu_Op(/*Year*& yearh*/)
     Delete_Course(year_cur, n, num_sem);
     //Update_Course(year_cur, num_sem);
     //View_List_Course(year_cur, n);
-}
+}*/
 
 /*void PrintSem(Year* yearh, Year*& year_cur)
 {
@@ -47,7 +47,7 @@ void Menu_Op(/*Year*& yearh*/)
 }
 */
 
-void create_new_year(Year*& yearh, Year*& year_cur) {
+void create_new_year(Year*& yearh, Year*& year_cur,int &n) {
     string newyear;
     int offset = 30;
     createframe();
@@ -247,7 +247,7 @@ void View_List_Course(Year* year_cur, int n)
         HANDLE  hConsole;
         hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleTextAttribute(hConsole, 121);
-        for (int i = 0; i < n - 1; i++)
+        for (int i = 0; i < n; i++)
         {
             gotoxy(38, i + 3);
             cout << i << ". " << coursecur->course_name;

@@ -231,6 +231,7 @@ void InputMaskedPassword(string& password)
 void Login(Students* stu, Students* sta, Students*& stu_cur, Year*& yearh, Year*& year_cur, int& num_sem, Class*& classhead)
 {
     int offset = 30;
+    int n;
     while (1)
     {
         createframe();
@@ -258,7 +259,7 @@ void Login(Students* stu, Students* sta, Students*& stu_cur, Year*& yearh, Year*
                 Sleep(1500);
             }
             else {
-                Option_After_Login(stu, sta, stu_cur, filenameStu, yearh, year_cur, num_sem, classhead);
+                Option_After_Login(stu, sta, stu_cur, filenameStu, yearh, year_cur, num_sem, classhead, n);
             }
         }
         if (user[0] == '0')
@@ -274,7 +275,7 @@ void Login(Students* stu, Students* sta, Students*& stu_cur, Year*& yearh, Year*
                 Sleep(1500);
             }
             else {
-                Option_After_Login(stu, sta, stu_cur, filenameSta, yearh, year_cur, num_sem, classhead);
+                Option_After_Login(stu, sta, stu_cur, filenameSta, yearh, year_cur, num_sem, classhead, n);
             }
         }
     }
@@ -309,7 +310,7 @@ void View_profile(Students* stu, Students* stu_cur) {
         gotoxy(25 + offset, 11);  cin >> wait;
     } while (wait = 0);
 }
-void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, string filename, Year*& yearh, Year*& year_cur, int& num_sem, Class* &classhead) {
+void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, string filename, Year*& yearh, Year*& year_cur, int& num_sem, Class* &classhead, int& n) {
     int offset = 30;
     while (1) {
         createframe();
@@ -351,7 +352,7 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
             else cout << "Registering is currently not available";
         } // student function;
         if (stu_cur->username[0] == '0' && option == 3) {
-            Menu_Feature_First_Staff(stu, yearh, year_cur, num_sem, classhead);
+            Menu_Feature_First_Staff(stu, yearh, year_cur, num_sem, classhead,n);
         }
         if (stu_cur->username[0] != '0' && option == 4) {
             View_Course(stu_cur); // can phai enroll, thi khuc nay moi test duoc
