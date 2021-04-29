@@ -18,20 +18,6 @@ Course* Find_Course(Year* yearh, string id_course, int num_sem)
     return nullptr;
 }
 
-/*void Menu_Op(Year*& yearh)
-{
-    Year* yearh = nullptr;
-    Year* year_cur = nullptr;
-    int num_sem = 0;
-    int n = 0;
-    create_new_year(yearh, year_cur);
-    CreateSem(year_cur, n, num_sem);
-    View_List_Course(year_cur, n);
-    Delete_Course(year_cur, n, num_sem);
-    //Update_Course(year_cur, num_sem);
-    //View_List_Course(year_cur, n);
-}*/
-
 /*void PrintSem(Year* yearh, Year*& year_cur)
 {
     int num_sem;
@@ -516,24 +502,92 @@ void Export_List_Stu_In_Course(Year* year_cur, int num_sem)
     int n = course_cur->num_stu;
     for (int i = 0; i < n; i++)
     {
-        output << course_cur->Stu[i].ID << "," << course_cur->Stu[i].NameFirst << "," << course_cur->Stu[i].NameLast << "," << course_cur->Stu[i].Gender;
+        output << course_cur->Stu[i].ID << "," << course_cur->Stu[i].Fullname << "," << course_cur->Stu[i].Gender;
         output << endl;
     }
 }
-void Inport_Scoreboard()
+void Import_Scoreboard(Year* year_cur, int num_sem)
 {
     ifstream input;
+    string tempID;;
     input.open("Scoreboard.csv");
+    cout << "Input the course you want to add scoreboard: " << endl;
+    cin >> tempID;
+    Course* course_cur = Find_Course(year_cur, tempID, num_sem);
     if (!input.is_open())
     {
         cout << "Cannot open file " << endl;
     }
     else
     {
+        int i = 0;
         while (input.good())
         {
-            
+            getline(input, course_cur->Stu[i].No, ',');
+            getline(input, course_cur->Stu[i].NameFirst, ',');
+            getline(input, course_cur->Stu[i].NameLast, ',');
+            input >> course_cur->Stu[i].score.Midterm >> course_cur->Stu[i].score.Other >> course_cur->Stu[i].score.Final >> course_cur->Stu[i].score.Total;
+            i++;
         }
     }
     input.close();
+}
+void View_Scoreboard_Course(Year* year_cur, int num_sem)
+{
+    string tempID;
+    int count;
+    cout << "Input the course you want to add scoreboard: " << endl;
+    cin >> tempID;
+    Course* course_cur = Find_Course(year_cur, tempID, num_sem);
+    count = course_cur->num_stu;
+    for (int i = 0; i < count; i++)
+    {
+        cout << course_cur->Stu[i].No << " " << course_cur->Stu[i].ID << " " << course_cur->Stu[i].Fullname << " " << course_cur->Stu[i].score.Midterm << " " << course_cur->Stu[i].score.Other << " " << course_cur->Stu[i].score.Final << " " << course_cur->Stu[i].score.Total;
+        cout << endl;
+    }
+}
+void Edit_Score(Year*& year_cur, int num_sem)
+{
+    string tempID, tempIDStu;
+    cout << "Input the course you want to add scoreboard: " << endl;
+    cin >> tempID;
+    Course* course_cur = Find_Course(year_cur, tempID, num_sem);
+    int count = course_cur->num_stu;
+    Students1 TempStu;
+    cout << "Input the ID of student you want to edit: " << endl;
+    cin >> tempIDStu;
+    for (int i = 0; i < count; i++)
+    {
+        if (course_cur->Stu[i].ID == tempIDStu)
+        {
+            TempStu = course_cur->Stu[i];
+        }
+    }
+    int option;
+    cout << "Input the score you want to edit: ";
+    cout << "1. Midterm Score" << endl;
+    cout << "2. Other Score" << endl;
+    cout << "3. Final Score" << endl;
+    cout << "4. Total" << endl;
+    cin >> option;
+    if (option == 1)
+    {
+        cout << "Input Midterm Score" << endl;
+        cin >> TempStu.score.Midterm;
+    }
+    if (option == 2)
+    {
+        cout << "Input Other Score" << endl;
+        cin >> TempStu.score.Other;
+    }
+    if (option == 3)
+    {
+        cout << "Input Final Score" << endl;
+        cin >> TempStu.score.Final;
+    }
+    if (option == 4)
+    {
+        cout << "Input Final Score" << endl;
+        cin >> TempStu.score.Total;
+    }
 }

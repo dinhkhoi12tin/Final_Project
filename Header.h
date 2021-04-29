@@ -11,17 +11,26 @@ struct Session {
     string date;
     string timeofSes;
 };
+struct Scoreboard
+{
+    int Total;
+    int Final;
+    int Midterm;
+    int Other;
+};
 struct Students1
 {
     string No;
     string ID;
     string NameFirst, NameLast;
+    string Fullname = NameFirst + " " + NameLast;
     string Gender;
     string Birth;
     string socialID;
     string username;
     string password;
     string classes;
+    Scoreboard score;
 };
 struct Course {
     string course_id, course_name, teacher_name, cre_num;
@@ -46,7 +55,6 @@ struct Students
     Students* pNext;
     int num_Cour = 0;
     Course* Cour = new Course[7];
-    struct Scoreboard;
 };
 struct Class {
     string class_name = "";
@@ -67,13 +75,6 @@ struct Year {
     string dateStart;
     string dateEnd;
     Year* Next;
-};
-struct Scoreboard
-{
-    int Total;
-    int Final;
-    int Midterm;
-    int Other;
 };
 void createframe();
 void gotoxy(int x, int y);
@@ -115,7 +116,7 @@ void CreateSem(Year*& year_cur, int& n, int& num_sem);
 
 void CreateSes(Course*& course_cur, int num_sem);
 
-//void Menu_Op(/*Year*& yearh*/);
+//void Menu_Op();
 
 
 void View_List_Course(Year* year_cur, int n);
@@ -132,3 +133,6 @@ void GetCurrentDate(int& Year, int& Month, int& Day);
 void Convert_Date(string s, int& dd, int& mm, int& yyyy);
 bool CheckRegistrationDate(Year* year_cur, int num_sem);
 void Export_List_Stu_In_Course(Year* year_cur, int num_sem);
+void Import_Scoreboard(Year* year_cur, int num_sem);
+void View_Scoreboard_Course(Year* year_cur, int num_sem);
+void Edit_Score(Year*& year_cur, int num_sem);
