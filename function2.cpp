@@ -536,10 +536,12 @@ void Import_Scoreboard(Year* year_cur, int num_sem)
     }
     else
     {
+        input.ignore();
         int i = 0;
         while (input.good())
         {
             getline(input, course_cur->Stu[i].No, ',');
+            getline(input, course_cur->Stu[i].ID, ',');
             getline(input, course_cur->Stu[i].NameFirst, ',');
             getline(input, course_cur->Stu[i].NameLast, ',');
             input >> course_cur->Stu[i].score.Midterm >> course_cur->Stu[i].score.Other >> course_cur->Stu[i].score.Final >> course_cur->Stu[i].score.Total;
@@ -605,5 +607,64 @@ void Edit_Score(Year*& year_cur, int num_sem)
     {
         cout << "Input Final Score" << endl;
         cin >> TempStu.score.Total;
+    }
+}
+float GPA(int score) {
+    if (score >= 9) return 4;
+    if (score >= 8) return 3.5;
+    if (score >= 7) return 3;
+    if (score >= 6) return 2.5;
+    if (score >= 5) return 2;
+    if (score >= 4) return 1.5;
+    if (score >= 3) return 1;
+    if (score >= 2) return 0.5;
+    return 0;
+}
+float* Overal_Count_GPA(Students1* stu, int num_stu) {
+    float* ans = new float[10];
+    int t = 0,num=0;
+    float s = 0;
+    for (int i = 1; i <= num_stu; ++i) {
+        if (i == 1 || stu[i].Fullname == stu[i - 1].Fullname) {
+            s += GPA(stu[i].score.Total);
+            num++;
+        }
+        else {
+            ans[++t] = (float) s / num;
+            num = 1;
+            s = GPA(stu[i].score.Total);
+        }
+    }
+    ans[++t] = (float)s / num;
+}
+void Get_all_students(Year* yearh, string classname, Students1*& stu,int num_sem,int& num_stu) {
+    Course* Co = yearh->sem[num_sem - 1].courseh;
+    while (Co) {
+        for (int i = 1; i <= Co->num_stu; ++i)
+            if (Co->Stu[i].classes == classname) {
+                stu[++num_stu]= Co->Stu[i];
+                stu[num_stu].course_name = Co->course_name;
+            }
+        Co = Co->Next;
+    }
+}
+void sort(Students1*& stu, int num_stu) {
+    for (int i = 1; i < num_stu; ++i)
+        for (int j = i + 1; j <= num_stu; ++j)
+            if (stu[i].ID > stu[j].ID) swap(stu[i], stu[j]);
+}
+void View_Score_Class(Year* yearh,int num_sem) {
+    string classname;
+    cout << "class_name="; cin >> classname;
+    Students1* stu = new Students1 [1000];
+    int num_stu = 0;
+    Get_all_students(yearh, classname, stu, num_sem, num_stu);
+    sort(stu, num_stu);
+    int t = 0;
+    float *Total_Gpa = Overal_Count_GPA(stu, num_stu);
+    for (int i = 1; i <= num_stu; ++i) {
+        if (i == 1 || stu[i].Fullname != stu[i - 1].Fullname) cout << stu[i].Fullname << " " << Total_Gpa[++t];
+        else cout << "       ";
+        cout << stu[i].course_name << " " << stu[i].score.Final << "\n";
     }
 }
