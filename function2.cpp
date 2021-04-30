@@ -419,8 +419,15 @@ void View_Course(Students* stu_cur) {
     }
 }
 void Remove_Course(Students*& stu_cur, Year*& yearh, int num_sem) {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
     string ID;
+    gotoxy(8 + offset, 3);
     cout << "type ID course to remove: "; 
+    gotoxy(50 + offset, 3);
     cin >> ID;
     for (int i = 1; i <= stu_cur->num_Cour; ++i)
         if (stu_cur->Cour[i].course_id == ID) {
