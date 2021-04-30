@@ -7,7 +7,6 @@ Year* Find_Year(Year* yearh, string name_year)
     }
     return nullptr;
 }
-
 Course* Find_Course(Year* yearh, string id_course, int num_sem)
 {
     while (yearh)
@@ -49,7 +48,6 @@ void create_new_year(Year*& yearh, Year*& year_cur, int& n) {
     yearh = yearcur;
     year_cur = Find_Year(yearh, newyear);
 }
-
 void CreateSem(Year*& year_cur, int& n, int& num_sem)
 {
     int offset = 30;
@@ -167,7 +165,6 @@ void CreateCourseByFile(Course*& courseh, int num_sem, int& n, ifstream& input)
     }
     input.close();
 }
-
 void CreateSes(Course*& course_cur, int num_sem)
 {
     int offset = 30;
@@ -208,7 +205,6 @@ void CreateSes(Course*& course_cur, int num_sem)
         } while (course_cur->ses[i].timeofSes != "S1" && course_cur->ses[i].timeofSes != "S2" && course_cur->ses[i].timeofSes != "S3" && course_cur->ses[i].timeofSes != "S4");
     }
 }
-
 void View_List_Course(Year* year_cur, int n)
 {
     int offset = 30;
@@ -276,7 +272,6 @@ void View_List_Course(Year* year_cur, int n)
         }
     }
 }
-
 void Delete_Course(Year*& year_cur, int& n, int num_sem)
 {
     int offset = 30;
@@ -312,7 +307,6 @@ void Delete_Course(Year*& year_cur, int& n, int num_sem)
     gotoxy(8 + offset, 4);
     cout << "Delete complete." << endl;
 }
-
 void Update_Course(Year*& year_cur, int num_sem)
 {
     int offset = 30;
@@ -376,8 +370,6 @@ void Update_Course(Year*& year_cur, int num_sem)
     }
 
 }
-
-
 bool check(Students* stu_cur, Course* Cour) {
     if (Cour->num_stu == 50 || stu_cur->num_Cour == 5) return 0;
     for (int i = 1; i <= stu_cur->num_Cour; ++i) {
@@ -520,16 +512,19 @@ void Export_List_Stu_In_Course(Year* year_cur, int num_sem)
     output.open("Stu_in_course.csv");
     Course* course_cur = Find_Course(year_cur, tempID, num_sem);
     int n = course_cur->num_stu;
-    for (int i = 0; i < n; i++)
+    for (int i = 1; i <= n; i++)
     {
         output << course_cur->Stu[i].ID << "," << course_cur->Stu[i].Fullname << "," << course_cur->Stu[i].Gender;
         output << endl;
     }
 }
-void Import_Scoreboard(Year* year_cur, int num_sem)
+void Import_Scoreboard(Year*& year_cur, int num_sem)
 {
     ifstream input;
-    string tempID;;
+    string tempID;
+    string filename;
+    /*cout << "Input name of file: " << endl;
+    cin >> filename;*/
     input.open("Scoreboard.csv");
     cout << "Input the course you want to add scoreboard: " << endl;
     cin >> tempID;
@@ -540,15 +535,18 @@ void Import_Scoreboard(Year* year_cur, int num_sem)
     }
     else
     {
-        input.ignore();
-        int i = 0;
+        string s;
+        getline(input, s);
+        int i = 1;
         while (input.good())
         {
             getline(input, course_cur->Stu[i].No, ',');
             getline(input, course_cur->Stu[i].ID, ',');
             getline(input, course_cur->Stu[i].NameFirst, ',');
             getline(input, course_cur->Stu[i].NameLast, ',');
-            input >> course_cur->Stu[i].score.Midterm >> course_cur->Stu[i].score.Other >> course_cur->Stu[i].score.Final >> course_cur->Stu[i].score.Total;
+            char trash;
+            input >> course_cur->Stu[i].score.Midterm >> trash >> course_cur->Stu[i].score.Other >> trash >> course_cur->Stu[i].score.Final >> trash >> course_cur->Stu[i].score.Total;
+            getline(input, s);
             i++;
         }
     }
@@ -562,7 +560,7 @@ void View_Scoreboard_Course(Year* year_cur, int num_sem)
     cin >> tempID;
     Course* course_cur = Find_Course(year_cur, tempID, num_sem);
     count = course_cur->num_stu;
-    for (int i = 0; i < count; i++)
+    for (int i = 1; i <= count; i++)
     {
         cout << course_cur->Stu[i].No << " " << course_cur->Stu[i].ID << " " << course_cur->Stu[i].Fullname << " " << course_cur->Stu[i].score.Midterm << " " << course_cur->Stu[i].score.Other << " " << course_cur->Stu[i].score.Final << " " << course_cur->Stu[i].score.Total;
         cout << endl;
@@ -575,14 +573,15 @@ void Edit_Score(Year*& year_cur, int num_sem)
     cin >> tempID;
     Course* course_cur = Find_Course(year_cur, tempID, num_sem);
     int count = course_cur->num_stu;
-    Students1 TempStu;
     cout << "Input the ID of student you want to edit: " << endl;
     cin >> tempIDStu;
-    for (int i = 0; i < count; i++)
+    int temp;
+    for (int i = 1; i <= count; i++)
     {
         if (course_cur->Stu[i].ID == tempIDStu)
         {
-            TempStu = course_cur->Stu[i];
+            temp = i;
+            break;
         }
     }
     int option;
@@ -595,22 +594,22 @@ void Edit_Score(Year*& year_cur, int num_sem)
     if (option == 1)
     {
         cout << "Input Midterm Score" << endl;
-        cin >> TempStu.score.Midterm;
+        cin >> course_cur->Stu[temp].score.Midterm;
     }
     if (option == 2)
     {
         cout << "Input Other Score" << endl;
-        cin >> TempStu.score.Other;
+        cin >> course_cur->Stu[temp].score.Other;
     }
     if (option == 3)
     {
         cout << "Input Final Score" << endl;
-        cin >> TempStu.score.Final;
+        cin >> course_cur->Stu[temp].score.Final;
     }
     if (option == 4)
     {
-        cout << "Input Final Score" << endl;
-        cin >> TempStu.score.Total;
+        cout << "Input Total Score" << endl;
+        cin >> course_cur->Stu[temp].score.Total;
     }
 }
 float GPA(int score) {
@@ -671,5 +670,34 @@ void View_Score_Class(Year* yearh, int num_sem) {
         if (i == 1 || stu[i].Fullname != stu[i - 1].Fullname) cout << stu[i].Fullname << " " << Total_Gpa[++t];
         else cout << "       ";
         cout << stu[i].course_name << " " << stu[i].score.Final << "\n";
+    }
+}
+void View_Stu_Score(Year* year_cur, int num_sem, Students* stu_cur)
+{
+    string tempID;
+    while (true)
+    {
+        cout << "Input the ID of course you want to view score: " << endl;
+        cout << "Exit (0.)";
+        cin >> tempID;
+        if (tempID == "0")break;
+        Course* course_cur = Find_Course(year_cur, tempID, num_sem);
+        int count = course_cur->num_stu;
+        for (int i = 0; i < count; i++)
+        {
+            if (stu_cur->ID == course_cur->Stu[i].ID)
+            {
+                stu_cur->score.Other = course_cur->Stu[i].score.Other;
+                stu_cur->score.Midterm = course_cur->Stu[i].score.Midterm;
+                stu_cur->score.Final = course_cur->Stu[i].score.Final;
+                stu_cur->score.GPA = course_cur->Stu[i].score.GPA;
+                break;
+            }
+        }
+        cout << "Midterm Score: " << stu_cur->score.Midterm << endl;
+        cout << "Other Score: " << stu_cur->score.Other << endl;
+        cout << "Final Score: " << stu_cur->score.Final << endl;
+        cout << "Total Score: " << stu_cur->score.Total << endl;
+        stu_cur->score.GPA = GPA(stu_cur->score.Total);
     }
 }

@@ -13,18 +13,17 @@ struct Session {
 };
 struct Scoreboard
 {
-    int Total = -1;
-    int Final = -1;
-    int Midterm = -1;
-    int Other = -1;
-    float GPA = (float)Total * 4 / 10;
+    float Total = -1;
+    float Final = -1;
+    float Midterm = -1;
+    float Other = -1;
+    float GPA = -1;
 };
 struct Students1
 {
     string No;
     string ID;
     string NameFirst, NameLast;
-    string Fullname = NameFirst + " " + NameLast;
     string Gender;
     string Birth;
     string socialID;
@@ -33,6 +32,7 @@ struct Students1
     string classes;
     Scoreboard score;
     string course_name;
+    string Fullname = NameFirst + " " + NameLast;
 };
 struct Course {
     string course_id, course_name, teacher_name, cre_num;
@@ -136,7 +136,7 @@ void GetCurrentDate(int& Year, int& Month, int& Day);
 void Convert_Date(string s, int& dd, int& mm, int& yyyy);
 bool CheckRegistrationDate(Year* year_cur, int num_sem);
 void Export_List_Stu_In_Course(Year* year_cur, int num_sem);
-void Import_Scoreboard(Year* year_cur, int num_sem);
+void Import_Scoreboard(Year*& year_cur, int num_sem);
 void View_Scoreboard_Course(Year* year_cur, int num_sem);
 void Edit_Score(Year*& year_cur, int num_sem);
 
@@ -145,4 +145,5 @@ float* Overal_Count_GPA(Students1* stu, int num_stu);
 void Get_all_students(Year* yearh, string classname, Students1*& stu, int num_sem, int& num_stu);
 void sort(Students1*& stu, int num_stu);
 void View_Score_Class(Year* yearh, int num_sem);
+void View_Stu_Score(Year* year_cur, int num_sem, Students* stu_cur);
 
