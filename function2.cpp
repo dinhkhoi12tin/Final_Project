@@ -386,8 +386,16 @@ bool check(Students* stu_cur, Course* Cour) {
     return 1;
 }
 void Enroll_Course(Students*& stu_cur, Year*& yearh, int num_sem) {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
     string ID;
-    cout << "Input Id course: "; cin >> ID;
+    gotoxy(8 + offset, 3);
+    cout << "Input Id course: "; 
+    gotoxy(8 + offset, 3);
+    cin >> ID;
     Course* Cour = Find_Course(yearh, ID, num_sem);
     if (check(stu_cur, Cour)) {
         Cour->Stu[++Cour->num_stu] =
@@ -396,7 +404,7 @@ void Enroll_Course(Students*& stu_cur, Year*& yearh, int num_sem) {
         stu_cur->Cour[++stu_cur->num_Cour] = *Cour;
     }
     else {
-        cout << "Unable to register\n";
+        gotoxy(8 + offset, 4); cout << "Unable to register\n";
     }
 }
 void View_Course(Students* stu_cur) {
@@ -411,8 +419,16 @@ void View_Course(Students* stu_cur) {
     }
 }
 void Remove_Course(Students*& stu_cur, Year*& yearh, int num_sem) {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
     string ID;
-    cout << "type ID course to remove: "; cin >> ID;
+    gotoxy(8 + offset, 3);
+    cout << "type ID course to remove: "; 
+    gotoxy(8 + offset, 3);
+    cin >> ID;
     for (int i = 1; i <= stu_cur->num_Cour; ++i)
         if (stu_cur->Cour[i].course_id == ID) {
             for (int j = i; j < stu_cur->num_Cour; ++j)
