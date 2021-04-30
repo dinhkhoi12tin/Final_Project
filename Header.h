@@ -13,11 +13,11 @@ struct Session {
 };
 struct Scoreboard
 {
-    int Total=-1;
-    int Final=-1;
-    int Midterm=-1;
-    int Other=-1;
-    float GPA = ( float)Total * 4 / 10;
+    int Total = -1;
+    int Final = -1;
+    int Midterm = -1;
+    int Other = -1;
+    float GPA = (float)Total * 4 / 10;
 };
 struct Students1
 {
@@ -108,11 +108,11 @@ void display(Class* classhead);
 void add_by_file_csv(Class*& classhead);
 void create_class(Class*& classhead);
 
-void Menu_Feature_First_Staff(Students* stu, Year*& yearh, Year* &year_cur, int& num_sem, Class*& classhead, int& n);
+void Menu_Feature_First_Staff(Students* stu, Year*& yearh, Year*& year_cur, int& num_sem, Class*& classhead, int& n);
 
 void Export_new(Class* classhead, Students* stu);
 
-void create_new_year(Year*& yearh, Year*& year_cur,int &n);
+void create_new_year(Year*& yearh, Year*& year_cur, int& n);
 
 void CreateSem(Year*& year_cur, int& n, int& num_sem);
 //void CreateCourse(Course*& courseh, int num_sem, int n);
@@ -145,4 +145,4 @@ float* Overal_Count_GPA(Students1* stu, int num_stu);
 void Get_all_students(Year* yearh, string classname, Students1*& stu, int num_sem, int& num_stu);
 void sort(Students1*& stu, int num_stu);
 void View_Score_Class(Year* yearh, int num_sem);
- 
+

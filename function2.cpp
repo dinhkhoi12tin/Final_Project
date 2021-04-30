@@ -12,8 +12,8 @@ Course* Find_Course(Year* yearh, string id_course, int num_sem)
 {
     while (yearh)
     {
-        if (yearh->sem[num_sem - 1].courseh->course_id == id_course) return yearh->sem[num_sem- 1].courseh;
-        yearh->sem[num_sem - 1].courseh = yearh->sem[num_sem -1].courseh->Next;
+        if (yearh->sem[num_sem - 1].courseh->course_id == id_course) return yearh->sem[num_sem - 1].courseh;
+        yearh->sem[num_sem - 1].courseh = yearh->sem[num_sem - 1].courseh->Next;
     }
     return nullptr;
 }
@@ -33,7 +33,7 @@ Course* Find_Course(Year* yearh, string id_course, int num_sem)
 }
 */
 
-void create_new_year(Year*& yearh, Year*& year_cur,int &n) {
+void create_new_year(Year*& yearh, Year*& year_cur, int& n) {
     string newyear;
     int offset = 30;
     createframe();
@@ -112,7 +112,7 @@ void CreateSem(Year*& year_cur, int& n, int& num_sem)
         gotoxy(8 + offset, 3);
         cout << "Input the No. " << i + 1 << " course's name: ";
         cin.ignore();
-        getline(cin, coursecur->course_name);               
+        getline(cin, coursecur->course_name);
         gotoxy(8 + offset, 4);
         cout << "Input the No. " << i + 1 << " course's ID: ";
         cin >> coursecur->course_id;
@@ -126,7 +126,7 @@ void CreateSem(Year*& year_cur, int& n, int& num_sem)
         CreateSes(coursecur, num_sem);
         coursecur->Next = nullptr;
     }
-}*/                                                                                                                                                                         
+}*/
 
 void CreateCourseByFile(Course*& courseh, int num_sem, int& n, ifstream& input)
 {
@@ -242,7 +242,11 @@ void View_List_Course(Year* year_cur, int n)
         }
         int choice2;
         gotoxy(8 + offset, 2);
-        cout << "Input the course you want to view: ";
+
+        coursecur = year_cur->sem[choice - 1].courseh;
+        //while (coursecur != nullptr) {}
+        cout << "Input the course you want to view: "; // can add danh sach
+      
         cin >> choice2;
         coursecur = year_cur->sem[choice - 1].courseh;
         for (int i = 0; i < choice2; i++)
@@ -282,7 +286,7 @@ void Delete_Course(Year*& year_cur, int& n, int num_sem)
     SetConsoleTextAttribute(hConsole, 121);
     string tempID;
     gotoxy(8 + offset, 3);
-    cout << "Input the ID of course you want to delete: " <<endl;
+    cout << "Input the ID of course you want to delete: " << endl;
     gotoxy(51 + offset, 3);
     cin >> tempID;
     Course* coursecur = year_cur->sem[num_sem - 1].courseh;
@@ -393,7 +397,7 @@ void Enroll_Course(Students*& stu_cur, Year*& yearh, int num_sem) {
     SetConsoleTextAttribute(hConsole, 121);
     string ID;
     gotoxy(8 + offset, 3);
-    cout << "Input Id course: "; 
+    cout << "Input Id course: ";
     gotoxy(8 + offset, 3);
     cin >> ID;
     Course* Cour = Find_Course(yearh, ID, num_sem);
@@ -426,7 +430,7 @@ void Remove_Course(Students*& stu_cur, Year*& yearh, int num_sem) {
     SetConsoleTextAttribute(hConsole, 121);
     string ID;
     gotoxy(8 + offset, 3);
-    cout << "type ID course to remove: "; 
+    cout << "type ID course to remove: ";
     gotoxy(50 + offset, 3);
     cin >> ID;
     for (int i = 1; i <= stu_cur->num_Cour; ++i)
@@ -475,16 +479,16 @@ void View_List_Of_Students_Course(Year* year_cur, int num_sem)
         cout << endl;
     }
 }
-void GetCurrentDate(int &Year, int &Month, int &Day) {
+void GetCurrentDate(int& Year, int& Month, int& Day) {
     struct tm newtime;
     time_t now = time(0);
     localtime_s(&newtime, &now);
     Year = 1900 + newtime.tm_year;
     Month = 1 + newtime.tm_mon;
     Day = newtime.tm_mday;
-    
+
 }
-void Convert_Date(string s, int &dd, int &mm, int &yyyy)
+void Convert_Date(string s, int& dd, int& mm, int& yyyy)
 {
     dd = ((int)s[0] - 48) * 10 + ((int)s[1] - 48);
     mm = ((int)s[3] - 48) * 10 + ((int)s[4] - 48);
@@ -495,7 +499,7 @@ bool CheckRegistrationDate(Year* year_cur, int num_sem)
     int CheckY, CheckM, CheckD;
     GetCurrentDate(CheckY, CheckM, CheckD);
     int dd1, mm1, yyyy1, dd2, mm2, yyyy2;
-    Convert_Date(year_cur->sem[num_sem - 1].regStart , dd1, mm1, yyyy1);
+    Convert_Date(year_cur->sem[num_sem - 1].regStart, dd1, mm1, yyyy1);
     Convert_Date(year_cur->sem[num_sem - 1].regEnd, dd2, mm2, yyyy2);
     int CD = (CheckY * 10000) + (CheckM * 100) + CheckD;
     int SD = (yyyy1 * 10000) + (mm1 * 100) + dd1;
@@ -622,7 +626,7 @@ float GPA(int score) {
 }
 float* Overal_Count_GPA(Students1* stu, int num_stu) {
     float* ans = new float[10];
-    int t = 0,num=0;
+    int t = 0, num = 0;
     float s = 0;
     for (int i = 1; i <= num_stu; ++i) {
         if (i == 1 || stu[i].Fullname == stu[i - 1].Fullname) {
@@ -630,19 +634,20 @@ float* Overal_Count_GPA(Students1* stu, int num_stu) {
             num++;
         }
         else {
-            ans[++t] = (float) s / num;
+            ans[++t] = (float)s / num;
             num = 1;
             s = GPA(stu[i].score.Total);
         }
     }
     ans[++t] = (float)s / num;
+    return ans;
 }
-void Get_all_students(Year* yearh, string classname, Students1*& stu,int num_sem,int& num_stu) {
+void Get_all_students(Year* yearh, string classname, Students1*& stu, int num_sem, int& num_stu) {
     Course* Co = yearh->sem[num_sem - 1].courseh;
     while (Co) {
         for (int i = 1; i <= Co->num_stu; ++i)
             if (Co->Stu[i].classes == classname) {
-                stu[++num_stu]= Co->Stu[i];
+                stu[++num_stu] = Co->Stu[i];
                 stu[num_stu].course_name = Co->course_name;
             }
         Co = Co->Next;
@@ -653,15 +658,15 @@ void sort(Students1*& stu, int num_stu) {
         for (int j = i + 1; j <= num_stu; ++j)
             if (stu[i].ID > stu[j].ID) swap(stu[i], stu[j]);
 }
-void View_Score_Class(Year* yearh,int num_sem) {
+void View_Score_Class(Year* yearh, int num_sem) {
     string classname;
     cout << "class_name="; cin >> classname;
-    Students1* stu = new Students1 [1000];
+    Students1* stu = new Students1[1000];
     int num_stu = 0;
     Get_all_students(yearh, classname, stu, num_sem, num_stu);
     sort(stu, num_stu);
     int t = 0;
-    float *Total_Gpa = Overal_Count_GPA(stu, num_stu);
+    float* Total_Gpa = Overal_Count_GPA(stu, num_stu);
     for (int i = 1; i <= num_stu; ++i) {
         if (i == 1 || stu[i].Fullname != stu[i - 1].Fullname) cout << stu[i].Fullname << " " << Total_Gpa[++t];
         else cout << "       ";

@@ -154,7 +154,7 @@ void create_class(Class*& classhead) {
         classhead = newclass;
     }
 }
-void Menu_Feature_First_Staff(Students* stu, Year*& yearh, Year*& year_cur, int &num_sem, Class* &classhead, int& n) {
+void Menu_Feature_First_Staff(Students* stu, Year*& yearh, Year*& year_cur, int& num_sem, Class*& classhead, int& n) {
     int offset = 30;
     //create_new_year();
     while (1) {
@@ -173,9 +173,18 @@ void Menu_Feature_First_Staff(Students* stu, Year*& yearh, Year*& year_cur, int 
         SetConsoleTextAttribute(hConsole, 6);
         gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "                    ";
         gotoxy(36 + offset, 11);  cin >> option;
+        if (option == 0) break;
         if (option == 1) create_class(classhead);
-        if (option == 2) add_one_by_one(classhead);
-        if (option == 3) add_by_file_csv(classhead);
+        if (option == 2)
+        {
+            add_one_by_one(classhead);
+            Export_new(classhead, stu);
+        }
+        if (option == 3) 
+        {
+            add_by_file_csv(classhead); 
+            Export_new(classhead, stu);
+        }
         if (option == 4) create_new_year(yearh, year_cur, n);
         if (option == 5) CreateSem(year_cur, n, num_sem);
         if (option == 6)
@@ -197,9 +206,8 @@ void Menu_Feature_First_Staff(Students* stu, Year*& yearh, Year*& year_cur, int 
         {
             cout << CheckRegistrationDate(year_cur, 1)
         }*/
-        if (option == 0) break;
     }
-    Export_new(classhead, stu);
+    
 }
 void Staff_View_Information(Year* year_cur, int num_sem, Class*& classhead) {
     int offset = 30;

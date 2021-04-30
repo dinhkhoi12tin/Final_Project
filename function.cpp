@@ -1,5 +1,4 @@
 #include "Header.h";
-void Menu_Feature_First_Staff(Students* stu);
 void LoadFileStudents(Students*& stu, string filename)
 {
     ifstream input;
@@ -310,7 +309,7 @@ void View_profile(Students* stu, Students* stu_cur) {
         gotoxy(25 + offset, 11);  cin >> wait;
     } while (wait = 0);
 }
-void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, string filename, Year*& yearh, Year*& year_cur, int& num_sem, Class* &classhead, int& n) {
+void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, string filename, Year*& yearh, Year*& year_cur, int& num_sem, Class*& classhead, int& n) {
     int offset = 30;
     while (1) {
         createframe();
@@ -327,6 +326,7 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
         }//cout student name of function
         if (stu_cur->username[0] == '0') {
             cout << "3.Academic Year Options\n"; // cout staff name of function
+            cout << "4.View Classes and Courses.";
             gotoxy(20 + offset, 7); cout << "0.Log out\n";
         }
         int option;
@@ -349,29 +349,51 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
             {
                 Enroll_Course(stu_cur, yearh, num_sem);
             }
-            else cout << "Registering is currently not available";
+            else cout << "Registering is currently unavailable";
         } // student function;
         if (stu_cur->username[0] == '0' && option == 3) {
-            Menu_Feature_First_Staff(stu, yearh, year_cur, num_sem, classhead,n);
+            Menu_Feature_First_Staff(stu, yearh, year_cur, num_sem, classhead, n);
         }
-        if (stu_cur->username[0] != '0' && option == 4) {
-            View_Course(stu_cur); // can phai enroll, thi khuc nay moi test duoc
-            if (CheckRegistrationDate(yearh, num_sem))
-            {
-                 gotoxy(20 + offset, 8); cout << "1. Remove Enrolled Courses"; 
-                 gotoxy(20 + offset, 9); cout << "0. Exit";
-                 cout << "pick an option: ";
-                 cin >> option;
-                 if (option == 0) break;
-                 if (option == 1) Remove_Course(stu_cur, yearh, num_sem);
+        if (stu_cur->username[0] == '0' && option == 4) { //staff view
+            cin >> option;
+            if (option == 0) break;
+            if (option == 1) {
+                View_List_Of_Classes(classhead); // function 17-18
+                string classfind;
+                cin >> classfind;
+                Class* classcur = classhead;
+                while (classfind != classcur->class_name && classcur != nullptr)
+                {
+                    classcur = classcur->Next;
+                }
+                if (classfind == classcur->class_name) View_Classes_Students(classcur->sthead);
+                else cout << "Class does not exist";
             }
-            else
-            {
-                gotoxy(20 + offset, 8); cout << "0. Exit";
-                cin >> option;
-                break;
-            }
+            // find class command;
+            if (option == 2) {
+                View_List_Course(yearh, n); // check
+                View_List_Of_Students_Course(yearh, num_sem);
         }
+        
+        }
+    if (stu_cur->username[0] != '0' && option == 4) {
+        View_Course(stu_cur); // can phai enroll, thi khuc nay moi test duoc
+        if (CheckRegistrationDate(yearh, num_sem))
+        {
+            gotoxy(20 + offset, 8); cout << "1. Remove Enrolled Courses";
+            gotoxy(20 + offset, 9); cout << "0. Exit";
+            cout << "pick an option: ";
+            cin >> option;
+            if (option == 0) break;
+            if (option == 1) Remove_Course(stu_cur, yearh, num_sem);
+        }
+        else
+        {
+            gotoxy(20 + offset, 8); cout << "0. Exit";
+            cin >> option;
+            break;
+        }
+    }
     }
 }
 void Menu()
