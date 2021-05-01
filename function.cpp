@@ -406,7 +406,7 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
                 break;
             }
         }
-        // function 26 if (stu_cur->username[0] != '0' && option == 4)
+        if (stu_cur->username[0] != '0' && option == 4) View_Stu_Score(yearh, num_sem, stu);
     }
 }
 void Menu()

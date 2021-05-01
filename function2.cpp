@@ -7,12 +7,14 @@ Year* Find_Year(Year* yearh, string name_year)
     }
     return nullptr;
 }
-Course* Find_Course(Year* yearh, string id_course, int num_sem)
+
+Course * Find_Course(Year * yearh, string id_course, int num_sem)
 {
-    while (yearh)
+    Course* Cur = yearh->sem[num_sem - 1].courseh;
+    while (Cur)
     {
-        if (yearh->sem[num_sem - 1].courseh->course_id == id_course) return yearh->sem[num_sem - 1].courseh;
-        yearh->sem[num_sem - 1].courseh = yearh->sem[num_sem - 1].courseh->Next;
+        if (Cur->course_id == id_course) return Cur;
+        Cur = Cur->Next;
     }
     return nullptr;
 }
@@ -242,7 +244,7 @@ void View_List_Course(Year* year_cur, int n)
         coursecur = year_cur->sem[choice - 1].courseh;
         //while (coursecur != nullptr) {}
         cout << "Input the course you want to view: "; // can add danh sach
-      
+
         cin >> choice2;
         coursecur = year_cur->sem[choice - 1].courseh;
         for (int i = 0; i < choice2; i++)
