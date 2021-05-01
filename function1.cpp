@@ -44,7 +44,7 @@ void add_one_by_one(Class*& classhead) {
         gotoxy(20 + offset, 5); cout << "NameLast:"; getline(cin, newst->NameLast, '\n');
         gotoxy(20 + offset, 6); cout << "Gender:"; getline(cin, newst->Gender, '\n');
         gotoxy(20 + offset, 7); cout << "Birth:"; getline(cin, newst->Birth, '\n');
-        gotoxy(20 + offset, 8); cout << "socialID:"; getline(cin, newst->socialID, '\n');
+        gotoxy(20 + offset, 8); cout << "SocialID:"; getline(cin, newst->socialID, '\n');
         newst->username = newst->password = newst->ID;
         newst->pNext = pcur->sthead;
         pcur->sthead = newst;
