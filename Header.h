@@ -18,6 +18,7 @@ struct Scoreboard
     float Midterm = -1;
     float Other = -1;
     float GPA = -1;
+    float OverallGPA = -1;
 };
 struct Students1
 {

@@ -646,6 +646,7 @@ float* Overal_Count_GPA(Students1* stu, int num_stu) {
 void Get_all_students(Year* yearh, string classname, Students1*& stu, int num_sem, int& num_stu) {
     Course* Co = yearh->sem[num_sem - 1].courseh;
     while (Co) {
+        cout << Co->course_name << " " << Co->num_stu << endl;
         for (int i = 1; i <= Co->num_stu; ++i)
             if (Co->Stu[i].classes == classname) {
                 stu[++num_stu] = Co->Stu[i];
@@ -676,30 +677,31 @@ void View_Score_Class(Year* yearh, int num_sem) {
 }
 void View_Stu_Score(Year* year_cur, int num_sem, Students* stu_cur)
 {
-    string tempID;
-    while (true)
+    int count = stu_cur->num_Cour;
+    float SemesterGPA;
+    for (int i = 1; i <= count; i++)
     {
-        cout << "Input the ID of course you want to view score: " << endl;
-        cout << "Exit (0.)";
-        cin >> tempID;
-        if (tempID == "0")break;
-        Course* course_cur = Find_Course(year_cur, tempID, num_sem);
-        int count = course_cur->num_stu;
-        for (int i = 0; i < count; i++)
+        int count_temp = stu_cur->Cour[i].num_stu;
+        for (int j = 1; j <= count_temp; j++)
         {
-            if (stu_cur->ID == course_cur->Stu[i].ID)
+            if (stu_cur->ID == stu_cur->Cour[i].Stu[j].ID)
             {
-                stu_cur->score.Other = course_cur->Stu[i].score.Other;
-                stu_cur->score.Midterm = course_cur->Stu[i].score.Midterm;
-                stu_cur->score.Final = course_cur->Stu[i].score.Final;
-                stu_cur->score.GPA = course_cur->Stu[i].score.GPA;
+                cout << "Midterm Score of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.Midterm << endl;
+                cout << "Other Score of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.Other << endl;
+                cout << "Final Score of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.Final << endl;
+                cout << "Total Score of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.Total << endl;
+                stu_cur->Cour[i].Stu[j].score.GPA = GPA(stu_cur->Cour[i].Stu[j].score.Total);
+                SemesterGPA += stu_cur->Cour[i].Stu[j].score.GPA;
+                cout << "GPA of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.GPA;
                 break;
             }
         }
-        cout << "Midterm Score: " << stu_cur->score.Midterm << endl;
-        cout << "Other Score: " << stu_cur->score.Other << endl;
-        cout << "Final Score: " << stu_cur->score.Final << endl;
-        cout << "Total Score: " << stu_cur->score.Total << endl;
-        stu_cur->score.GPA = GPA(stu_cur->score.Total);
     }
+    cout << "Semester GPA: " << SemesterGPA / count;
+    /*float OverallGPA = 0;
+    for (int i = 0; i < num_sem; i++)
+    {
+ 
+    }*/
+
 }
