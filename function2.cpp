@@ -633,6 +633,19 @@ void Edit_Score(Year*& year_cur, int num_sem)
         cout << "Input Total Score" << endl;
         cin >> course_cur->Stu[temp].score.Total;
     }
+    Export_Edit_Score(year_cur, num_sem, tempID, course_cur, count);
+}
+void Export_Edit_Score(Year*& year_cur, int num_sem, string tempID, Course* course_cur, int count)
+{
+    ofstream output;
+    output.open("Scoreboard.csv");
+    //No, ID, FirstName, LastName, Midterm, Other, Final, Total
+    output << "No, ID, FirsName, LastName, Midterm, Other, Final, Total" << endl;
+    for (int i = 1; i <= count; i++)
+    {
+        output << course_cur->Stu[i].No << "," << course_cur->Stu[i].ID << "," << course_cur->Stu[i].NameFirst << "," << course_cur->Stu[i].NameLast << "," << course_cur->Stu[i].score.Midterm << "," << course_cur->Stu[i].score.Other << "," << course_cur->Stu[i].score.Final << "," << course_cur->Stu[i].score.Total;
+        output << endl;
+    }
 }
 float GPA(int score) {
     if (score >= 9) return 4;
@@ -698,7 +711,7 @@ void View_Score_Class(Year* yearh, int num_sem) {
 void View_Stu_Score(Year* year_cur, int num_sem, Students* stu_cur)
 {
     int count = stu_cur->num_Cour;
-    float SemesterGPA;
+    float OverallGPA = 0;
     for (int i = 1; i <= count; i++)
     {
         int count_temp = stu_cur->Cour[i].num_stu;
@@ -711,17 +724,17 @@ void View_Stu_Score(Year* year_cur, int num_sem, Students* stu_cur)
                 cout << "Final Score of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.Final << endl;
                 cout << "Total Score of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.Total << endl;
                 stu_cur->Cour[i].Stu[j].score.GPA = GPA(stu_cur->Cour[i].Stu[j].score.Total);
-                SemesterGPA += stu_cur->Cour[i].Stu[j].score.GPA;
+                stu_cur->score.GPASem[num_sem-1] += stu_cur->Cour[i].Stu[j].score.GPA;
                 cout << "GPA of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.GPA;
                 break;
             }
         }
     }
-    cout << "Semester GPA: " << SemesterGPA / count;
-    /*float OverallGPA = 0;
-    for (int i = 0; i < num_sem; i++)
+    stu_cur->score.GPASem[num_sem - 1] /= count;
+    cout << "Semester GPA: " << stu_cur->score.GPASem[num_sem - 1];
+    for (int k = 0; k < num_sem; k++)
     {
- 
-    }*/
-
+        OverallGPA += stu_cur->score.GPASem[k];
+    }
+    cout << "Overall GPA: " << OverallGPA << endl;
 }

@@ -19,6 +19,7 @@ struct Scoreboard
     float Other = -1;
     float GPA = -1;
     float OverallGPA = -1;
+    float* GPASem = new float[3];
 };
 struct Students1
 {
@@ -140,7 +141,7 @@ void Export_List_Stu_In_Course(Year* year_cur, int num_sem);
 void Import_Scoreboard(Year*& year_cur, int num_sem);
 void View_Scoreboard_Course(Year* year_cur, int num_sem);
 void Edit_Score(Year*& year_cur, int num_sem);
-
+void Export_Edit_Score(Year*& year_cur, int num_sem, string tempID, Course* course_cur, int count);
 float GPA(int score);
 float* Overal_Count_GPA(Students1* stu, int num_stu);
 void Get_all_students(Year* yearh, string classname, Students1*& stu, int num_sem, int& num_stu);
