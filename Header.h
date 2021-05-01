@@ -143,9 +143,9 @@ void View_Scoreboard_Course(Year* year_cur, int num_sem);
 void Edit_Score(Year*& year_cur, int num_sem);
 void Export_Edit_Score(Year*& year_cur, int num_sem, string tempID, Course* course_cur, int count);
 float GPA(int score);
-float* Overal_Count_GPA(Students1* stu, int num_stu);
+float* Overal_Count_GPA(Students1* stu, int num_stu,int &t);
 void Get_all_students(Year* yearh, string classname, Students1*& stu, int num_sem, int& num_stu);
 void sort(Students1*& stu, int num_stu);
 void View_Score_Class(Year* yearh, int num_sem);
 void View_Stu_Score(Year* year_cur, int num_sem, Students* stu_cur);
-
+float* Total_Gpa(Year* yearh, string classname, int Sem);

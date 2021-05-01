@@ -8,7 +8,7 @@ Year* Find_Year(Year* yearh, string name_year)
     return nullptr;
 }
 
-Course * Find_Course(Year * yearh, string id_course, int num_sem)
+Course* Find_Course(Year* yearh, string id_course, int num_sem)
 {
     Course* Cur = yearh->sem[num_sem - 1].courseh;
     while (Cur)
@@ -207,6 +207,8 @@ void CreateSes(Course*& course_cur, int num_sem)
         } while (course_cur->ses[i].timeofSes != "S1" && course_cur->ses[i].timeofSes != "S2" && course_cur->ses[i].timeofSes != "S3" && course_cur->ses[i].timeofSes != "S4");
     }
 }
+
+
 void View_List_Course(Year* year_cur, int n)
 {
     int offset = 30;
@@ -540,6 +542,7 @@ void Export_List_Stu_In_Course(Year* year_cur, int num_sem)
         output << endl;
     }
 }
+
 void Import_Scoreboard(Year*& year_cur, int num_sem)
 {
     ifstream input;
@@ -647,6 +650,8 @@ void Export_Edit_Score(Year*& year_cur, int num_sem, string tempID, Course* cour
         output << endl;
     }
 }
+
+
 float GPA(int score) {
     if (score >= 9) return 4;
     if (score >= 8) return 3.5;
@@ -658,9 +663,9 @@ float GPA(int score) {
     if (score >= 2) return 0.5;
     return 0;
 }
-float* Overal_Count_GPA(Students1* stu, int num_stu) {
-    float* ans = new float[10];
-    int t = 0, num = 0;
+float* Overal_Count_GPA(Students1* stu, int num_stu,int &t) {
+    float* ans = new float[1000];
+    int  num = 0;
     float s = 0;
     for (int i = 1; i <= num_stu; ++i) {
         if (i == 1 || stu[i].Fullname == stu[i - 1].Fullname) {
@@ -693,6 +698,28 @@ void sort(Students1*& stu, int num_stu) {
         for (int j = i + 1; j <= num_stu; ++j)
             if (stu[i].ID > stu[j].ID) swap(stu[i], stu[j]);
 }
+
+
+float* Total_Gpa(Year* yearh,string classname,int Sem) {
+    float* ans = new float [1000];
+    for (int i = 0; i < 1000; ++i)
+        ans[i] = 0;
+    int n = 0;
+    for (int num_sem = 0; num_sem < Sem; ++num_sem) {
+        Students1* stu = new Students1[1000];
+        int num_stu = 0;
+        Get_all_students(yearh, classname, stu, num_sem, num_stu);
+        sort(stu, num_stu);
+        int t = 0;
+        float* Total_Gpa = Overal_Count_GPA(stu, num_stu,t);
+        if (n != 0) n = t;
+        for (int i = 1; i <= t; ++i)
+            ans[i] += Total_Gpa[i];
+    }
+    for (int i = 1; i <= n; ++i)
+        ans[i] = (float)ans[i] / Sem;
+    return ans;
+}
 void View_Score_Class(Year* yearh, int num_sem) {
     string classname;
     cout << "class_name="; cin >> classname;
@@ -701,9 +728,12 @@ void View_Score_Class(Year* yearh, int num_sem) {
     Get_all_students(yearh, classname, stu, num_sem, num_stu);
     sort(stu, num_stu);
     int t = 0;
-    float* Total_Gpa = Overal_Count_GPA(stu, num_stu);
+    float* Overal_GPA = Overal_Count_GPA(stu, num_stu,t);
+    float* Total_GPA = Total_Gpa(yearh,classname,num_sem);
+    int k = 0;
     for (int i = 1; i <= num_stu; ++i) {
-        if (i == 1 || stu[i].Fullname != stu[i - 1].Fullname) cout << stu[i].Fullname << " " << Total_Gpa[++t];
+        if (i == 1 || stu[i].Fullname != stu[i - 1].Fullname) 
+            cout << stu[i].Fullname << " " << Overal_GPA[++k]<<" "<<Total_GPA[k];
         else cout << "       ";
         cout << stu[i].course_name << " " << stu[i].score.Final << "\n";
     }
@@ -724,7 +754,7 @@ void View_Stu_Score(Year* year_cur, int num_sem, Students* stu_cur)
                 cout << "Final Score of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.Final << endl;
                 cout << "Total Score of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.Total << endl;
                 stu_cur->Cour[i].Stu[j].score.GPA = GPA(stu_cur->Cour[i].Stu[j].score.Total);
-                stu_cur->score.GPASem[num_sem-1] += stu_cur->Cour[i].Stu[j].score.GPA;
+                stu_cur->score.GPASem[num_sem - 1] += stu_cur->Cour[i].Stu[j].score.GPA;
                 cout << "GPA of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.GPA;
                 break;
             }
@@ -738,3 +768,4 @@ void View_Stu_Score(Year* year_cur, int num_sem, Students* stu_cur)
     }
     cout << "Overall GPA: " << OverallGPA << endl;
 }
+
