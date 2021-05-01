@@ -325,10 +325,13 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
             gotoxy(20 + offset, 7); cout << "0.Log out\n";
         }//cout student name of function
         if (stu_cur->username[0] == '0') {
+            gotoxy(20 + offset, 5);
             cout << "3.Academic Year Options\n"; // cout staff name of function
+            gotoxy(20 + offset, 6);
             cout << "4.View Classes and Courses.";
+            gotoxy(20 + offset, 7);
             cout << "5.End of Semester Options";
-            gotoxy(20 + offset, 6); cout << "0.Log out\n";
+            gotoxy(20 + offset, 8); cout << "0.Log out\n";
         }
         int option;
         SetConsoleTextAttribute(hConsole, 6);

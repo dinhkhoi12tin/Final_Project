@@ -446,29 +446,49 @@ void Remove_Course(Students*& stu_cur, Year*& yearh, int num_sem) {
 }
 void View_List_Of_Classes(Class* classhead)
 {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
     if (classhead != nullptr)
     {
         View_List_Of_Classes(classhead->Next);
+        gotoxy(8 + offset, 3);
         cout << classhead->class_name << endl;
     }
 }
 void View_Classes_Students(Students* sthead)
 {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
     if (sthead != nullptr)
     {
         View_Classes_Students(sthead->pNext);
+        gotoxy(8 + offset, 3);
         cout << sthead->ID << " " << sthead->NameFirst << " " << sthead->NameLast << " " << sthead->Gender << endl;
     }
 }
 void View_List_Of_Students_Course(Year* year_cur, int num_sem)
 {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
     string tempID;
+    gotoxy(8 + offset, 3);
     cout << "Input the ID of the course: ";
+    gotoxy(8 + offset, 3);
     cin >> tempID;
     Course* course_cur = Find_Course(year_cur, tempID, num_sem);
     int n = course_cur->num_stu;
     for (int i = 0; i < n; i++)
     {
+        gotoxy(8 + offset, 4);
         cout << i << ". " << course_cur->Stu[i].ID << " " << course_cur->Stu[i].NameFirst << " " << course_cur->Stu[i].NameLast << " " << course_cur->Stu[i].Gender;
         cout << endl;
     }
