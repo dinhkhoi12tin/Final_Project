@@ -368,7 +368,7 @@ void Enroll_Course(Students*& stu_cur, Year*& yearh, int num_sem) {
     string ID;
     gotoxy(8 + offset, 3);
     cout << "Input Id course: ";
-    gotoxy(8 + offset, 3);
+    gotoxy(18 + offset, 3);
     cin >> ID;
     Course* Cour = Find_Course(yearh, ID, num_sem);
     if (check(stu_cur, Cour)) {
@@ -401,7 +401,7 @@ void Remove_Course(Students*& stu_cur, Year*& yearh, int num_sem) {
     string ID;
     gotoxy(8 + offset, 3);
     cout << "type ID course to remove: ";
-    gotoxy(50 + offset, 3);
+    gotoxy(27 + offset, 3);
     cin >> ID;
     for (int i = 1; i <= stu_cur->num_Cour; ++i)
         if (stu_cur->Cour[i].course_id == ID) {
@@ -458,7 +458,7 @@ void View_List_Of_Students_Course(Year* year_cur, int num_sem)
     string tempID;
     gotoxy(8 + offset, 3);
     cout << "Input the ID of the course: ";
-    gotoxy(8 + offset, 3);
+    gotoxy(29 + offset, 3);
     cin >> tempID;
     Course* course_cur = Find_Course(year_cur, tempID, num_sem);
     int n = course_cur->num_stu;
@@ -503,8 +503,15 @@ bool CheckRegistrationDate(Year* year_cur, int num_sem)
 }
 void Export_List_Stu_In_Course(Year* year_cur, int num_sem)
 {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
     string tempID;
+    gotoxy(8 + offset, 3);
     cout << "Input the ID of the course: ";
+    gotoxy(29 + offset, 3);
     cin >> tempID;
     ofstream output;
     output.open("Stu_in_course.csv");
@@ -512,6 +519,7 @@ void Export_List_Stu_In_Course(Year* year_cur, int num_sem)
     int n = course_cur->num_stu;
     for (int i = 1; i <= n; i++)
     {
+        gotoxy(58,3);
         output << course_cur->Stu[i].ID << "," << course_cur->Stu[i].Fullname << "," << course_cur->Stu[i].Gender;
         output << endl;
     }
@@ -519,14 +527,23 @@ void Export_List_Stu_In_Course(Year* year_cur, int num_sem)
 
 void Import_Scoreboard(Year*& year_cur, int num_sem)
 {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
     ifstream input;
     string tempID;
     string filename;
+    gotoxy(8 + offset, 3);
     cout << "Input name of file you want to add: " << endl;
+    gotoxy(37 + offset, 3);
     cin >> filename;
     //filename = "Scoreboard.csv"
-    input.open(filename);
+    input.open(filename);   
+    gotoxy(8 + offset, 3);
     cout << "Input the course you want to add scoreboard: " << endl;
+    gotoxy(46 + offset, 3);
     cin >> tempID;
     Course* course_cur = Find_Course(year_cur, tempID, num_sem);
     if (!input.is_open())
@@ -554,26 +571,43 @@ void Import_Scoreboard(Year*& year_cur, int num_sem)
 }
 void View_Scoreboard_Course(Year* year_cur, int num_sem)
 {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
     string tempID;
     int count;
-    cout << "Input the course you want to view scoreboard: " << endl;
+    gotoxy(8 + offset, 3);
+    cout << "Input the course you want to add scoreboard: " << endl;
+    gotoxy(46 + offset, 3);
     cin >> tempID;
     Course* course_cur = Find_Course(year_cur, tempID, num_sem);
     count = course_cur->num_stu;
     for (int i = 1; i <= count; i++)
     {
+        gotoxy(8 + offset, 3);
         cout << course_cur->Stu[i].No << " " << course_cur->Stu[i].ID << " " << course_cur->Stu[i].Fullname << " " << course_cur->Stu[i].score.Midterm << " " << course_cur->Stu[i].score.Other << " " << course_cur->Stu[i].score.Final << " " << course_cur->Stu[i].score.Total;
         cout << endl;
     }
 }
 void Edit_Score(Year*& year_cur, int num_sem)
 {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
     string tempID, tempIDStu;
+    gotoxy(8 + offset, 3);
     cout << "Input the course you want to add scoreboard: " << endl;
+    gotoxy(46 + offset, 3);
     cin >> tempID;
     Course* course_cur = Find_Course(year_cur, tempID, num_sem);
     int count = course_cur->num_stu;
+    gotoxy(8 + offset, 4);
     cout << "Input the ID of student you want to edit: " << endl;
+    gotoxy(43 + offset, 4);
     cin >> tempIDStu;
     int temp;
     for (int i = 1; i <= count; i++)
@@ -585,11 +619,18 @@ void Edit_Score(Year*& year_cur, int num_sem)
         }
     }
     int option;
+    createframe();
+    gotoxy(8 + offset, 3);
     cout << "Input the score you want to edit: ";
+    gotoxy(8 + offset, 4);
     cout << "1. Midterm Score" << endl;
+    gotoxy(8 + offset, 5);
     cout << "2. Other Score" << endl;
+    gotoxy(8 + offset, 6);
     cout << "3. Final Score" << endl;
+    gotoxy(8 + offset, 7);
     cout << "4. Total" << endl;
+    gotoxy(36 + offset, 3);
     cin >> option;
     if (option == 1)
     {
@@ -615,12 +656,19 @@ void Edit_Score(Year*& year_cur, int num_sem)
 }
 void Export_Edit_Score(Year*& year_cur, int num_sem, string tempID, Course* course_cur, int count)
 {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
     ofstream output;
     output.open("Scoreboard.csv");
     //No, ID, FirstName, LastName, Midterm, Other, Final, Total
+    gotoxy(8 + offset, 3);
     output << "No, ID, FirsName, LastName, Midterm, Other, Final, Total" << endl;
     for (int i = 1; i <= count; i++)
     {
+        gotoxy(8 + offset, 4);
         output << course_cur->Stu[i].No << "," << course_cur->Stu[i].ID << "," << course_cur->Stu[i].NameFirst << "," << course_cur->Stu[i].NameLast << "," << course_cur->Stu[i].score.Midterm << "," << course_cur->Stu[i].score.Other << "," << course_cur->Stu[i].score.Final << "," << course_cur->Stu[i].score.Total;
         output << endl;
     }
@@ -695,7 +743,13 @@ float* Total_Gpa(Year* yearh, string classname, int Sem) {
     return ans;
 }
 void View_Score_Class(Year* yearh, int num_sem) {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
     string classname;
+    gotoxy(8 + offset, 3);
     cout << "class_name="; cin >> classname;
     Students1* stu = new Students1[1000];
     int num_stu = 0;
@@ -706,14 +760,25 @@ void View_Score_Class(Year* yearh, int num_sem) {
     float* Total_GPA = Total_Gpa(yearh, classname, num_sem);
     int k = 0;
     for (int i = 1; i <= num_stu; ++i) {
-        if (i == 1 || stu[i].Fullname != stu[i - 1].Fullname)
+        if (i == 1 || stu[i].Fullname != stu[i - 1].Fullname) {
+            gotoxy(8 + offset, 4);
             cout << stu[i].Fullname << " " << Overal_GPA[++k] << " " << Total_GPA[k];
-        else cout << "       ";
+        }
+        else {
+            gotoxy(8 + offset, 4);
+            cout << "       ";
+        }
+        gotoxy(8 + offset, 5);
         cout << stu[i].course_name << " " << stu[i].score.Final << "\n";
     }
 }
 void View_Stu_Score(Year* year_cur, int num_sem, Students* stu_cur)
 {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121); 
     int count = stu_cur->num_Cour;
     float OverallGPA = 0;
     stu_cur->score.GPASem[num_sem - 1] = 0;
@@ -724,24 +789,32 @@ void View_Stu_Score(Year* year_cur, int num_sem, Students* stu_cur)
         {
             if (stu_cur->ID == stu_cur->Cour[i].Stu[j].ID)
             {
+                gotoxy(8 + offset, 3);
                 cout << "Midterm Score of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.Midterm << endl;
+                gotoxy(8 + offset, 4);
                 cout << "Other Score of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.Other << endl;
+                gotoxy(8 + offset, 5);
                 cout << "Final Score of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.Final << endl;
+                gotoxy(8 + offset, 6);
                 cout << "Total Score of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.Total << endl;
                 stu_cur->Cour[i].Stu[j].score.GPA = GPA(stu_cur->Cour[i].Stu[j].score.Total);
                 stu_cur->score.GPASem[num_sem - 1] += stu_cur->Cour[i].Stu[j].score.GPA;
-                cout << "GPA of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.GPA << endl;
+
+                gotoxy(8 + offset, 7);
+                cout << "GPA of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.GPA;
                 break;
             }
         }
     }
     cout << endl << endl;
     stu_cur->score.GPASem[num_sem - 1] /= count;
-    cout << "Semester GPA: " << setprecision(1) << stu_cur->score.GPASem[num_sem - 1] << endl;
+    gotoxy(8 + offset, 8);
+    cout << "Semester GPA: " << setprecision(1) << stu_cur->score.GPASem[num_sem - 1];
     for (int k = 0; k < num_sem; k++)
     {
         OverallGPA += stu_cur->score.GPASem[k];
     }
+    gotoxy(8 + offset, 9);
     cout << "Overall GPA: " << setprecision(1) << OverallGPA << endl;
 }
 
