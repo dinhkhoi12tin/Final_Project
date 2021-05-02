@@ -788,7 +788,13 @@ float* Total_Gpa(Year* yearh, string classname, int Sem) {
     return ans;
 }
 void View_Score_Class(Year* yearh, int num_sem) {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
     string classname;
+    gotoxy(8 + offset, 3);
     cout << "class_name="; cin >> classname;
     Students1* stu = new Students1[1000];
     int num_stu = 0;
@@ -799,14 +805,25 @@ void View_Score_Class(Year* yearh, int num_sem) {
     float* Total_GPA = Total_Gpa(yearh, classname, num_sem);
     int k = 0;
     for (int i = 1; i <= num_stu; ++i) {
-        if (i == 1 || stu[i].Fullname != stu[i - 1].Fullname)
+        if (i == 1 || stu[i].Fullname != stu[i - 1].Fullname) {
+        gotoxy(8 + offset, 4);
             cout << stu[i].Fullname << " " << Overal_GPA[++k] << " " << Total_GPA[k];
-        else cout << "       ";
+        }
+        else {
+            gotoxy(8 + offset, 4);
+            cout << "       ";
+        }
+        gotoxy(8 + offset, 5;
         cout << stu[i].course_name << " " << stu[i].score.Final << "\n";
     }
 }
 void View_Stu_Score(Year* year_cur, int num_sem, Students* stu_cur)
 {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121); 
     int count = stu_cur->num_Cour;
     float OverallGPA = 0;
     for (int i = 1; i <= count; i++)
@@ -816,23 +833,30 @@ void View_Stu_Score(Year* year_cur, int num_sem, Students* stu_cur)
         {
             if (stu_cur->ID == stu_cur->Cour[i].Stu[j].ID)
             {
+                gotoxy(8 + offset, 3);
                 cout << "Midterm Score of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.Midterm << endl;
+                gotoxy(8 + offset, 4);
                 cout << "Other Score of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.Other << endl;
+                gotoxy(8 + offset, 5);
                 cout << "Final Score of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.Final << endl;
+                gotoxy(8 + offset, 6);
                 cout << "Total Score of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.Total << endl;
                 stu_cur->Cour[i].Stu[j].score.GPA = GPA(stu_cur->Cour[i].Stu[j].score.Total);
                 stu_cur->score.GPASem[num_sem - 1] += stu_cur->Cour[i].Stu[j].score.GPA;
+                gotoxy(8 + offset, 7);
                 cout << "GPA of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.GPA;
                 break;
             }
         }
     }
     stu_cur->score.GPASem[num_sem - 1] /= count;
+    gotoxy(8 + offset, 8);
     cout << "Semester GPA: " << stu_cur->score.GPASem[num_sem - 1];
     for (int k = 0; k < num_sem; k++)
     {
         OverallGPA += stu_cur->score.GPASem[k];
     }
+    gotoxy(8 + offset, 9);
     cout << "Overall GPA: " << OverallGPA << endl;
 }
 
