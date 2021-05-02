@@ -153,6 +153,36 @@ void displayUI()
         cin >> options;
     } while (options != 0);
 }
+void extendframe(int y)
+{
+    int offset = 30;
+    int x = 60 + offset;  // change size of input
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 119);
+    for (int i = 10; i < y; i++)
+    {
+        for (int j = 0 + offset; j < x; j++)
+        {
+            gotoxy(j, i);
+            cout << " ";
+        }
+        cout << endl;
+    }
+    SetConsoleTextAttribute(hConsole, 158);
+
+    for (int i = 0 + offset; i < x; i++) // tao dong ngang
+    {
+        gotoxy(i, y); printf("%c", 205);  // dong ngang duoi
+    }
+    for (int i = 10; i < y; i++)  // dong ke thang dung
+    {
+        gotoxy(0 + offset, i); printf("%c", 186); // dong thang ben trai
+        gotoxy(x, i); printf("%c", 186); // dong thang ben phai
+    }
+    gotoxy(x, y); printf("%c", 188);
+    gotoxy(0 + offset, y); printf("%c", 200); // moc cau ben trai duoi
+}
 void createframe()
 {
     int offset = 30;
@@ -255,7 +285,7 @@ void Login(Students* stu, Students* sta, Students*& stu_cur, Year*& yearh, Year*
                 gotoxy(20 + offset, 4); cout << "Password:                     ";
                 gotoxy(10 + offset, 7);
                 cout << "Please try again " << endl;
-                Sleep(1500);
+                Sleep(1000);
             }
             else {
                 Option_After_Login(stu, sta, stu_cur, filenameStu, yearh, year_cur, num_sem, classhead, n);
@@ -271,7 +301,7 @@ void Login(Students* stu, Students* sta, Students*& stu_cur, Year*& yearh, Year*
                 gotoxy(20 + offset, 4); cout << "Password:                     ";
                 gotoxy(10 + offset, 7);
                 cout << "Please try again " << endl;
-                Sleep(1500);
+                Sleep(1000);
             }
             else {
                 Option_After_Login(stu, sta, stu_cur, filenameSta, yearh, year_cur, num_sem, classhead, n);
@@ -301,13 +331,10 @@ void View_profile(Students* stu, Students* stu_cur) {
     {
         gotoxy(12 + offset, 9); cout << stu->classes << ":  " << stu_cur->classes;
     }
-    int wait = 0;
-    do
-    {
+    string wait;
         SetConsoleTextAttribute(hConsole, 6);
         gotoxy(0 + offset, 11); cout << " >> Press any to stop.  "; gotoxy(24 + offset, 11); cout << "                               ";
         gotoxy(25 + offset, 11);  cin >> wait;
-    } while (wait = 0);
 }
 void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, string filename, Year*& yearh, Year*& year_cur, int& num_sem, Class*& classhead, int& n) {
     int offset = 30;
@@ -322,8 +349,8 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
         if (stu_cur->username[0] != '0') {
             cout << "3. Enroll in a course\n";
             gotoxy(20 + offset, 6); cout << "4. View Enrolled Courses";
-            gotoxy(20 + offset, 8); cout << "5. View Course Score";
-            gotoxy(20 + offset, 9); cout << "0.Log out\n";
+            gotoxy(20 + offset, 7); cout << "5. View Enrolled Course Score";
+            gotoxy(20 + offset, 8); cout << "0.Log out\n";
         }//cout student name of function
         if (stu_cur->username[0] == '0') {
             gotoxy(20 + offset, 5);
@@ -359,9 +386,10 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
                 createframe();
                 SetConsoleTextAttribute(hConsole, 121);
                 gotoxy(20 + offset, 4); cout << "Registering is currently unavailable";
+                string wait;
                 SetConsoleTextAttribute(hConsole, 6);
                 gotoxy(0 + offset, 11); cout << " >> Press any to stop.  "; gotoxy(24 + offset, 11); cout << "                               ";
-                gotoxy(25 + offset, 11);  cin >> option;
+                gotoxy(25 + offset, 11);  cin >> wait;
             }
         } // student function;
         if (stu_cur->username[0] == '0' && option == 3) {
@@ -383,42 +411,44 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
                 if (option == 1) {
                     while (1) {
                         View_List_Of_Classes(classhead); // function 17-18
-                        createframe();
                         SetConsoleTextAttribute(hConsole, 121);
-                        gotoxy(20 + offset, 8); cout << "1. View Classes Students";
-                        gotoxy(20 + offset, 9); cout << "0. Exit";
+                        gotoxy(30 + offset, 8); cout << "1. View Classes Students";
+                        gotoxy(30 + offset, 9); cout << "0. Exit";
                         SetConsoleTextAttribute(hConsole, 6);
                         gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "       ";
                         gotoxy(35 + offset, 11);  cin >> option;
                         if (option == 0) break;
                         if (option == 1) {
                             string classfind;
+                            createframe();
+                            SetConsoleTextAttribute(hConsole, 121);
+                            gotoxy(20 + offset, 9); cout << "1. View All Classes";
                             cin >> classfind;
-                            Class* classcur = classhead;
-                            while (classfind != classcur->class_name && classcur != nullptr)
-                            {
-                                classcur = classcur->Next;
-                            }
-                            if (classfind == classcur->class_name) View_Classes_Students(classcur->sthead);
+                            Class* class_cur = Find(classhead, classfind);
+                            if (class_cur != 0) View_Classes_Students(class_cur->sthead);
                             else cout << "Class does not exist";
                         }
                     }
+                }
                     // find class command;
-                    if (option == 2) {
-                        while (1)
-                        {
-                            string ID;
-                            int choice2 = -1;
-                            View_List_Course(yearh, n, choice2, ID); // check
-                            if (choice2 == 0) break;
-                            SetConsoleTextAttribute(hConsole, 6);
-                            gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "          ";
-                            gotoxy(35 + offset, 11);  cin >> option;
-                            if (option == 0) break;
-                            if (option == 1) {
-                                View_List_Of_Students_Course(yearh, num_sem);
-                            }
-                        }
+                   
+                if (option == 2) {
+                            while (1)
+                            {
+                                string ID;
+                                int choice2 = -1;
+                                View_List_Course(yearh, n, choice2, ID); // check
+                                if (choice2 == 0) break;
+                                SetConsoleTextAttribute(hConsole, 121);
+                                gotoxy(30 + offset, 7); cout << "1. View Class's Students";
+                                gotoxy(30 + offset, 8); cout << "0. Exit";
+                                SetConsoleTextAttribute(hConsole, 6);
+                                gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "          ";
+                                gotoxy(35 + offset, 11);  cin >> option;
+                                if (option == 0) break;
+                                if (option == 1) {
+                                    View_List_Of_Students_Course(yearh, num_sem, ID);
+                                }
                     }
                 }
             }
@@ -426,6 +456,7 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
         if (stu_cur->username[0] == '0' && option == 5) //staff function
         {
             while (1) {
+                
                 createframe();
                 SetConsoleTextAttribute(hConsole, 121);
                 gotoxy(20 + offset, 2); cout << "1. Export Course's Student List";

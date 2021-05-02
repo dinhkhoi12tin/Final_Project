@@ -82,6 +82,7 @@ struct Year {
     Year* Next;
 };
 void createframe();
+void extendframe(int y);
 void gotoxy(int x, int y);
 void displayUI();
 void LoadFileStudents(Students*& stu, string filename);
@@ -125,9 +126,8 @@ void Delete_Course(Year*& year_cur, int& n, int num_sem, string ID);
 void Update_Course(Year*& year_cur, int num_sem, string ID);
 
 void View_List_Of_Classes(Class* classhead);
-void View_Classes_Students(Students* sthead);
-void View_List_Of_Students_Course(Year* year_cur, int num_sem);
-
+void View_Classes_Students(Students* sthead); 
+void View_List_Of_Students_Course(Year* year_cur, int num_sem, string ID);
 void CreateCourseByFile(Course*& courseh, int num_sem, int& n, ifstream& input);
 void GetCurrentDate(int& Year, int& Month, int& Day);
 void Convert_Date(string s, int& dd, int& mm, int& yyyy);

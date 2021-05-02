@@ -218,7 +218,7 @@ void Staff_View_Information(Year* year_cur, int num_sem, Class*& classhead) {
         if (option == 2) View_Classes_Students(classhead->sthead);
         if (option == 3) View_List_Course(year_cur, num_sem, choice2, ID);
         if (choice2 == 0) break;
-        if (option == 4) View_List_Of_Students_Course(year_cur, num_sem);
+        if (option == 4) View_List_Of_Students_Course(year_cur, num_sem, ID);
         if (option == 0) break;
     }
 }
