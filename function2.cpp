@@ -412,7 +412,7 @@ void Enroll_Course(Students*& stu_cur, Year*& yearh, int num_sem) {
     string ID;
     gotoxy(8 + offset, 3);
     cout << "Input Id course: ";
-    gotoxy(8 + offset, 3);
+    gotoxy(18 + offset, 3);
     cin >> ID;
     Course* Cour = Find_Course(yearh, ID, num_sem);
     if (check(stu_cur, Cour)) {
@@ -445,7 +445,7 @@ void Remove_Course(Students*& stu_cur, Year*& yearh, int num_sem) {
     string ID;
     gotoxy(8 + offset, 3);
     cout << "type ID course to remove: ";
-    gotoxy(50 + offset, 3);
+    gotoxy(27 + offset, 3);
     cin >> ID;
     for (int i = 1; i <= stu_cur->num_Cour; ++i)
         if (stu_cur->Cour[i].course_id == ID) {
@@ -502,7 +502,7 @@ void View_List_Of_Students_Course(Year* year_cur, int num_sem)
     string tempID;
     gotoxy(8 + offset, 3);
     cout << "Input the ID of the course: ";
-    gotoxy(8 + offset, 3);
+    gotoxy(29 + offset, 3);
     cin >> tempID;
     Course* course_cur = Find_Course(year_cur, tempID, num_sem);
     int n = course_cur->num_stu;
@@ -547,8 +547,15 @@ bool CheckRegistrationDate(Year* year_cur, int num_sem)
 }
 void Export_List_Stu_In_Course(Year* year_cur, int num_sem)
 {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
     string tempID;
+    gotoxy(8 + offset, 3);
     cout << "Input the ID of the course: ";
+    gotoxy(29 + offset, 3);
     cin >> tempID;
     ofstream output;
     output.open("Stu_in_course.csv");
@@ -556,6 +563,7 @@ void Export_List_Stu_In_Course(Year* year_cur, int num_sem)
     int n = course_cur->num_stu;
     for (int i = 1; i <= n; i++)
     {
+        gotoxy(58,3);
         output << course_cur->Stu[i].ID << "," << course_cur->Stu[i].Fullname << "," << course_cur->Stu[i].Gender;
         output << endl;
     }
@@ -563,14 +571,23 @@ void Export_List_Stu_In_Course(Year* year_cur, int num_sem)
 
 void Import_Scoreboard(Year*& year_cur, int num_sem)
 {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
     ifstream input;
     string tempID;
     string filename;
+    gotoxy(8 + offset, 3);
     cout << "Input name of file you want to add: " << endl;
+    gotoxy(37 + offset, 3);
     cin >> filename;
     //filename = "Scoreboard.csv"
     input.open(filename);   
+    gotoxy(8 + offset, 3);
     cout << "Input the course you want to add scoreboard: " << endl;
+    gotoxy(46 + offset, 3);
     cin >> tempID;
     Course* course_cur = Find_Course(year_cur, tempID, num_sem);
     if (!input.is_open())
@@ -598,14 +615,22 @@ void Import_Scoreboard(Year*& year_cur, int num_sem)
 }
 void View_Scoreboard_Course(Year* year_cur, int num_sem)
 {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
     string tempID;
     int count;
+    gotoxy(8 + offset, 3);
     cout << "Input the course you want to add scoreboard: " << endl;
+    gotoxy(46 + offset, 3);
     cin >> tempID;
     Course* course_cur = Find_Course(year_cur, tempID, num_sem);
     count = course_cur->num_stu;
     for (int i = 1; i <= count; i++)
     {
+        gotoxy(8 + offset, 3);
         cout << course_cur->Stu[i].No << " " << course_cur->Stu[i].ID << " " << course_cur->Stu[i].Fullname << " " << course_cur->Stu[i].score.Midterm << " " << course_cur->Stu[i].score.Other << " " << course_cur->Stu[i].score.Final << " " << course_cur->Stu[i].score.Total;
         cout << endl;
     }
