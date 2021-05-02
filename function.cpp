@@ -321,8 +321,9 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
         gotoxy(20 + offset, 5);
         if (stu_cur->username[0] != '0') {
             cout << "3. Enroll in a course\n";
-            gotoxy(20 + offset, 6); cout << "4. View enrolled courses";
-            gotoxy(20 + offset, 7); cout << "0.Log out\n";
+            gotoxy(20 + offset, 6); cout << "4. View Enrolled Courses";
+            gotoxy(20 + offset, 8); cout << "5. View Course Score";
+            gotoxy(20 + offset, 9); cout << "0.Log out\n";
         }//cout student name of function
         if (stu_cur->username[0] == '0') {
             gotoxy(20 + offset, 5);
@@ -335,7 +336,7 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
         }
         int option;
         SetConsoleTextAttribute(hConsole, 6);
-        gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "   ";
+        gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "      ";
         gotoxy(35 + offset, 11);  cin >> option;
         if (option == 0)  break;
         if (option == 1) View_profile(stu, stu_cur);
@@ -353,63 +354,118 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
             {
                 Enroll_Course(stu_cur, yearh, num_sem);
             }
-            else cout << "Registering is currently unavailable";
+            else
+            {
+                createframe();
+                SetConsoleTextAttribute(hConsole, 121);
+                gotoxy(20 + offset, 4); cout << "Registering is currently unavailable";
+                SetConsoleTextAttribute(hConsole, 6);
+                gotoxy(0 + offset, 11); cout << " >> Press any to stop.  "; gotoxy(24 + offset, 11); cout << "                               ";
+                gotoxy(25 + offset, 11);  cin >> option;
+            }
         } // student function;
         if (stu_cur->username[0] == '0' && option == 3) {
             Menu_Feature_First_Staff(stu, yearh, year_cur, num_sem, classhead, n);
         }
         if (stu_cur->username[0] == '0' && option == 4) { //staff view
-            cin >> option;
+            while (1)
+            {
+                createframe();
+            SetConsoleTextAttribute(hConsole, 121);
+            gotoxy(20 + offset, 2); cout << "1. View All Classes";
+            gotoxy(20 + offset, 3); cout << "2. View All Courses";
+            gotoxy(20 + offset, 4); cout << "0. Exit";
+            SetConsoleTextAttribute(hConsole, 6);
+            gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "      ";
+            gotoxy(35 + offset, 11);  cin >> option;
+          
             if (option == 0) break;
             if (option == 1) {
-                View_List_Of_Classes(classhead); // function 17-18
-                string classfind;
-                cin >> classfind;
-                Class* classcur = classhead;
-                while (classfind != classcur->class_name && classcur != nullptr)
-                {
-                    classcur = classcur->Next;
+                while (1) {
+                    View_List_Of_Classes(classhead); // function 17-18
+                    createframe();
+                    SetConsoleTextAttribute(hConsole, 121);
+                    gotoxy(20 + offset, 8); cout << "1. View Classes Students";
+                    gotoxy(20 + offset, 9); cout << "0. Exit";
+                    SetConsoleTextAttribute(hConsole, 6);
+                    gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "       ";
+                    gotoxy(35 + offset, 11);  cin >> option;
+                    if (option == 0) break;
+                    if (option == 1) {
+                        string classfind;
+                        cin >> classfind;
+                        Class* classcur = classhead;
+                        while (classfind != classcur->class_name && classcur != nullptr)
+                        {
+                            classcur = classcur->Next;
+                        }
+                        if (classfind == classcur->class_name) View_Classes_Students(classcur->sthead);
+                        else cout << "Class does not exist";
+                    }
                 }
-                if (classfind == classcur->class_name) View_Classes_Students(classcur->sthead);
-                else cout << "Class does not exist";
+                // find class command;
+                if (option == 2) {
+                    while (1)
+                    {
+                        string ID;
+                        int choice2 = -1;
+                        View_List_Course(yearh, n, choice2, ID); // check
+                        if (choice2 == 0) break;
+                        SetConsoleTextAttribute(hConsole, 6); 
+                        gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "          ";
+                        gotoxy(35 + offset, 11);  cin >> option;
+                        if (option == 0) break;
+                        if (option == 1) {
+                            View_List_Of_Students_Course(yearh, num_sem);
+                        }
+                    }
+                }
             }
-            // find class command;
-            if (option == 2) {
-                View_List_Course(yearh, n); // check
-                View_List_Of_Students_Course(yearh, num_sem);
             }
-
-        }
-        if (stu_cur->username[0] == '0' && option == 5)
-        {
-            cout << "Input your option:";
-            cin >> option;
-            if (option == 1) Export_List_Stu_In_Course(yearh, num_sem); // t dung yearh nhe
-            if (option == 2) Import_Scoreboard(yearh, num_sem);
-            if (option == 3) View_Scoreboard_Course(yearh, num_sem);
-            if (option == 4) Edit_Score(yearh, num_sem);
-            if (option == 5) View_Score_Class(yearh, num_sem);
-            if (option == 0) break;
-        }
-        if (stu_cur->username[0] != '0' && option == 4) {
-            View_Course(stu_cur); // can phai enroll, thi khuc nay moi test duoc
-            if (CheckRegistrationDate(yearh, num_sem))
+            if (stu_cur->username[0] == '0' && option == 5) //staff function
             {
-                gotoxy(20 + offset, 8); cout << "1. Remove Enrolled Courses";
-                gotoxy(20 + offset, 9); cout << "0. Exit";
-                cout << "pick an option: ";
-                cin >> option;
-                if (option == 0) break;
-                if (option == 1) Remove_Course(stu_cur, yearh, num_sem);
+                while (1) {
+                    createframe();
+                    SetConsoleTextAttribute(hConsole, 121);
+                    gotoxy(20 + offset, 8); cout << "1. Export Course's Student List";
+                    gotoxy(20 + offset, 8); cout << "2. Import Course Scoreboard";
+                    gotoxy(20 + offset, 8); cout << "3. View Course's Scoreboard";
+                    gotoxy(20 + offset, 9); cout << "4. Edit Course's Scoreboard";
+                    gotoxy(20 + offset, 9); cout << "5. View Class's Scoreboard";
+                    gotoxy(20 + offset, 9); cout << "0. Exit";
+                    SetConsoleTextAttribute(hConsole, 6);
+                    gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "            ";
+                    gotoxy(35 + offset, 11);  cin >> option;
+                    if (option == 1) Export_List_Stu_In_Course(yearh, num_sem); // t dung yearh nhe
+                    if (option == 2) Import_Scoreboard(yearh, num_sem);
+                    if (option == 3) View_Scoreboard_Course(yearh, num_sem);
+                    if (option == 4) Edit_Score(yearh, num_sem);
+                    if (option == 5) View_Score_Class(yearh, num_sem);
+                    if (option == 0) break;
+                }
             }
-            else
-            {
-                gotoxy(20 + offset, 8); cout << "0. Exit";
-                cin >> option;
-                break;
+            if (stu_cur->username[0] != '0' && option == 4) {
+                while (1) {
+                    View_Course(stu_cur); // can phai enroll, thi khuc nay moi test duoc
+                    if (CheckRegistrationDate(yearh, num_sem))
+                    {
+                        gotoxy(20 + offset, 8); cout << "1. Remove Enrolled Courses";
+                        gotoxy(20 + offset, 9); cout << "0. Exit";
+                        cout << "pick an option: ";
+                        cin >> option;
+                        if (option == 0) break;
+                        if (option == 1) Remove_Course(stu_cur, yearh, num_sem);
+                    }
+                    else
+                    {
+                        gotoxy(20 + offset, 8); cout << "0. Exit";
+                        cin >> option;
+                        if (option == 0) break;
+                    }
+                }
             }
+            if (stu_cur->username[0] != '0' && option == 5) View_Stu_Score(yearh, num_sem, stu_cur);
         }
-        if (stu_cur->username[0] != '0' && option == 5) View_Stu_Score(yearh, num_sem, stu_cur);
     }
 }
 void Menu()

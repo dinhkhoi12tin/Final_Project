@@ -124,9 +124,9 @@ void CreateSes(Course*& course_cur, int num_sem);
 //void Menu_Op();
 
 
-void View_List_Course(Year* year_cur, int n);
-void Delete_Course(Year*& year_cur, int& n, int num_sem);
-void Update_Course(Year*& year_cur, int num_sem);
+void View_List_Course(Year* year_cur, int n, int& choice2, string &ID);
+void Delete_Course(Year*& year_cur, int& n, int num_sem, string ID);
+void Update_Course(Year*& year_cur, int num_sem, string ID);
 
 void View_List_Of_Classes(Class* classhead);
 void View_Classes_Students(Students* sthead);

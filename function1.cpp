@@ -180,37 +180,45 @@ void Menu_Feature_First_Staff(Students* stu, Year*& yearh, Year*& year_cur, int&
             add_one_by_one(classhead);
             Export_new(classhead, stu);
         }
-        if (option == 3) 
+        if (option == 3)
         {
-            add_by_file_csv(classhead); 
+            add_by_file_csv(classhead);
             Export_new(classhead, stu);
         }
         if (option == 4) create_new_year(yearh, year_cur, n);
         if (option == 5) CreateSem(year_cur, n, num_sem);
         if (option == 6)
         {
-            View_List_Course(year_cur, n);
+            while (1) {
+                int choice2 = -1;
+                string ID;
+            View_List_Course(year_cur, n, choice2, ID);
+            if (choice2 == 0) break;
             gotoxy(20 + offset, 7); cout << "1.Edit courses information";
             gotoxy(20 + offset, 8); cout << "2.Delete courses";
             gotoxy(20 + offset, 9); cout << "0.Exit";
             int option1;
-            gotoxy(20 + offset, 10);
-            cout << "Choose option: " << endl;
-            gotoxy(65, 10);
+            SetConsoleTextAttribute(hConsole, 6);
+            gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "                    ";
+            gotoxy(36 + offset, 11);
             cin >> option1;
             if (option1 == 0) break;
-            if (option1 == 1) Update_Course(year_cur, num_sem);
-            if (option1 == 2) Delete_Course(year_cur, n, num_sem);
+            if (option1 == 1) Update_Course(year_cur, num_sem, ID);
+            if (option1 == 2) Delete_Course(year_cur, n, num_sem, ID);
+            break;
+            }
         }
         /*if (option == 7) test ngay thang
         {
             cout << CheckRegistrationDate(year_cur, 1)
         }*/
     }
-    
+
 }
 void Staff_View_Information(Year* year_cur, int num_sem, Class*& classhead) {
     int offset = 30;
+    int choice2 = -1;
+    string ID;
     while (1) {
         createframe();
         HANDLE  hConsole;
@@ -227,7 +235,8 @@ void Staff_View_Information(Year* year_cur, int num_sem, Class*& classhead) {
         gotoxy(36 + offset, 11);  cin >> option;
         if (option == 1) View_List_Of_Classes(classhead);
         if (option == 2) View_Classes_Students(classhead->sthead);
-        if (option == 3) View_List_Course(year_cur, num_sem);
+        if (option == 3) View_List_Course(year_cur, num_sem, choice2, ID);
+        if (choice2 == 0) break;
         if (option == 4) View_List_Of_Students_Course(year_cur, num_sem);
         if (option == 0) break;
     }
