@@ -1,18 +1,4 @@
 #include "Header.h"
-/*void create_new_year(Year* yearh) {
->>>>>>> 071e438daf4150ab6c100609a2181e85d3d7363d
-    int offset = 30;
-    createframe();
-    string newyear;
-    HANDLE hConsole;
-    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, 121);
-    gotoxy(20 + offset, 3); cout << "type new year:"; cin >> newyear;
-    Year* yearcur = new Year;
-    yearcur->year_name = newyear;
-    yearcur->Next = yearh;
-    yearh = yearcur;
-}*/
 Class* Find(Class* classhead, string classname) {
     while (classhead) {
         if (classhead->class_name == classname) return classhead;
@@ -154,9 +140,8 @@ void create_class(Class*& classhead) {
         classhead = newclass;
     }
 }
-void Menu_Feature_First_Staff(Students* stu, Year*& yearh, Year*& year_cur, int& num_sem, Class*& classhead, int& n) {
+void Menu_Feature_First_Staff(Students*& stu, Year*& yearh, Year*& year_cur, int& num_sem, Class*& classhead, int& n) {
     int offset = 30;
-    //create_new_year();
     while (1) {
         createframe();
         HANDLE  hConsole;
@@ -186,32 +171,28 @@ void Menu_Feature_First_Staff(Students* stu, Year*& yearh, Year*& year_cur, int&
             Export_new(classhead, stu);
         }
         if (option == 4) create_new_year(yearh, year_cur, n);
-        if (option == 5) CreateSem(year_cur, n, num_sem);
+        if (option == 5) CreateSem(year_cur, n, num_sem, stu);
         if (option == 6)
         {
             while (1) {
                 int choice2 = -1;
                 string ID;
-            View_List_Course(year_cur, n, choice2, ID);
-            if (choice2 == 0) break;
-            gotoxy(20 + offset, 7); cout << "1.Edit courses information";
-            gotoxy(20 + offset, 8); cout << "2.Delete courses";
-            gotoxy(20 + offset, 9); cout << "0.Exit";
-            int option1;
-            SetConsoleTextAttribute(hConsole, 6);
-            gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "                    ";
-            gotoxy(36 + offset, 11);
-            cin >> option1;
-            if (option1 == 0) break;
-            if (option1 == 1) Update_Course(year_cur, num_sem, ID);
-            if (option1 == 2) Delete_Course(year_cur, n, num_sem, ID);
-            break;
+                View_List_Course(year_cur, n, choice2, ID);
+                if (choice2 == 0) break;
+                gotoxy(20 + offset, 7); cout << "1.Edit courses information";
+                gotoxy(20 + offset, 8); cout << "2.Delete courses";
+                gotoxy(20 + offset, 9); cout << "0.Exit";
+                int option1;
+                SetConsoleTextAttribute(hConsole, 6);
+                gotoxy(0 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(35 + offset, 11); cout << "                    ";
+                gotoxy(36 + offset, 11);
+                cin >> option1;
+                if (option1 == 0) break;
+                if (option1 == 1) Update_Course(year_cur, num_sem, ID);
+                if (option1 == 2) Delete_Course(year_cur, n, num_sem, ID);
+                break;
             }
         }
-        /*if (option == 7) test ngay thang
-        {
-            cout << CheckRegistrationDate(year_cur, 1)
-        }*/
     }
 
 }

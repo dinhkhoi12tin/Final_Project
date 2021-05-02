@@ -87,9 +87,8 @@ void displayUI();
 void LoadFileStudents(Students*& stu, string filename);
 void LoadFileStaff(Students*& sta, string filename);
 void export_file(Students* stu, string filename);
-void Release_memory(Students*& stu);
 void display_information_students(Students* stu);
-//void display_information_staffs(Students* stu);
+
 void Change_Password(Students* stu, Students*& stu_cur, string New_Password, string filename);
 void View_profile(Students* stu, Students* stu_cur);
 bool CheckUser(Students* stu, Students*& stu_cur, string ID, string pass);
@@ -110,21 +109,18 @@ void display(Class* classhead);
 void add_by_file_csv(Class*& classhead);
 void create_class(Class*& classhead);
 
-void Menu_Feature_First_Staff(Students* stu, Year*& yearh, Year*& year_cur, int& num_sem, Class*& classhead, int& n);
+void Menu_Feature_First_Staff(Students*& stu, Year*& yearh, Year*& year_cur, int& num_sem, Class*& classhead, int& n);
 
 void Export_new(Class* classhead, Students* stu);
 
 void create_new_year(Year*& yearh, Year*& year_cur, int& n);
-
-void CreateSem(Year*& year_cur, int& n, int& num_sem);
-//void CreateCourse(Course*& courseh, int num_sem, int n);
+void Remove_All_Course(Students*& stu, int num_sem);
+void CreateSem(Year*& year_cur, int& n, int& num_sem, Students*& stu);
 
 void CreateSes(Course*& course_cur, int num_sem);
 
-//void Menu_Op();
 
-
-void View_List_Course(Year* year_cur, int n, int& choice2, string &ID);
+void View_List_Course(Year* year_cur, int n, int& choice2, string& ID);
 void Delete_Course(Year*& year_cur, int& n, int num_sem, string ID);
 void Update_Course(Year*& year_cur, int num_sem, string ID);
 
@@ -133,7 +129,6 @@ void View_Classes_Students(Students* sthead);
 void View_List_Of_Students_Course(Year* year_cur, int num_sem);
 
 void CreateCourseByFile(Course*& courseh, int num_sem, int& n, ifstream& input);
-void CreateSem(Year*& year_cur, int& n, int& num_sem);
 void GetCurrentDate(int& Year, int& Month, int& Day);
 void Convert_Date(string s, int& dd, int& mm, int& yyyy);
 bool CheckRegistrationDate(Year* year_cur, int num_sem);
@@ -143,9 +138,10 @@ void View_Scoreboard_Course(Year* year_cur, int num_sem);
 void Edit_Score(Year*& year_cur, int num_sem);
 void Export_Edit_Score(Year*& year_cur, int num_sem, string tempID, Course* course_cur, int count);
 float GPA(int score);
-float* Overal_Count_GPA(Students1* stu, int num_stu,int &t);
+float* Overal_Count_GPA(Students1* stu, int num_stu, int& t);
 void Get_all_students(Year* yearh, string classname, Students1*& stu, int num_sem, int& num_stu);
 void sort(Students1*& stu, int num_stu);
 void View_Score_Class(Year* yearh, int num_sem);
 void View_Stu_Score(Year* year_cur, int num_sem, Students* stu_cur);
 float* Total_Gpa(Year* yearh, string classname, int Sem);
+void Release_memory(Students*& stu, Students*& sta, Year*& yearh, Year*& year_cur, Class*& classhead);

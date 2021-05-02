@@ -19,21 +19,6 @@ Course* Find_Course(Year* yearh, string id_course, int num_sem)
     return nullptr;
 }
 
-/*void PrintSem(Year* yearh, Year*& year_cur)
-{
-    int num_sem;
-    string name_year;
-    cout << "Input name of year: " << endl;
-    cin >> name_year;
-    year_cur = Find_Year(yearh, name_year);
-    cout << "The sem you want to check: " << endl;
-    cin >> num_sem;
-    cout << "Semester " << num_sem << "in year" << year_cur->year_name << endl;
-    cout << "The start of semester " << num_sem << ":" << year_cur->sem[num_sem - 1].dateStart << endl;
-    cout << "The end of semester " << num_sem << ":" << year_cur->sem[num_sem - 1].dateEnd << endl;
-}
-*/
-
 void create_new_year(Year*& yearh, Year*& year_cur, int& n) {
     string newyear;
     int offset = 30;
@@ -50,7 +35,17 @@ void create_new_year(Year*& yearh, Year*& year_cur, int& n) {
     yearh = yearcur;
     year_cur = Find_Year(yearh, newyear);
 }
-void CreateSem(Year*& year_cur, int& n, int& num_sem)
+void Remove_All_Course(Students*& stu, int num_sem) {
+    Students* stu_cur = stu;
+    while (stu_cur != nullptr) // run until no students left
+    {
+        for (int i = stu_cur->num_Cour; i >= 0; i--)
+            stu_cur->Cour[i] = stu_cur->Cour[i + 1];
+        stu_cur->num_Cour = 0;
+        stu_cur = stu_cur->pNext;
+    }
+}
+void CreateSem(Year*& year_cur, int& n, int& num_sem, Students*& stu)
 {
     int offset = 30;
     createframe();
@@ -58,6 +53,7 @@ void CreateSem(Year*& year_cur, int& n, int& num_sem)
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, 121);
     gotoxy(8 + offset, 3);
+    Remove_All_Course(stu, num_sem);
     cout << "Input the Semester(1/2/3): ";
     cin >> num_sem;
     if (num_sem == 1) year_cur->sem[num_sem - 1].sem_name = "Semester 1";
@@ -87,46 +83,6 @@ void CreateSem(Year*& year_cur, int& n, int& num_sem)
     ifstream input;
     CreateCourseByFile(year_cur->sem[num_sem - 1].courseh, num_sem, n, input);
 }
-
-/*void CreateCourse(Course*& courseh, int num_sem, int n)
-{
-    Course* coursecur = nullptr;
-    int offset = 30;
-    for (int i = 0; i < n; i++)
-    {
-        createframe();
-        HANDLE hConsole;
-        hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-        SetConsoleTextAttribute(hConsole, 121);
-        if (courseh == nullptr)
-        {
-            courseh = new Course;
-            coursecur = courseh;
-        }
-        else
-        {
-            coursecur->Next = new Course;
-            coursecur = coursecur->Next;
-        }
-        coursecur->maxnum_stu = 50;
-        gotoxy(8 + offset, 3);
-        cout << "Input the No. " << i + 1 << " course's name: ";
-        cin.ignore();
-        getline(cin, coursecur->course_name);
-        gotoxy(8 + offset, 4);
-        cout << "Input the No. " << i + 1 << " course's ID: ";
-        cin >> coursecur->course_id;
-        gotoxy(8 + offset, 5);
-        cout << "Input the No. " << i + 1 << " course's teacher's name: ";
-        cin.ignore();
-        getline(cin, coursecur->teacher_name);
-        gotoxy(8 + offset, 6);
-        cout << "Input the No. " << i + 1 << " course's credits: ";
-        cin >> coursecur->cre_num;
-        CreateSes(coursecur, num_sem);
-        coursecur->Next = nullptr;
-    }
-}*/
 
 void CreateCourseByFile(Course*& courseh, int num_sem, int& n, ifstream& input)
 {
@@ -217,8 +173,7 @@ void CreateSes(Course*& course_cur, int num_sem)
     }
 }
 
-
-void View_List_Course(Year* year_cur, int n, int &choice2, string &ID)
+void View_List_Course(Year* year_cur, int n, int& choice2, string& ID)
 {
     while (1)
     {
@@ -244,7 +199,7 @@ void View_List_Course(Year* year_cur, int n, int &choice2, string &ID)
             HANDLE  hConsole;
             hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
             SetConsoleTextAttribute(hConsole, 121);
-           
+
             gotoxy(8 + offset, 8);
             for (int i = 1; i < n; i++)
             {
@@ -255,6 +210,7 @@ void View_List_Course(Year* year_cur, int n, int &choice2, string &ID)
                     coursecur = coursecur->Next;
                 }
             }
+            gotoxy(8 + offset, n); cout << "0. Exit";
             coursecur = year_cur->sem[choice - 1].courseh;
             //while (coursecur != nullptr) {}
             gotoxy(38, 9);
@@ -267,7 +223,7 @@ void View_List_Course(Year* year_cur, int n, int &choice2, string &ID)
             {
                 coursecur = coursecur->Next;
             }
-
+            ID = coursecur->course_id;
             createframe();
             SetConsoleTextAttribute(hConsole, 121);
             gotoxy(8 + offset, 1);
@@ -282,13 +238,12 @@ void View_List_Course(Year* year_cur, int n, int &choice2, string &ID)
             cout << "Course's Session: ";
             for (int i = 0; i < 2; i++)
             {
-                gotoxy(58, i+5);
+                gotoxy(58, i + 5);
                 cout << coursecur->ses[i].date << "  -";
-                gotoxy(65, i+5);
+                gotoxy(65, i + 5);
                 cout << coursecur->ses[i].timeofSes;
                 cout << endl;
             }
-            ID = coursecur->course_id;
             break;
         }
     }
@@ -300,26 +255,27 @@ void Delete_Course(Year*& year_cur, int& n, int num_sem, string ID)
     HANDLE  hConsole;
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, 121);
-    string tempID;
-    tempID = ID;
     Course* coursecur = year_cur->sem[num_sem - 1].courseh;
-    if (year_cur->sem[num_sem - 1].courseh->course_id == tempID)
+    if (year_cur->sem[num_sem - 1].courseh->course_id == ID)
     {
         year_cur->sem[num_sem - 1].courseh = year_cur->sem[num_sem - 1].courseh->Next;
         delete coursecur;
         n--;
     }
-    while (coursecur->Next != nullptr)
+    else
     {
-        if (coursecur->Next->course_id == tempID) //crashing
+        while (coursecur->Next != nullptr)
         {
-            Course* pDel = coursecur->Next;
-            coursecur->Next = coursecur->Next->Next;
-            delete pDel;
-            n--;
-            break;
+            if (coursecur->Next->course_id == ID) //crashing
+            {
+                Course* pDel = coursecur->Next;
+                coursecur->Next = coursecur->Next->Next;
+                delete pDel;
+                n--;
+                break;
+            }
+            else coursecur = coursecur->Next;
         }
-        else coursecur = coursecur->Next;
     }
     createframe();
     gotoxy(8 + offset, 4);
@@ -379,10 +335,10 @@ void Update_Course(Year*& year_cur, int num_sem, string ID)
     }
     if (choice == 5)
     {
-        
+
         for (int i = 0; i < 2; i++)
         {
-            cout << "Input No. " << i+1 <<" Session: ";
+            cout << "Input No. " << i + 1 << " Session: ";
             cout << "Input course's new date: ";
             cin >> coursecur->ses[i].date;
             gotoxy(8 + offset, 5);
@@ -569,7 +525,7 @@ void Import_Scoreboard(Year*& year_cur, int num_sem)
     cout << "Input name of file you want to add: " << endl;
     cin >> filename;
     //filename = "Scoreboard.csv"
-    input.open(filename);   
+    input.open(filename);
     cout << "Input the course you want to add scoreboard: " << endl;
     cin >> tempID;
     Course* course_cur = Find_Course(year_cur, tempID, num_sem);
@@ -600,7 +556,7 @@ void View_Scoreboard_Course(Year* year_cur, int num_sem)
 {
     string tempID;
     int count;
-    cout << "Input the course you want to add scoreboard: " << endl;
+    cout << "Input the course you want to view scoreboard: " << endl;
     cin >> tempID;
     Course* course_cur = Find_Course(year_cur, tempID, num_sem);
     count = course_cur->num_stu;
@@ -670,7 +626,6 @@ void Export_Edit_Score(Year*& year_cur, int num_sem, string tempID, Course* cour
     }
 }
 
-
 float GPA(int score) {
     if (score >= 9) return 4;
     if (score >= 8) return 3.5;
@@ -724,7 +679,7 @@ float* Total_Gpa(Year* yearh, string classname, int Sem) {
     for (int i = 0; i < 1000; ++i)
         ans[i] = 0;
     int n = 0;
-    for (int num_sem = 0; num_sem < Sem; ++num_sem) {
+    for (int num_sem = 1; num_sem <= Sem; ++num_sem) {
         Students1* stu = new Students1[1000];
         int num_stu = 0;
         Get_all_students(yearh, classname, stu, num_sem, num_stu);
@@ -761,6 +716,7 @@ void View_Stu_Score(Year* year_cur, int num_sem, Students* stu_cur)
 {
     int count = stu_cur->num_Cour;
     float OverallGPA = 0;
+    stu_cur->score.GPASem[num_sem - 1] = 0;
     for (int i = 1; i <= count; i++)
     {
         int count_temp = stu_cur->Cour[i].num_stu;
@@ -774,17 +730,66 @@ void View_Stu_Score(Year* year_cur, int num_sem, Students* stu_cur)
                 cout << "Total Score of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.Total << endl;
                 stu_cur->Cour[i].Stu[j].score.GPA = GPA(stu_cur->Cour[i].Stu[j].score.Total);
                 stu_cur->score.GPASem[num_sem - 1] += stu_cur->Cour[i].Stu[j].score.GPA;
-                cout << "GPA of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.GPA;
+                cout << "GPA of " << stu_cur->Cour[i].course_name << ": " << stu_cur->Cour[i].Stu[j].score.GPA << endl;
                 break;
             }
         }
     }
+    cout << endl << endl;
     stu_cur->score.GPASem[num_sem - 1] /= count;
-    cout << "Semester GPA: " << stu_cur->score.GPASem[num_sem - 1];
+    cout << "Semester GPA: " << setprecision(1) << stu_cur->score.GPASem[num_sem - 1] << endl;
     for (int k = 0; k < num_sem; k++)
     {
         OverallGPA += stu_cur->score.GPASem[k];
     }
-    cout << "Overall GPA: " << OverallGPA << endl;
+    cout << "Overall GPA: " << setprecision(1) << OverallGPA << endl;
 }
 
+void Release_memory(Students*& stu, Students*& sta, Year*& yearh, Year*& year_cur, Class*& classhead)
+{
+    while (stu != nullptr)
+    {
+        Students* ptemp_stu = stu;
+        delete[]ptemp_stu->Cour;
+        stu = stu->pNext;
+        delete ptemp_stu;
+    }
+    while (sta != nullptr)
+    {
+        Students* ptemp_sta = sta;
+        sta = sta->pNext;
+        delete ptemp_sta;
+    }
+    for (int i = 0; i < 3; i++)
+    {
+        while (year_cur->sem[i].courseh != nullptr)
+        {
+            delete[] year_cur->sem[i].courseh->Stu;
+            year_cur->sem[i].courseh = year_cur->sem[i].courseh->Next;
+        }
+        while (year_cur->sem[i].courseh != nullptr)
+        {
+            delete[] year_cur->sem[i].courseh->ses;
+            year_cur->sem[i].courseh = year_cur->sem[i].courseh->Next;
+        }
+        while (year_cur->sem[i].courseh != nullptr)
+        {
+            Course* ptemp_course = year_cur->sem[i].courseh;
+            year_cur->sem[i].courseh = year_cur->sem[i].courseh->Next;
+            delete ptemp_course;
+        }
+    }
+    while (yearh != nullptr)
+    {
+        year_cur = yearh;
+        delete[]year_cur->sem;
+        yearh = yearh->Next;
+        delete year_cur;
+    }
+    while (classhead != nullptr)
+    {
+        Class* ptemp_class = classhead;
+        classhead = classhead->Next;
+        delete ptemp_class;
+    }
+}
