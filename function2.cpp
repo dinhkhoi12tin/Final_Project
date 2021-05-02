@@ -637,12 +637,21 @@ void View_Scoreboard_Course(Year* year_cur, int num_sem)
 }
 void Edit_Score(Year*& year_cur, int num_sem)
 {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
     string tempID, tempIDStu;
+    gotoxy(8 + offset, 3);
     cout << "Input the course you want to add scoreboard: " << endl;
+    gotoxy(46 + offset, 3);
     cin >> tempID;
     Course* course_cur = Find_Course(year_cur, tempID, num_sem);
     int count = course_cur->num_stu;
+    gotoxy(8 + offset, 4);
     cout << "Input the ID of student you want to edit: " << endl;
+    gotoxy(43 + offset, 4);
     cin >> tempIDStu;
     int temp;
     for (int i = 1; i <= count; i++)
@@ -654,11 +663,18 @@ void Edit_Score(Year*& year_cur, int num_sem)
         }
     }
     int option;
+    createframe();
+    gotoxy(8 + offset, 3);
     cout << "Input the score you want to edit: ";
+    gotoxy(8 + offset, 4);
     cout << "1. Midterm Score" << endl;
+    gotoxy(8 + offset, 5);
     cout << "2. Other Score" << endl;
+    gotoxy(8 + offset, 6);
     cout << "3. Final Score" << endl;
+    gotoxy(8 + offset, 7);
     cout << "4. Total" << endl;
+    gotoxy(36 + offset, 3);
     cin >> option;
     if (option == 1)
     {
@@ -684,12 +700,19 @@ void Edit_Score(Year*& year_cur, int num_sem)
 }
 void Export_Edit_Score(Year*& year_cur, int num_sem, string tempID, Course* course_cur, int count)
 {
+    int offset = 30;
+    createframe();
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 121);
     ofstream output;
     output.open("Scoreboard.csv");
     //No, ID, FirstName, LastName, Midterm, Other, Final, Total
+    gotoxy(8 + offset, 3);
     output << "No, ID, FirsName, LastName, Midterm, Other, Final, Total" << endl;
     for (int i = 1; i <= count; i++)
     {
+        gotoxy(8 + offset, 4);
         output << course_cur->Stu[i].No << "," << course_cur->Stu[i].ID << "," << course_cur->Stu[i].NameFirst << "," << course_cur->Stu[i].NameLast << "," << course_cur->Stu[i].score.Midterm << "," << course_cur->Stu[i].score.Other << "," << course_cur->Stu[i].score.Final << "," << course_cur->Stu[i].score.Total;
         output << endl;
     }
