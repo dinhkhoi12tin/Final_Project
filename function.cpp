@@ -416,9 +416,9 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
                         gotoxy(30 + offset, 9); cout << "0. Exit";
                         system("CLS");
                         SetConsoleTextAttribute(hConsole, 6);
-                        gotoxy(50 + offset, 11); cout << " >> Please, select your functions: "; gotoxy(50 + 35 + offset, 11); cout << "       ";
-                        gotoxy(50+ 35 + offset, 11);  cin >> option;
-                        if (option == 0) break;
+                        gotoxy(50 +12 + offset, 11); cout << ">> Select your functions: "; gotoxy(50+ 12 + 35 + offset, 11); cout << "       ";
+                        gotoxy(50+ 12+ 35 + offset, 11);  cin >> option;
+                        if (option == 0) system("CLS"); break;
                         if (option == 1) {
                             string classfind;
                             SetConsoleTextAttribute(hConsole, 121);
@@ -426,8 +426,17 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
                             cin >> classfind;
                             Class* class_cur = Find(classhead, classfind);
                             if (class_cur != 0) View_Classes_Students(class_cur->sthead);
-                            else cout << "Class does not exist";
+                            else{
+                                gotoxy(35+ offset, 10);
+                            cout << "Class does not exist";
+                            }
+                            string wait;
+                             SetConsoleTextAttribute(hConsole, 6);
+                            gotoxy(0 + offset, 11); cout << " >> Press any to return.  "; gotoxy(24 + offset, 11); cout << "                               ";
+                            gotoxy(25 + offset, 11);  cin >> wait;
+
                         }
+                        system("CLS");
                     }
                 }
                     // find class command;
