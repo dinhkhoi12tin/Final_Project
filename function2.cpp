@@ -462,7 +462,7 @@ void View_Classes_Students(Students* sthead)
     while (sttemp != nullptr)
     {
         class_size++;
-        sthead = sthead->pNext;
+        sttemp = sttemp->pNext;
     }
     int pressY = 11;
     if (class_size >= 8)
