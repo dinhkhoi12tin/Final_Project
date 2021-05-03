@@ -548,6 +548,7 @@ bool CheckRegistrationDate(Year* year_cur, int num_sem)
 void Export_List_Stu_In_Course(Year* year_cur, int num_sem)
 {
     int offset = 30;
+    string filename;
     createframe();
     HANDLE  hConsole;
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -556,8 +557,11 @@ void Export_List_Stu_In_Course(Year* year_cur, int num_sem)
     gotoxy(8 + offset, 3);
     cout << "Input the ID of the course: ";
     cin >> tempID;
+    cout << "Input the name of the file you want to export list of students in course: ";
+    cin >> filename;
     ofstream output;
-    output.open("Stu_in_course.csv");
+    //filename = Stu_in_course.csv
+    output.open(filename);
     Course* course_cur = Find_Course(year_cur, tempID, num_sem);
     int n = course_cur->num_stu;
     for (int i = 1; i <= n; i++)
