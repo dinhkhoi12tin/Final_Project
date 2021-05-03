@@ -46,11 +46,15 @@ void display(Class* classhead) {
 void Export_new(Class* classhead, Students* stu) {
     Students* stu_cur = stu;
     while (stu->pNext && stu->pNext->No != "") stu = stu->pNext;
+
+
     while (classhead) {
         Students* sthead = classhead->sthead;
         while (sthead) {
-            stu->pNext = sthead;
-
+            stu->pNext = new Students{ sthead->No,sthead->ID,sthead->NameFirst, sthead->NameLast
+    ,sthead->Gender,sthead->Birth,sthead->socialID,sthead->username,sthead->password,sthead->classes,0
+    ,sthead->num_Cour = 0,sthead->Cour = new Course[7],
+    sthead->score };
             stu = stu->pNext;
             sthead = sthead->pNext;
         }

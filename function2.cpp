@@ -800,12 +800,6 @@ void View_Score_Class(Year* yearh, int num_sem) {
     Students1* stu = new Students1[1000];
     int num_stu = 0;
     Get_all_students(yearh, classname, stu, num_sem, num_stu);
-    if (num_stu > 2)
-    {
-        createframe();
-        extendframe((num_stu) * 4);
-        SetConsoleTextAttribute(hConsole, 121);
-    }
     sort(stu, num_stu);
     int t = 0;
     float* Overal_GPA = Overal_Count_GPA(stu, num_stu, t);
@@ -814,21 +808,43 @@ void View_Score_Class(Year* yearh, int num_sem) {
     int yformat = 0;
     int increment = 0;
     for (int i = 1; i <= num_stu; ++i) {
+        yformat += increment;
         if (i == 1 || stu[i].Fullname != stu[i - 1].Fullname) {
-            gotoxy(8 + offset, yformat + 2);
+            increment = yformat;
+        }
+        else {
+            increment++;
+        }
+    }
+    if (yformat >= 10)
+    {
+        createframe();
+        extendframe(yformat);
+        SetConsoleTextAttribute(hConsole, 121);
+    }
+    yformat = 0;
+    increment = 0;
+    for (int i = 1; i <= num_stu; ++i) {
+        yformat += increment;
+        if (i == 1 || stu[i].Fullname != stu[i - 1].Fullname) {
+            gotoxy(7 + offset, yformat + 2);
             cout << stu[i].Fullname << " - Semester Gpa: " << Overal_GPA[++k] << " - Overall GPA: " << Total_GPA[k];
             increment = yformat;
         }
         else {
+            gotoxy(14 + offset, increment + 3);
+            cout << stu[i].course_name << " - Final Score: " << stu[i].score.Final;
+            increment++;
         }
-        gotoxy(14 + offset, increment + 3);
-        cout << stu[i].course_name << " - Final Score: " << stu[i].score.Final;
-        increment++;
+    }
+    if (yformat < 10)
+    {
+        yformat = 10;
     }
     string wait;
     SetConsoleTextAttribute(hConsole, 6);
-    gotoxy(0 + offset, (0 + 2) * 5 + 1); cout << " >> Press any to stop.  "; gotoxy(24 + offset, (0 + 2) * 5 + 1); cout << "                               ";
-    gotoxy(25 + offset, (0 + 2) * 5 + 1);  cin >> wait;
+    gotoxy(0 + offset, (yformat) + 1); cout << " >> Press any to stop.  "; gotoxy(24 + offset, (yformat) + 1); cout << "                               ";
+    gotoxy(25 + offset, (yformat) + 1);  cin >> wait;
     system("CLS");
 }
 void View_Stu_Score(Year* year_cur, int num_sem, Students* stu_cur)
