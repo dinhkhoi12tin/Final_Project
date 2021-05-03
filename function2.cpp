@@ -425,7 +425,18 @@ void Remove_Course(Students*& stu_cur, Year*& yearh, int num_sem) {
 void View_List_Of_Classes(Class* classhead)
 {
     int offset = 30;
+    Class* classcur = classhead;
+    int yformat = 0;
+    while (classcur != nullptr)
+    {
+        yformat++;
+        classcur = classcur->Next;
+    }
     createframe();
+    if (yformat >= 10)
+    {
+        extendframe(yformat);
+    }
     HANDLE  hConsole;
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, 121);
@@ -437,10 +448,10 @@ void View_List_Of_Classes(Class* classhead)
         cout << classhead->class_name;
         classhead = classhead->Next;
     }
-    int wait;
-  /*  SetConsoleTextAttribute(hConsole, 6);
-    gotoxy(0 + offset, 11); cout << " >> Press any to stop.  "; gotoxy(24 + offset, 11); cout << "                               ";
-    gotoxy(25 + offset, 11);  cin >> wait;*/
+    //int wait;
+    //SetConsoleTextAttribute(hConsole, 6);
+    //gotoxy(0 + offset, 11); cout << " >> Press any to continue.  "; gotoxy(24 + offset, 11); cout << "                               ";
+    //gotoxy(25 + offset, 11);  cin >> wait;
 }
 void View_Classes_Students(Students* sthead)
 {
@@ -448,13 +459,15 @@ void View_Classes_Students(Students* sthead)
     createframe();
     int class_size = 0;
     Students* sttemp = sthead;
-    while (sthead != nullptr)
+    while (sttemp != nullptr)
     {
         class_size++;
         sthead = sthead->pNext;
     }
-    if (class_size >= 10)
+    int pressY = 11;
+    if (class_size >= 8)
     {
+        pressY = class_size+3;
         extendframe(class_size + 1);
     }
     HANDLE  hConsole;
@@ -464,14 +477,14 @@ void View_Classes_Students(Students* sthead)
     while (sthead != nullptr)
     {
         i++;
-        gotoxy(20 + offset, i);
+        gotoxy(8 + offset, i);
         cout << i-1 << ". " << sthead->ID << " - " << sthead->NameFirst << " " << sthead->NameLast << " - " << sthead->Gender << endl;
         sthead = sthead->pNext;
     }
     string wait;
     SetConsoleTextAttribute(hConsole, 6);
-    gotoxy(0 + offset, 11); cout << " >> Press any to return.  "; gotoxy(24 + offset, 11); cout << "                               ";
-    gotoxy(25 + offset, 11);  cin >> wait;
+    gotoxy(0 + offset, pressY); cout << " >> Press any to return.  "; gotoxy(24 + offset, pressY); cout << "                               ";
+    gotoxy(25 + offset, pressY);  cin >> wait;
     system("CLS");
 }
 void View_List_Of_Students_Course(Year* year_cur, int num_sem, string ID)
@@ -483,7 +496,10 @@ void View_List_Of_Students_Course(Year* year_cur, int num_sem, string ID)
     int n = course_cur->num_stu;
      int offset = 30;
     createframe();
-    if (n >= 10) extendframe(n + 1);
+    int pressY = 11;
+    if (n >= 7) { 
+        pressY = (n + 5);
+        extendframe(n + 1); }
     HANDLE  hConsole;
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, 121);
@@ -495,8 +511,8 @@ void View_List_Of_Students_Course(Year* year_cur, int num_sem, string ID)
     }
     string wait;
     SetConsoleTextAttribute(hConsole, 6);
-    gotoxy(0 + offset, 11); cout << " >> Press any to return.  "; gotoxy(24 + offset, 11); cout << "                               ";
-    gotoxy(25 + offset, 11);  cin >> wait;
+    gotoxy(0 + offset, pressY); cout << " >> Press any to return.  "; gotoxy(24 + offset, pressY); cout << "                               ";
+    gotoxy(25 + offset, pressY);  cin >> wait;
     system("CLS");
 }
 void GetCurrentDate(int& Year, int& Month, int& Day) {
