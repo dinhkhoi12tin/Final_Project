@@ -414,20 +414,19 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
                         SetConsoleTextAttribute(hConsole, 121);
                         gotoxy(30 + offset, 8); cout << "1. View Classes Students";
                         gotoxy(30 + offset, 9); cout << "0. Exit";
-                        system("CLS");
                         SetConsoleTextAttribute(hConsole, 6);
-                        gotoxy(50 +12 + offset, 11); cout << ">> Select your functions: "; gotoxy(50+ 12 + 35 + offset, 11); cout << "       ";
-                        gotoxy(50+ 12+ 35 + offset, 11);  cin >> option;
-                        if (option == 0) system("CLS"); break;
+                        gotoxy(50 +12 + offset, 10); cout << ">> Select your functions: "; gotoxy(50+ 12 + 25 + offset, 10); cout << "       ";
+                        gotoxy(50+ 12+ 25 + offset, 10);  cin >> option;
+                        if (option == 0) { system("CLS"); break; }
                         if (option == 1) {
                             string classfind;
                             SetConsoleTextAttribute(hConsole, 121);
-                            gotoxy(35 + offset, 8); cout << "Input Class Name: ";
+                            gotoxy(30 + offset, 8); cout << "Input Class Name: ";
                             cin >> classfind;
                             Class* class_cur = Find(classhead, classfind);
                             if (class_cur != 0) View_Classes_Students(class_cur->sthead);
                             else{
-                                gotoxy(35+ offset, 10);
+                                gotoxy(30 + offset, 9);
                             cout << "Class does not exist";
                             }
                             string wait;
