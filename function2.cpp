@@ -489,8 +489,6 @@ void View_Classes_Students(Students* sthead)
 }
 void View_List_Of_Students_Course(Year* year_cur, int num_sem, string ID)
 {
-
-
     string tempID = ID;
     Course* course_cur = Find_Course(year_cur, tempID, num_sem);
     int n = course_cur->num_stu;
@@ -504,11 +502,10 @@ void View_List_Of_Students_Course(Year* year_cur, int num_sem, string ID)
     HANDLE  hConsole;
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, 121);
-    for (int i = 0; i < n; i++)
+    for (int i = 1; i <= n; i++)
     {
-        gotoxy(8 + offset, 4);
+        gotoxy(8 + offset, i+3);
         cout << i << ". " << course_cur->Stu[i].ID << " - " << course_cur->Stu[i].NameFirst << " " << course_cur->Stu[i].NameLast << " - " << course_cur->Stu[i].Gender;
-
     }
     string wait;
     SetConsoleTextAttribute(hConsole, 6);
