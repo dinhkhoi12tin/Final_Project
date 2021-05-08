@@ -76,13 +76,6 @@ void LoadFileStaff(Students*& sta, string filename)
     }
     input.close();
 }
-void Release_memory(Students*& stu) {
-    while (stu != nullptr) {
-        Students* ptemp = stu;
-        stu = stu->pNext;
-        delete ptemp;
-    }
-}
 void display_information_students(Students* stu) {
     while (stu) {
         int space[] = { 10,10,20,8,12,10,10,15,10 };
