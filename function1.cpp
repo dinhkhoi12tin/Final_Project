@@ -111,7 +111,7 @@ void add_by_file_csv(Class*& classhead) {
         hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleTextAttribute(hConsole, 121);
         gotoxy(20 + offset, 3); cout << "Type -1.exit\n";
-        gotoxy(20 + offset, 4); cout << "Input filename to load:";
+        gotoxy(10 + offset, 4); cout << "Input filename to load:";
         string filename;
         cin >> filename;
         if (filename[0] == '-') break;
