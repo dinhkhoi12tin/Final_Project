@@ -414,19 +414,18 @@ void Option_After_Login(Students*& stu, Students*& sta, Students*& stu_cur, stri
                         if (option == 1) {
                             string classfind;
                             SetConsoleTextAttribute(hConsole, 121);
-                            gotoxy(30 + offset, 8); cout << "Input Class Name: ";
-                            cin >> classfind;
+                            gotoxy(30 + offset, 8); cout << "Input Class Name: ";gotoxy(30 + offset + 18, 8); cout << "       ";
+                            gotoxy(30 + offset +18, 8); cin >> classfind;
                             Class* class_cur = Find(classhead, classfind);
                             if (class_cur != 0) View_Classes_Students(class_cur->sthead);
                             else{
                                 gotoxy(30 + offset, 9);
                             cout << "Class does not exist";
-                            }
-                            string wait;
+                             string wait;
                              SetConsoleTextAttribute(hConsole, 6);
                             gotoxy(0 + offset, 11); cout << " >> Press any to return.  "; gotoxy(24 + offset, 11); cout << "                               ";
                             gotoxy(25 + offset, 11);  cin >> wait;
-
+                            }
                         }
                         system("CLS");
                     }

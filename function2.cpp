@@ -468,7 +468,7 @@ void View_Classes_Students(Students* sthead)
     if (class_size >= 8)
     {
         pressY = class_size + 3;
-        extendframe(class_size + 1);
+        extendframe(class_size + 2);
     }
     HANDLE  hConsole;
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -497,7 +497,7 @@ void View_List_Of_Students_Course(Year* year_cur, int num_sem, string ID)
     int pressY = 11;
     if (n >= 7) {
         pressY = (n + 5);
-        extendframe(n + 1);
+        extendframe(n + 2);
     }
     HANDLE  hConsole;
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
